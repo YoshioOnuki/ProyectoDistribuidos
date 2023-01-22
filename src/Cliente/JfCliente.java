@@ -100,7 +100,7 @@ public class JfCliente extends javax.swing.JFrame {
                 salir.setVisible(true);
                 panelEstado.setBackground(new Color(228, 65, 65));
                 txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+//                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
                 txtMensaje.requestFocus();
             }else{
                 crearUbi.mkdirs();
@@ -518,7 +518,7 @@ public class JfCliente extends javax.swing.JFrame {
                     salir.setVisible(true);
                     panelEstado.setBackground(new Color(228, 65, 65));
                     txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-                    JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+//                    JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
                     txtMensaje.requestFocus();
                 }else{
                     view2();
@@ -534,7 +534,7 @@ public class JfCliente extends javax.swing.JFrame {
                 salir.setVisible(true);
                 panelEstado.setBackground(new Color(228, 65, 65));
                 txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+//                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
                 txtMensaje.requestFocus();
             }
         }
