@@ -7,7 +7,7 @@ package Cliente;
 
 /**
  *
- * @author Susana
+ * @author yoshi
  */
 public class Cliente {
     

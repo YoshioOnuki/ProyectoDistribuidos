@@ -1,6 +1,7 @@
 
 package Cliente;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Susana
+ * @author yoshi
  */
 public class JfCliente extends javax.swing.JFrame {
     
@@ -45,7 +46,9 @@ public class JfCliente extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         txtArea.setEditable(false);
-        
+        panelEstado.setVisible(false);
+        txtError.setVisible(false);
+        salir.setVisible(false);
     }
     
     private void crearTabla(){
@@ -92,7 +95,12 @@ public class JfCliente extends javax.swing.JFrame {
         
         try {
             if(crearArchi.exists()){
-                JOptionPane.showMessageDialog(null, "La tabla ya se encuentra registrada.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+                panelEstado.setVisible(true);
+                txtError.setVisible(true);
+                salir.setVisible(true);
+                panelEstado.setBackground(new Color(228, 65, 65));
+                txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
                 txtMensaje.requestFocus();
             }else{
                 crearUbi.mkdirs();
@@ -110,6 +118,11 @@ public class JfCliente extends javax.swing.JFrame {
 
                 int respuesta3 = escribir(crearArchi, contenido);
 
+                panelEstado.setVisible(true);
+                txtError.setVisible(true);
+                salir.setVisible(true);
+                panelEstado.setBackground(new Color(76, 175, 80));
+                txtError.setText("Correcto:  Tabla creada correctamente en la base de datos TXT...");
                 JOptionPane.showMessageDialog(null, "Directorios creados correctamente.", "¡Correcto!",JOptionPane.WARNING_MESSAGE, icoOk);
                 txtMensaje.requestFocus();
                 limpiarMensaje();
@@ -119,25 +132,6 @@ public class JfCliente extends javax.swing.JFrame {
             System.out.println("Error al crear directorios"+e);
         }
         
-    }
-    
-    public int escribir(File file, String contenido){
-        int r = 0;
-        
-        if(file != null){
-            try {
-                fos = new FileOutputStream(file);
-                byte[] bytes= contenido.getBytes();
-                fos.write(bytes);
-                fos.close();
-            } catch (FileNotFoundException ex) {
-                System.out.println("Error 3: "+ex.getMessage());
-            } catch (IOException ex) {
-                System.out.println("Error 3: "+ex.getMessage());
-            }
-        }
-        
-        return r;
     }
     
     void cargarDatos(String nombreT){
@@ -215,11 +209,33 @@ public class JfCliente extends javax.swing.JFrame {
         
     }
     
+    public int escribir(File file, String contenido){
+        int r = 0;
+        
+        if(file != null){
+            try {
+                fos = new FileOutputStream(file);
+                byte[] bytes= contenido.getBytes();
+                fos.write(bytes);
+                fos.close();
+            } catch (FileNotFoundException ex) {
+                System.out.println("Error 3: "+ex.getMessage());
+            } catch (IOException ex) {
+                System.out.println("Error 3: "+ex.getMessage());
+            }
+        }
+        
+        return r;
+    }
+    
     String tipoConsulta(){
         String r = "";
-        
-        for (int i = 0; i < 6; i++) {
-            r += txtConsulta.charAt(i);
+        if(txtConsulta.length() < 6){
+            
+        }else{
+            for (int i = 0; i < 6; i++) {
+                r += txtConsulta.charAt(i);
+            }
         }
         
         return r;
@@ -322,6 +338,9 @@ public class JfCliente extends javax.swing.JFrame {
         PanelPrincipal = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtArea = new javax.swing.JTextArea();
+        panelEstado = new javax.swing.JPanel();
+        txtError = new javax.swing.JLabel();
+        salir = new javax.swing.JLabel();
         panelEnvio = new javax.swing.JPanel();
         txtMensaje = new javax.swing.JTextField();
         btnEnviar = new javax.swing.JButton();
@@ -368,17 +387,53 @@ public class JfCliente extends javax.swing.JFrame {
         txtArea.setMinimumSize(new java.awt.Dimension(689, 343));
         jScrollPane1.setViewportView(txtArea);
 
+        panelEstado.setBackground(new java.awt.Color(255, 255, 255));
+
+        txtError.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
+        txtError.setForeground(new java.awt.Color(255, 255, 255));
+        txtError.setText("Error");
+
+        salir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Salir.png"))); // NOI18N
+        salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                salirMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelEstadoLayout = new javax.swing.GroupLayout(panelEstado);
+        panelEstado.setLayout(panelEstadoLayout);
+        panelEstadoLayout.setHorizontalGroup(
+            panelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEstadoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(salir)
+                .addContainerGap())
+        );
+        panelEstadoLayout.setVerticalGroup(
+            panelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEstadoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(salir, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout PanelPrincipalLayout = new javax.swing.GroupLayout(PanelPrincipal);
         PanelPrincipal.setLayout(PanelPrincipalLayout);
         PanelPrincipalLayout.setHorizontalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 689, Short.MAX_VALUE)
+            .addComponent(panelEstado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 608, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE))
         );
         PanelPrincipalLayout.setVerticalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 343, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
+                .addGap(0, 293, Short.MAX_VALUE)
+                .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, Short.MAX_VALUE))
         );
@@ -389,6 +444,8 @@ public class JfCliente extends javax.swing.JFrame {
         panelEnvio.setPreferredSize(new java.awt.Dimension(689, 100));
 
         txtMensaje.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
+        txtMensaje.setMinimumSize(new java.awt.Dimension(6, 26));
+        txtMensaje.setPreferredSize(new java.awt.Dimension(6, 26));
 
         btnEnviar.setBackground(new java.awt.Color(51, 71, 86));
         btnEnviar.setFont(new java.awt.Font("SF UI Display", 1, 16)); // NOI18N
@@ -450,13 +507,18 @@ public class JfCliente extends javax.swing.JFrame {
             txtMensaje.requestFocus();
         }else{
             txtConsulta = txtMensaje.getText();
-            System.out.println(tipoConsulta());
+            System.out.println("\n"+tipoConsulta());
             if(tipoConsulta().equalsIgnoreCase("CREATE")){
                 crearTabla();
             }else if(tipoConsulta().equalsIgnoreCase("SELECT")){
                 File crearArchi = new File(crearUbicacion+"alumno2.txt");
                 if(!crearArchi.exists()){
-                    JOptionPane.showMessageDialog(null, "La tabla no se encuentra registrada.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+                    panelEstado.setVisible(true);
+                    txtError.setVisible(true);
+                    salir.setVisible(true);
+                    panelEstado.setBackground(new Color(228, 65, 65));
+                    txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+                    JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
                     txtMensaje.requestFocus();
                 }else{
                     view2();
@@ -467,13 +529,24 @@ public class JfCliente extends javax.swing.JFrame {
             }else if(tipoConsulta().equalsIgnoreCase("DELETE")){
                 
             }else{
-                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+                panelEstado.setVisible(true);
+                txtError.setVisible(true);
+                salir.setVisible(true);
+                panelEstado.setBackground(new Color(228, 65, 65));
+                txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
                 txtMensaje.requestFocus();
             }
         }
         
         
     }//GEN-LAST:event_btnEnviarActionPerformed
+
+    private void salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirMouseClicked
+        panelEstado.setVisible(false);
+        txtError.setVisible(false);
+        salir.setVisible(false);
+    }//GEN-LAST:event_salirMouseClicked
 
     public static void main(String args[]) {
         
@@ -492,7 +565,10 @@ public class JfCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelEnvio;
+    private javax.swing.JPanel panelEstado;
+    private javax.swing.JLabel salir;
     private javax.swing.JTextArea txtArea;
+    private javax.swing.JLabel txtError;
     private javax.swing.JTextField txtMensaje;
     // End of variables declaration//GEN-END:variables
 }
