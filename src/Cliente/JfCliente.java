@@ -123,7 +123,7 @@ public class JfCliente extends javax.swing.JFrame {
                 salir.setVisible(true);
                 panelEstado.setBackground(new Color(76, 175, 80));
                 txtError.setText("Correcto:  Tabla creada correctamente en la base de datos TXT...");
-                JOptionPane.showMessageDialog(null, "Directorios creados correctamente.", "¡Correcto!",JOptionPane.WARNING_MESSAGE, icoOk);
+//                JOptionPane.showMessageDialog(null, "Directorios creados correctamente.", "¡Correcto!",JOptionPane.WARNING_MESSAGE, icoOk);
                 txtMensaje.requestFocus();
                 limpiarMensaje();
             }
