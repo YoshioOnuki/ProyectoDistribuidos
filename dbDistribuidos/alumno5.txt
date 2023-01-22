@@ -1,1 +1,1 @@
-id int	|	nombre varchar(255)	|	edad int	|	gato varchar(255)	|	mentos int	|
+id int	|	nombre varchar(255)	|	edad int	|	direccion varchar(255)	|	estado varchar(255)	|

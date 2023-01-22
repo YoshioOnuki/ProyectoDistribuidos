@@ -24,8 +24,8 @@ public class JfCliente extends javax.swing.JFrame {
     String barra = File.separator;
     String crearUbicacion = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra;
     
-    String crearUbicacionBackup = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"backup"+barra;
-    String crearUbicacionBackupPuntero = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"backup"+barra;
+    String crearUbicacionBackup = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"backup"+barra;
+    String crearUbicacionBackupPuntero = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"punteros"+barra;
     String mensaje = "";
     File archiBackupFile = null;
     

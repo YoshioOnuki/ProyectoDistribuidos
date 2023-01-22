@@ -1,0 +1,14 @@
+2 Atributos
+CREATE TABLE alumno2 ( id int , nombre varchar(255) );
+SELECT * FROM alumno2;
+UPDATE alumno2 SET nombre = 'Aurerio Onuki' WHERE id = 1;
+DELETE FROM alumno2 WHERE id = 1;
+
+3 Atributos
+CREATE TABLE alumno3 ( id int , nombre varchar(255) , edad int );
+
+4 Atributos
+CREATE TABLE alumno4 ( id int , nombre varchar(255) , edad int , direccion varchar(255) );
+
+5 Atributos
+CREATE TABLE alumno5 ( id int , nombre varchar(255) , edad int , direccion varchar(255) , estado varchar(255) );
