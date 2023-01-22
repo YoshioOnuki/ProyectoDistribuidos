@@ -1,1 +1,0 @@
-id int,nombre varchar(255),edad int,direccion varchar(255)

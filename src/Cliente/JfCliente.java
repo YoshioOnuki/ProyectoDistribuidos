@@ -61,75 +61,84 @@ public class JfCliente extends javax.swing.JFrame {
         int c = 1;
                 
         String archivo = nombreTabla+".txt";
-
+        
         datos = new String[puntero][cantidadAtributos];
-        for (int i = 0; i < cantidadAtributos; i++) {
-            datos[0][i] = da[c]+" "+da[c+1];
-            c += 2;
-            contenido += datos[0][i];
-            if(i != cantidadAtributos-1){
-                contenido += "\t|\t";
-            }else{
-                contenido += "\t|\n";
+        
+        if(da[0] == null){
+            panelEstado.setVisible(true);
+            txtError.setVisible(true);
+            salir.setVisible(true);
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+        }else{
+            for (int i = 0; i < cantidadAtributos; i++) {
+                datos[0][i] = da[c]+" "+da[c+1];
+                c += 2;
+                contenido += datos[0][i];
+                if(i != cantidadAtributos-1){
+                    contenido += "\t|\t";
+                }else{
+                    contenido += "\t|\n";
+                }
             }
-        }
-        for (int i = 0; i < cantidadAtributos; i++) {
-            if(i != 0){
-                conteBackup += ",";
-            }
-            conteBackup += datos[0][i];
-            System.out.println(conteBackup);
-        }
-        
-        String archivoPuntero = "puntero"+nombreTabla+".txt";
-        String contenidopuntero = ""+puntero; 
-        File crearUbiBackupPuntero = new File(crearUbicacionBackupPuntero);
-        File crearArchiBackupPuntero = new File(crearUbicacionBackupPuntero+archivoPuntero);
-        
-        File crearUbi = new File(crearUbicacion);
-        File crearArchi = new File(crearUbicacion+archivo);
-        
-        String archivoBackup = "backup"+nombreTabla+".txt";
-        File crearUbiBackup = new File(crearUbicacionBackup);
-        File crearArchiBackup = new File(crearUbicacionBackup+archivoBackup);
-        
-        try {
-            if(crearArchi.exists()){
-                panelEstado.setVisible(true);
-                txtError.setVisible(true);
-                salir.setVisible(true);
-                panelEstado.setBackground(new Color(228, 65, 65));
-                txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-//                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-                txtMensaje.requestFocus();
-            }else{
-                crearUbi.mkdirs();
-                crearArchi.createNewFile();
-
-                crearUbiBackup.mkdirs();
-                crearArchiBackup.createNewFile();
-                
-                crearUbiBackupPuntero.mkdirs();
-                crearArchiBackupPuntero.createNewFile();
-                
-                int respuesta1 = escribir(crearArchiBackupPuntero, contenidopuntero);
-                
-                int respuesta2 = escribir(crearArchiBackup, conteBackup);
-
-                int respuesta3 = escribir(crearArchi, contenido);
-
-                panelEstado.setVisible(true);
-                txtError.setVisible(true);
-                salir.setVisible(true);
-                panelEstado.setBackground(new Color(76, 175, 80));
-                txtError.setText("Correcto:  Tabla creada correctamente en la base de datos TXT...");
-//                JOptionPane.showMessageDialog(null, "Directorios creados correctamente.", "¡Correcto!",JOptionPane.WARNING_MESSAGE, icoOk);
-                txtMensaje.requestFocus();
-                limpiarMensaje();
+            for (int i = 0; i < cantidadAtributos; i++) {
+                if(i != 0){
+                    conteBackup += ",";
+                }
+                conteBackup += datos[0][i];
+                System.out.println(conteBackup);
             }
 
-        } catch (Exception e) {
-            System.out.println("Error al crear directorios"+e);
+            String archivoPuntero = "puntero"+nombreTabla+".txt";
+            String contenidopuntero = ""+puntero; 
+            File crearUbiBackupPuntero = new File(crearUbicacionBackupPuntero);
+            File crearArchiBackupPuntero = new File(crearUbicacionBackupPuntero+archivoPuntero);
+
+            File crearUbi = new File(crearUbicacion);
+            File crearArchi = new File(crearUbicacion+archivo);
+
+            String archivoBackup = "backup"+nombreTabla+".txt";
+            File crearUbiBackup = new File(crearUbicacionBackup);
+            File crearArchiBackup = new File(crearUbicacionBackup+archivoBackup);
+
+            try {
+                if(crearArchi.exists()){
+                    panelEstado.setVisible(true);
+                    txtError.setVisible(true);
+                    salir.setVisible(true);
+                    panelEstado.setBackground(new Color(228, 65, 65));
+                    txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+    //                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+                    txtMensaje.requestFocus();
+                }else{
+                    crearUbi.mkdirs();
+                    crearArchi.createNewFile();
+
+                    crearUbiBackup.mkdirs();
+                    crearArchiBackup.createNewFile();
+
+                    crearUbiBackupPuntero.mkdirs();
+                    crearArchiBackupPuntero.createNewFile();
+
+                    int respuesta1 = escribir(crearArchiBackupPuntero, contenidopuntero);
+
+                    int respuesta2 = escribir(crearArchiBackup, conteBackup);
+
+                    int respuesta3 = escribir(crearArchi, contenido);
+
+                    panelEstado.setVisible(true);
+                    txtError.setVisible(true);
+                    salir.setVisible(true);
+                    panelEstado.setBackground(new Color(76, 175, 80));
+                    txtError.setText("Correcto:  Tabla creada correctamente en la base de datos TXT...");
+    //                JOptionPane.showMessageDialog(null, "Directorios creados correctamente.", "¡Correcto!",JOptionPane.WARNING_MESSAGE, icoOk);
+                    txtMensaje.requestFocus();
+                    limpiarMensaje();
+                }
+
+            } catch (Exception e) {
+                System.out.println("Error al crear directorios"+e);
+            }
         }
         
     }
@@ -249,7 +258,7 @@ public class JfCliente extends javax.swing.JFrame {
         String nombre = "";
         int pAtri = 1;
         
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 13; i++) {
             consul += txtConsulta.charAt(i);
         }
         
@@ -263,10 +272,9 @@ public class JfCliente extends javax.swing.JFrame {
         
         String[] r = new String[(cantAtri*2)+1];
         
-        if(!consul.equalsIgnoreCase("CREATE TABLE")){
-            JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+        if(!consul.equalsIgnoreCase("CREATE TABLE ")){
+//            JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
             System.out.println(consul);
-            txtMensaje.requestFocus();
         }else{
             for (int i = posi; i < txtConsulta.length(); i++) {
                 if(txtConsulta.charAt(i) != espacio.charAt(0)){
