@@ -337,6 +337,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 //        String mensaje = "" + this.txtMensaje.getText() + "\n";
 //        this.txtArea.setText(mensaje);
         this.txtArea.setText(mensa);
+        this.tabla.setText(nombreTabla);
         
 //        panelEstado.setBackground(new Color(228, 65, 65));
 //        this.txtError.setText(mensajeError);
@@ -390,6 +391,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         panelEstado = new javax.swing.JPanel();
         txtError = new javax.swing.JLabel();
         salir = new javax.swing.JLabel();
+        tabla = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -422,14 +424,18 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             }
         });
 
+        tabla.setFont(new java.awt.Font("Tahoma", 0, 5)); // NOI18N
+
         javax.swing.GroupLayout panelEstadoLayout = new javax.swing.GroupLayout(panelEstado);
         panelEstado.setLayout(panelEstadoLayout);
         panelEstadoLayout.setHorizontalGroup(
             panelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEstadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(tabla, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(salir)
                 .addContainerGap())
         );
@@ -438,7 +444,11 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             .addComponent(txtError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEstadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(salir, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addGroup(panelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelEstadoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(tabla, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(salir, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -523,6 +533,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelEstado;
     private javax.swing.JLabel salir;
+    private javax.swing.JLabel tabla;
     private javax.swing.JTextArea txtArea;
     private javax.swing.JLabel txtError;
     // End of variables declaration//GEN-END:variables
