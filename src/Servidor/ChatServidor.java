@@ -53,13 +53,10 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         initMetodos();
         setLocationRelativeTo(null);
         txtArea.setEditable(false);
-        txtMensaje.setEditable(false);
-        btnEnviar.setEnabled(false);
         btnEnv();
     }
     
     void initMetodos(){
-        this.getRootPane().setDefaultButton(this.btnEnviar);
         Servidor s = new Servidor(5050);
         s.addObserver(this);
         Thread t = new Thread (s);
@@ -118,7 +115,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                     panelEstado.setBackground(new Color(228, 65, 65));
                     txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
     //                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-                    txtMensaje.requestFocus();
                 }else{
                     crearUbi.mkdirs();
                     crearArchi.createNewFile();
@@ -137,9 +133,8 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 
                     panelEstado.setBackground(new Color(76, 175, 80));
                     txtError.setText("Correcto:  Tabla creada correctamente en la base de datos TXT...");
+                    enviar("Correcto...");
     //                JOptionPane.showMessageDialog(null, "Directorios creados correctamente.", "¡Correcto!",JOptionPane.WARNING_MESSAGE, icoOk);
-                    txtMensaje.requestFocus();
-                    limpiarMensaje();
                 }
 
             } catch (Exception e) {
@@ -331,12 +326,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         txtArea.setText(mensaje);
     }
     
-    void limpiarMensaje(){
-        txtMensaje.setText("");
-    }
-    
     void limpiarTodo(){
-        txtMensaje.setText("");
         txtArea.setText("");
     }
     
@@ -349,7 +339,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 //        panelEstado.setBackground(new Color(228, 65, 65));
 //        this.txtError.setText(mensajeError);
         
-        this.txtMensaje.setText("");
         
         Cliente c1 = new Cliente("192.168.1.47",5050,mensa);
         Thread t1 = new Thread(c1); 
@@ -358,7 +347,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     
     void btnEnv(){
         txtConsulta = txtArea.getText();
-        System.out.println(txtConsulta);
+//        System.out.println(txtConsulta);
         if(txtConsulta.isEmpty()){
             
         }else{
@@ -404,8 +393,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        txtMensaje = new javax.swing.JTextField();
-        btnEnviar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -478,52 +465,15 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        txtMensaje.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
-        txtMensaje.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMensajeActionPerformed(evt);
-            }
-        });
-        txtMensaje.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtMensajeKeyReleased(evt);
-            }
-        });
-
-        btnEnviar.setBackground(new java.awt.Color(51, 71, 86));
-        btnEnviar.setFont(new java.awt.Font("SF UI Display", 1, 16)); // NOI18N
-        btnEnviar.setText("Enviar");
-        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEnviar)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(99, Short.MAX_VALUE)))
+            .addGap(0, 713, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(12, Short.MAX_VALUE)))
+            .addGap(0, 82, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -551,24 +501,10 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-//        btnEnv();
-    }//GEN-LAST:event_btnEnviarActionPerformed
-
     private void salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirMouseClicked
         panelEstado.setBackground(new Color(255,255,255));
         txtError.setText("");
     }//GEN-LAST:event_salirMouseClicked
-
-    private void txtMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMensajeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMensajeActionPerformed
-
-    private void txtMensajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMensajeKeyReleased
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-//            btnEnv();
-        }
-    }//GEN-LAST:event_txtMensajeKeyReleased
 
     private void txtAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaKeyTyped
         
@@ -599,7 +535,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEnviar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -608,7 +543,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     private javax.swing.JLabel salir;
     private javax.swing.JTextArea txtArea;
     private javax.swing.JLabel txtError;
-    private javax.swing.JTextField txtMensaje;
     // End of variables declaration//GEN-END:variables
 
     @Override

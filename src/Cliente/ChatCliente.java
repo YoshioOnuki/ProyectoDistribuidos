@@ -27,6 +27,9 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         if(m.equalsIgnoreCase("Error...")){
             panelEstado.setBackground(new Color(228, 65, 65));
             this.txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+        }else if(m.equalsIgnoreCase("Correcto...")){
+            panelEstado.setBackground(new Color(76, 175, 80));
+            txtError.setText("Correcto:  Tabla creada correctamente en la base de datos TXT...");
         }
     }
     
