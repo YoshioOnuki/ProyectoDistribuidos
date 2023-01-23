@@ -342,14 +342,14 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         // TODO add your handling code here:
 //        String mensaje = "" + this.txtMensaje.getText() + "\n";
 //        this.txtArea.setText(mensaje);
-        this.txtArea.append(mensa);
+        this.txtArea.setText(mensa);
         
 //        panelEstado.setBackground(new Color(228, 65, 65));
 //        this.txtError.setText(mensajeError);
         
         this.txtMensaje.setText("");
         
-        Cliente c1 = new Cliente("192.168.1.47",5050,mensaje);
+        Cliente c1 = new Cliente("192.168.1.47",5050,mensa);
         Thread t1 = new Thread(c1); 
         t1.start();
     }
@@ -366,8 +366,8 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 File crearArchi = new File(crearUbicacion+"alumno2.txt");
                 if(!crearArchi.exists()){
                     enviar("Error...");
-                    panelEstado.setBackground(new Color(228, 65, 65));
-                    txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+//                    panelEstado.setBackground(new Color(228, 65, 65));
+//                    txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
 //                    JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
 //                    txtMensaje.requestFocus();
                 }else{
@@ -380,8 +380,8 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 
             }else{
                 enviar("Error...");
-                panelEstado.setBackground(new Color(228, 65, 65));
-                txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+//                panelEstado.setBackground(new Color(228, 65, 65));
+//                txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
 //                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
 //                txtMensaje.requestFocus();
             }
