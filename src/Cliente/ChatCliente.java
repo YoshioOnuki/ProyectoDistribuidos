@@ -58,7 +58,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         this.txtMensaje.setText("");
         txtMensaje.requestFocus();
         
-        Cliente c = new Cliente("192.168.1.47",5050,mensaje);
+        Cliente c = new Cliente("192.168.0.127",5050,mensaje);
         Thread t = new Thread(c); 
         t.start();
     }

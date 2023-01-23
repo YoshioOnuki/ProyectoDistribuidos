@@ -30,6 +30,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     
     String crearUbicacionBackup = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"backup"+barra;
     String crearUbicacionBackupPuntero = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"punteros"+barra;
+    String crearUbicacionBackupCantAtri = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"cantidad_atributos"+barra;
     String mensaje = "";
     File archiBackupFile = null;
     
@@ -38,6 +39,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     String espacio = " ";
     String parenInicio = "(";
     String parenFinal = ")";
+    String comillaSimple = "'";
     
     FileOutputStream fos;
     
@@ -96,8 +98,13 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 conteBackup += datos[0][i];
                 System.out.println(conteBackup);
             }
-
-            String archivoPuntero = "puntero"+nombreTabla+".txt";
+//
+            String archivoCantidad = "cantidad_atributo_"+nombreTabla+".txt";
+            String contenidoCantidad = ""+cantidadAtributos; 
+            File crearUbiBackupCantidad = new File(crearUbicacionBackupCantAtri);
+            File crearArchiBackupCantidad = new File(crearUbicacionBackupCantAtri+archivoCantidad);
+            
+            String archivoPuntero = "puntero_"+nombreTabla+".txt";
             String contenidopuntero = ""+puntero; 
             File crearUbiBackupPuntero = new File(crearUbicacionBackupPuntero);
             File crearArchiBackupPuntero = new File(crearUbicacionBackupPuntero+archivoPuntero);
@@ -105,9 +112,11 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             File crearUbi = new File(crearUbicacion);
             File crearArchi = new File(crearUbicacion+archivo);
 
-            String archivoBackup = "backup"+nombreTabla+".txt";
+            String archivoBackup = "backup_"+nombreTabla+".txt";
             File crearUbiBackup = new File(crearUbicacionBackup);
             File crearArchiBackup = new File(crearUbicacionBackup+archivoBackup);
+            
+            
 
             try {
                 if(crearArchi.exists()){
@@ -125,6 +134,8 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                     crearUbiBackupPuntero.mkdirs();
                     crearArchiBackupPuntero.createNewFile();
 
+                    int respuesta0 = escribir(crearArchiBackupCantidad, contenidoCantidad);
+                    
                     int respuesta1 = escribir(crearArchiBackupPuntero, contenidopuntero);
 
                     int respuesta2 = escribir(crearArchiBackup, conteBackup);
@@ -142,56 +153,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             }
         }
         
-    }
-    
-    void cargarDatos(String nombreT){
-        String punt = "puntero"+nombreT+".txt";
-        int cantAtri = 0;
-        File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
-        String archivoBackup = "";
-        File archiBackupFile = null;
-        
-        ChatServidor obj = new ChatServidor();
-        
-        if(nombreT.equalsIgnoreCase("alumno2")){
-            cantAtri = 2;
-            archivoBackup = "alumno2Backup.txt";
-            archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
-        }
-        
-        int puntero = Integer.parseInt(obj.leerDatos(archiPuntero));
-        datos = new String[puntero][cantAtri];
-        String dat = obj.leerDatos(archiBackupFile);
-        String atri = "";
-        int posi = 0;
-        int k = 0;
-        int l = 0;
-        for (int j = 0; j < cantAtri*puntero; j++) {
-//            System.out.println(dat.length());
-            for (int i = posi; i < dat.length(); i++) {
-//                System.out.println(coma);
-                if(dat.charAt(posi) != coma.charAt(0)){
-                    atri += dat.charAt(i);
-                    posi++;
-                }else if(dat.charAt(posi) == coma.charAt(0)){
-                    posi++;
-                    break;
-                }
-            }
-            datos[k][l] = atri;
-            System.out.print(datos[k][l]+" ");
-            l++;
-            if(l == cantAtri && k != puntero-1){
-                k++;
-                l=0;
-            }
-            atri = "";
-        }
-        System.out.println("");
-        System.out.println(cantAtri);
-        System.out.println(puntero);
-        
-//        String[][] d = dat;
     }
     
     public String leerDatos(File file){
@@ -350,6 +311,90 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         return r;
     }
     
+    String[] validarUpdate(){
+        String consul = "";
+        int posi = 7;
+        String nombre = "";
+        
+        int cantAtri = 0;
+        int cont = 0;
+        int pAtri = 1;
+        
+        
+        for (int i = 0; i < 7; i++) {
+            consul += txtConsulta.charAt(i);
+        }
+        
+        for (int i = posi; i < txtConsulta.length(); i++) {
+            if(txtConsulta.charAt(i) == coma.charAt(0)){
+                cantAtri++;
+            }
+        }
+        cantAtri++;
+        System.out.println(cantAtri);
+        
+        String[] r = new String[(cantAtri*2)+3];
+        
+        if(!consul.equalsIgnoreCase("UPDATE ")){
+//            JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+            System.out.println(consul);
+        }else{
+            for (int i = posi; i < txtConsulta.length(); i++) {
+                if(txtConsulta.charAt(i) != espacio.charAt(0)){
+                    nombre += txtConsulta.charAt(i);
+                }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
+                    System.out.println(nombre);
+                    r[cont] = nombre;
+                    cont++;
+                    posi = i+5;
+                    nombre = "";
+                    break;
+                }
+            }
+            
+            for (int j = 0; j < cantAtri*2; j++) {
+                for (int i = posi; i < txtConsulta.length(); i++) {
+                    if(txtConsulta.charAt(i) != espacio.charAt(0)){
+                        if(txtConsulta.charAt(i) != comillaSimple.charAt(0)){
+                            nombre += txtConsulta.charAt(i);
+                        }
+                    }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
+                        System.out.println(nombre);
+                        r[cont] = nombre;
+                        cont++;
+                        if(j == cantAtri*2 - 1){
+                            posi = i+7;
+                        }else{
+                            posi = i+3;
+                        }
+                        nombre = "";   
+                    }
+                }
+            }
+            
+            for (int i = posi; i < txtConsulta.length(); i++) {
+                if(txtConsulta.charAt(i) != espacio.charAt(0)){
+                    if(txtConsulta.charAt(i) != puntoComa.charAt(0)){
+                        nombre += txtConsulta.charAt(i);
+                    }else{
+                        System.out.println(nombre);
+                        r[cont] = nombre;
+                        cont++;
+                        nombre = "";
+                    }
+                }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
+                    System.out.println(nombre);
+                    r[cont] = nombre;
+                    cont++;
+                    posi = i+3;
+                    nombre = "";
+                }
+            }
+        }
+        
+        return r;
+    }
+    
     void select(){
         String tab = validarSelect();
         File crearArchi = new File(crearUbicacion+tab+".txt");
@@ -369,6 +414,64 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 
     }
     
+    void update(String nombreT){
+        String punt = "puntero_"+nombreT+".txt";
+        File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
+        
+        String archivoUpd = nombreT+".txt";
+        File archivoUpdFile = new File(crearUbicacionBackup+archivoUpd);
+        
+        String archivoBackup = "backup_"+nombreT+".txt";
+        archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
+            
+        if(!archivoUpdFile.exists()){
+            enviar("Error...");
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+        }else{
+            int cantAtri = 0;
+            
+            ChatServidor obj = new ChatServidor();
+
+            int puntero = Integer.parseInt(obj.leerDatos(archiPuntero));
+            datos = new String[puntero][cantAtri];
+            
+            String dat = obj.leerDatos(archiBackupFile);
+            String atri = "";
+            int posi = 0;
+            int k = 0;
+            int l = 0;
+            for (int j = 0; j < cantAtri*puntero; j++) {
+    //            System.out.println(dat.length());
+                for (int i = posi; i < dat.length(); i++) {
+    //                System.out.println(coma);
+                    if(dat.charAt(posi) != coma.charAt(0)){
+                        atri += dat.charAt(i);
+                        posi++;
+                    }else if(dat.charAt(posi) == coma.charAt(0)){
+                        posi++;
+                        break;
+                    }
+                }
+                datos[k][l] = atri;
+                System.out.print(datos[k][l]+" ");
+                l++;
+                if(l == cantAtri && k != puntero-1){
+                    k++;
+                    l=0;
+                }
+                atri = "";
+            }
+            System.out.println("");
+            System.out.println(cantAtri);
+            System.out.println(puntero);
+        }
+            
+        
+        
+//        String[][] d = dat;
+    }
+    
     void limpiarTodo(){
         txtArea.setText("");
     }
@@ -383,7 +486,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 //        this.txtError.setText(mensajeError);
         
         
-        Cliente c1 = new Cliente("192.168.1.47",5050,mensa);
+        Cliente c1 = new Cliente("192.168.0.127",5050,mensa);
         Thread t1 = new Thread(c1); 
         t1.start();
     }
