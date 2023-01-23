@@ -350,10 +350,11 @@ public class jServidor extends javax.swing.JFrame implements Observer{
     void enviar(){
         // TODO add your handling code here:
         String mensaje = "Servidor: " + this.txtMensaje.getText() + "\n";
-        this.txtArea.setText(mensaje);
+//        this.txtArea.setText(mensaje);
+        this.txtArea.append(mensaje);
         this.txtMensaje.setText("");
         
-        Cliente c1 = new Cliente("192.168.1.78",5050,mensaje);
+        Cliente c1 = new Cliente("192.168.1.47",5050,mensaje);
         Thread t1 = new Thread(c1); 
         t1.start();
     }
