@@ -82,7 +82,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
 
         txtArea.setEditable(false);
         txtArea.setColumns(20);
-        txtArea.setFont(new java.awt.Font("SF UI Display", 0, 15)); // NOI18N
+        txtArea.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
         txtArea.setRows(5);
         txtArea.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {

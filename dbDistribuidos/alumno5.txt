@@ -1,0 +1,5 @@
+id int | nombre varchar(255) | edad int | direccion varchar(255) | estado varchar(255)
+01 | Yoshio Onuki Navas | 22 | Jr.Arica 190 | Activo
+02 | Susana Suarez Maciel | 21 | Av.Cementerio 1000 | Activo
+03 | Hector Lopez Montalvan | 21 | Av.Maya de Brito 1200 | Activo
+04 | Kenji Murakami Rubio | 21 | Av.Fonavi 1203 | Activo

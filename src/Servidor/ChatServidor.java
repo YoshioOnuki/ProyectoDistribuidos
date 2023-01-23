@@ -83,7 +83,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 c += 2;
                 contenido += datos[0][i];
                 if(i != cantidadAtributos-1){
-                    contenido += "|";
+                    contenido += espacio+"|"+espacio;
                 }else{
                     contenido += "\n";
                 }
@@ -428,7 +428,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 
         txtArea.setEditable(false);
         txtArea.setColumns(20);
-        txtArea.setFont(new java.awt.Font("SF UI Display", 0, 15)); // NOI18N
+        txtArea.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
         txtArea.setRows(5);
         jScrollPane1.setViewportView(txtArea);
 
