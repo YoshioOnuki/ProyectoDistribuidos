@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Cliente;
 
-import Servidor.*;
+package Servidor;
+
+import asd.*;
+import Cliente.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author 51993
+ * @author yoshi
  */
 public class Cliente implements Runnable 
 {
@@ -32,6 +29,7 @@ public class Cliente implements Runnable
     
     @Override
     public void run() {
+        
 
         //DataInputStream in;
         DataOutputStream out;

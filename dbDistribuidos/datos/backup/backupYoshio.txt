@@ -1,0 +1,1 @@
+id int,nombreCompleto varchar(255),edad int

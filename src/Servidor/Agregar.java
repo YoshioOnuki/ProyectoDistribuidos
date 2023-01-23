@@ -1,5 +1,5 @@
 
-package Cliente;
+package Servidor;
 
 import java.awt.Color;
 import java.io.BufferedReader;
@@ -248,15 +248,11 @@ public class Agregar extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnBuscar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JPanel btnSoyCliente;
-    private javax.swing.JPanel btnSoyCliente1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblAtri1;
     private javax.swing.JLabel lblAtri2;
-    private javax.swing.JLabel lblSoyCliente;
-    private javax.swing.JLabel lblSoyCliente1;
     private javax.swing.JTextField txtAtri1;
     private javax.swing.JTextField txtAtri2;
     private javax.swing.JTextField txtNombreTabla;

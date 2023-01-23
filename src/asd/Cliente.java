@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Cliente;
+package asd;
 
-import Servidor.*;
+import Cliente.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -32,6 +32,7 @@ public class Cliente implements Runnable
     
     @Override
     public void run() {
+        
 
         //DataInputStream in;
         DataOutputStream out;

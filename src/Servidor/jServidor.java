@@ -1,5 +1,5 @@
 
-package Cliente;
+package Servidor;
 
 import java.awt.Color;
 import java.io.File;
@@ -7,14 +7,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 /**
  *
  * @author yoshi
  */
-public class JfCliente extends javax.swing.JFrame {
+public class jServidor extends javax.swing.JFrame implements Observer{
     
     public static String[][] datos;
     public static int puntero;
@@ -42,13 +46,22 @@ public class JfCliente extends javax.swing.JFrame {
     ImageIcon icoOk = new ImageIcon("src/Imagenes/IconOk.png");
     
     
-    public JfCliente() {
+    public jServidor() {
         initComponents();
+        
         setLocationRelativeTo(null);
         txtArea.setEditable(false);
         panelEstado.setVisible(false);
         txtError.setVisible(false);
         salir.setVisible(false);
+    }
+    
+    void initMetodos(){
+        this.getRootPane().setDefaultButton(this.btnEnviar);
+        Servidor s = new Servidor(5050);
+        s.addObserver(this);
+        Thread t = new Thread (s);
+        t.start();
     }
     
     private void crearTabla(){
@@ -150,7 +163,7 @@ public class JfCliente extends javax.swing.JFrame {
         String archivoBackup = "";
         File archiBackupFile = null;
         
-        JfCliente obj = new JfCliente();
+        jServidor obj = new jServidor();
         
         if(nombreT.equalsIgnoreCase("alumno2")){
             cantAtri = 2;
@@ -334,7 +347,55 @@ public class JfCliente extends javax.swing.JFrame {
         txtArea.setText("");
     }
     
+    void enviar(){
+        // TODO add your handling code here:
+        String mensaje = "Servidor: " + this.txtMensaje.getText() + "\n";
+        this.txtArea.setText(mensaje);
+        this.txtMensaje.setText("");
+        
+        Cliente c1 = new Cliente("192.168.1.78",5050,mensaje);
+        Thread t1 = new Thread(c1); 
+        t1.start();
+    }
     
+    void btnEnv(){
+        if(txtMensaje.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Campos de texto vacíos...", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+            txtMensaje.requestFocus();
+        }else{
+            txtConsulta = txtMensaje.getText();
+            System.out.println("\n"+tipoConsulta());
+            if(tipoConsulta().equalsIgnoreCase("CREATE")){
+                crearTabla();
+            }else if(tipoConsulta().equalsIgnoreCase("SELECT")){
+                File crearArchi = new File(crearUbicacion+"alumno2.txt");
+                if(!crearArchi.exists()){
+                    panelEstado.setVisible(true);
+                    txtError.setVisible(true);
+                    salir.setVisible(true);
+                    panelEstado.setBackground(new Color(228, 65, 65));
+                    txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+//                    JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+                    txtMensaje.requestFocus();
+                }else{
+                    view2();
+                    cargarDatos("alumno2");
+                }
+            }else if(tipoConsulta().equalsIgnoreCase("UPDATE")){
+                
+            }else if(tipoConsulta().equalsIgnoreCase("DELETE")){
+                
+            }else{
+                panelEstado.setVisible(true);
+                txtError.setVisible(true);
+                salir.setVisible(true);
+                panelEstado.setBackground(new Color(228, 65, 65));
+                txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+//                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+                txtMensaje.requestFocus();
+            }
+        }
+    }    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -354,23 +415,22 @@ public class JfCliente extends javax.swing.JFrame {
         btnEnviar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(689, 482));
         setMinimumSize(new java.awt.Dimension(689, 482));
 
         jPanel3.setBackground(new java.awt.Color(8, 32, 50));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("CLIENTE");
+        jLabel1.setText("SERVIDOR");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(305, 305, 305)
+                .addGap(298, 298, 298)
                 .addComponent(jLabel1)
-                .addContainerGap(310, Short.MAX_VALUE))
+                .addContainerGap(298, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -416,7 +476,7 @@ public class JfCliente extends javax.swing.JFrame {
             .addGroup(panelEstadoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(salir)
                 .addContainerGap())
         );
@@ -433,17 +493,15 @@ public class JfCliente extends javax.swing.JFrame {
         PanelPrincipal.setLayout(PanelPrincipalLayout);
         PanelPrincipalLayout.setHorizontalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelEstado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         PanelPrincipalLayout.setVerticalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
-                .addGap(0, 293, Short.MAX_VALUE)
+            .addGroup(PanelPrincipalLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, Short.MAX_VALUE))
         );
 
         panelEnvio.setBackground(new java.awt.Color(255, 255, 255));
@@ -452,12 +510,10 @@ public class JfCliente extends javax.swing.JFrame {
         panelEnvio.setPreferredSize(new java.awt.Dimension(689, 100));
 
         txtMensaje.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
-        txtMensaje.setMinimumSize(new java.awt.Dimension(6, 26));
-        txtMensaje.setPreferredSize(new java.awt.Dimension(6, 26));
 
         btnEnviar.setBackground(new java.awt.Color(51, 71, 86));
         btnEnviar.setFont(new java.awt.Font("SF UI Display", 1, 16)); // NOI18N
-        btnEnviar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnviar.setForeground(new java.awt.Color(8, 32, 50));
         btnEnviar.setText("Enviar");
         btnEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -479,11 +535,11 @@ public class JfCliente extends javax.swing.JFrame {
         panelEnvioLayout.setVerticalGroup(
             panelEnvioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEnvioLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(5, 5, 5)
                 .addGroup(panelEnvioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -499,8 +555,9 @@ public class JfCliente extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(panelEnvio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         getContentPane().add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -510,43 +567,7 @@ public class JfCliente extends javax.swing.JFrame {
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         
-        if(txtMensaje.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Campos de texto vacíos...", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-            txtMensaje.requestFocus();
-        }else{
-            txtConsulta = txtMensaje.getText();
-            System.out.println("\n"+tipoConsulta());
-            if(tipoConsulta().equalsIgnoreCase("CREATE")){
-                crearTabla();
-            }else if(tipoConsulta().equalsIgnoreCase("SELECT")){
-                File crearArchi = new File(crearUbicacion+"alumno2.txt");
-                if(!crearArchi.exists()){
-                    panelEstado.setVisible(true);
-                    txtError.setVisible(true);
-                    salir.setVisible(true);
-                    panelEstado.setBackground(new Color(228, 65, 65));
-                    txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-//                    JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-                    txtMensaje.requestFocus();
-                }else{
-                    view2();
-                    cargarDatos("alumno2");
-                }
-            }else if(tipoConsulta().equalsIgnoreCase("UPDATE")){
-                
-            }else if(tipoConsulta().equalsIgnoreCase("DELETE")){
-                
-            }else{
-                panelEstado.setVisible(true);
-                txtError.setVisible(true);
-                salir.setVisible(true);
-                panelEstado.setBackground(new Color(228, 65, 65));
-                txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-//                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-                txtMensaje.requestFocus();
-            }
-        }
-        
+        enviar();
         
     }//GEN-LAST:event_btnEnviarActionPerformed
 
@@ -558,9 +579,19 @@ public class JfCliente extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         
+        try {
+            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.translucencySmallShadow;
+            BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
+            UIManager.put("RootPane.setupButtonVisible", false);
+            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JfCliente().setVisible(true);
+                new jServidor().setVisible(true);
             }
         });
     }
@@ -579,4 +610,9 @@ public class JfCliente extends javax.swing.JFrame {
     private javax.swing.JLabel txtError;
     private javax.swing.JTextField txtMensaje;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+        this.txtArea.append((String) arg);
+    }
 }
