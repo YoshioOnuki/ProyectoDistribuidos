@@ -83,9 +83,9 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 c += 2;
                 contenido += datos[0][i];
                 if(i != cantidadAtributos-1){
-                    contenido += "\t|\t";
+                    contenido += "|";
                 }else{
-                    contenido += "\t|\n";
+                    contenido += "\n";
                 }
             }
             for (int i = 0; i < cantidadAtributos; i++) {
