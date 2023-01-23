@@ -357,10 +357,12 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     }
     
     void btnEnv(){
-        if(txtArea.getText().isEmpty()){
+        txtConsulta = txtArea.getText();
+        System.out.println(txtConsulta);
+        if(txtConsulta.isEmpty()){
             
         }else{
-            txtConsulta = txtArea.getText();
+            
             System.out.println("\n"+tipoConsulta());
             if(tipoConsulta().equalsIgnoreCase("CREATE")){
                 crearTabla();

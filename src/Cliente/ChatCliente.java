@@ -31,7 +31,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
     }
     
     void enviar(){
-        String mensaje = "Cliente: " + this.txtMensaje.getText() + "\n";
+        String mensaje = "" + this.txtMensaje.getText() + "\n";
         //this.txtArea.setText(mensaje);
         this.txtArea.setText(mensaje);
         this.txtMensaje.setText("");
