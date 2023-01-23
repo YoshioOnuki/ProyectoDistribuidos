@@ -361,6 +361,8 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             mensaje = leerDatos(crearArchi);
             enviar(mensaje);
             txtArea.setText(mensaje);
+            panelEstado.setBackground(new Color(76, 175, 80));
+            txtError.setText("Correcto:  Tabla visualizada correctamente...");
         }
                 
                 
@@ -424,18 +426,10 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        txtArea.setEditable(false);
         txtArea.setColumns(20);
-        txtArea.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
+        txtArea.setFont(new java.awt.Font("SF UI Display", 0, 15)); // NOI18N
         txtArea.setRows(5);
-        txtArea.setPreferredSize(new java.awt.Dimension(264, 110));
-        txtArea.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtAreaKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtAreaKeyTyped(evt);
-            }
-        });
         jScrollPane1.setViewportView(txtArea);
 
         panelEstado.setBackground(new java.awt.Color(255, 255, 255));
@@ -496,16 +490,16 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
             .addComponent(panelEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -517,14 +511,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         panelEstado.setBackground(new Color(255,255,255));
         txtError.setText("");
     }//GEN-LAST:event_salirMouseClicked
-
-    private void txtAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaKeyTyped
-        
-    }//GEN-LAST:event_txtAreaKeyTyped
-
-    private void txtAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaKeyReleased
-        
-    }//GEN-LAST:event_txtAreaKeyReleased
 
     /**
      * @param args the command line arguments
