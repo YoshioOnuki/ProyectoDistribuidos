@@ -53,6 +53,8 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         initMetodos();
         setLocationRelativeTo(null);
         txtArea.setEditable(false);
+        txtMensaje.setEditable(false);
+        btnEnviar.setEnabled(false);
         btnEnv();
     }
     
