@@ -1,6 +1,7 @@
 
-package Servidor;
+package asd;
 
+import Servidor.*;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
