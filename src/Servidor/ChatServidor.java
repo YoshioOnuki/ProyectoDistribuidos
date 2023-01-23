@@ -548,7 +548,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-        btnEnv();
+//        btnEnv();
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirMouseClicked
@@ -567,11 +567,11 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_txtMensajeKeyReleased
 
     private void txtAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaKeyTyped
-//        btnEnv();
+        
     }//GEN-LAST:event_txtAreaKeyTyped
 
     private void txtAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaKeyReleased
-        btnEnv();
+        
     }//GEN-LAST:event_txtAreaKeyReleased
 
     /**
@@ -610,5 +610,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         this.txtArea.setText((String) arg);
+        btnEnv();
     }
 }

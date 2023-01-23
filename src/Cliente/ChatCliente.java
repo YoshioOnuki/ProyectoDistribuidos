@@ -255,5 +255,6 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         this.txtArea.setText((String) arg);
+        error();
     }
 }
