@@ -1,2 +1,0 @@
-id int	|	nombreCompleto varchar(255)	|	edad int	|
-01	|	Aurelio Yoshio Onuki Navas		|	22	|
