@@ -1,6 +1,7 @@
 package Cliente;
 
 import Servidor.*;
+import static Servidor.ChatServidor.nombreTabla;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.Observable;
@@ -269,7 +270,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         this.txtArea.setText((String) arg);
-        this.tabla.setText((String) arg);
+        this.tabla.setText(nombreTabla);
         error();
     }
 }
