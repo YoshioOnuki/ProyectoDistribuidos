@@ -335,9 +335,9 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             System.out.println(consul);
         }else{
             for (int i = posi; i < txtConsulta.length(); i++) {
-                if(txtConsulta.charAt(i) != espacio.charAt(0)){
+                if(txtConsulta.charAt(i) != puntoComa.charAt(0)){
                     nombre += txtConsulta.charAt(i);
-                }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
+                }else if(txtConsulta.charAt(i) == puntoComa.charAt(0)){
                     System.out.println(nombre);
                     r = nombre;
                     nombre = "";
