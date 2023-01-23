@@ -77,6 +77,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         datos = new String[puntero][cantidadAtributos];
         
         if(da[0] == null){
+            enviar("Correcto...");
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
@@ -112,6 +113,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 
             try {
                 if(crearArchi.exists()){
+                    enviar("Correcto...");
                     panelEstado.setBackground(new Color(228, 65, 65));
                     txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
     //                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
@@ -131,9 +133,9 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 
                     int respuesta3 = escribir(crearArchi, contenido);
 
-                    panelEstado.setBackground(new Color(76, 175, 80));
-                    txtError.setText("Correcto:  Tabla creada correctamente en la base de datos TXT...");
                     enviar("Correcto...");
+                    panelEstado.setBackground(new Color(76, 175, 80));
+                    txtError.setText("Correcto:  Tabla '"+ nombreTabla +"' creada correctamente en la base de datos TXT...");
     //                JOptionPane.showMessageDialog(null, "Directorios creados correctamente.", "¡Correcto!",JOptionPane.WARNING_MESSAGE, icoOk);
                 }
 
@@ -359,10 +361,9 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 File crearArchi = new File(crearUbicacion+"alumno2.txt");
                 if(!crearArchi.exists()){
                     enviar("Error...");
-//                    panelEstado.setBackground(new Color(228, 65, 65));
-//                    txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+                    panelEstado.setBackground(new Color(228, 65, 65));
+                    txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
 //                    JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-//                    txtMensaje.requestFocus();
                 }else{
                     view2();
                     cargarDatos("alumno2");
@@ -373,10 +374,9 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 
             }else{
                 enviar("Error...");
-//                panelEstado.setBackground(new Color(228, 65, 65));
-//                txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+                panelEstado.setBackground(new Color(228, 65, 65));
+                txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
 //                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-//                txtMensaje.requestFocus();
             }
         }
     }    
