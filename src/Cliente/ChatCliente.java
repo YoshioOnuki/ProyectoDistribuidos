@@ -2,6 +2,7 @@ package Cliente;
 
 import Servidor.*;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.UIManager;
@@ -18,6 +19,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         s.addObserver(this);
         Thread t = new Thread (s);
         t.start();
+        error();
     }
     
     void error(){
@@ -59,6 +61,11 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         txtArea.setColumns(20);
         txtArea.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
         txtArea.setRows(5);
+        txtArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAreaKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtArea);
 
         panelEstado.setBackground(new java.awt.Color(255, 255, 255));
@@ -121,6 +128,11 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         txtMensaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMensajeActionPerformed(evt);
+            }
+        });
+        txtMensaje.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMensajeKeyReleased(evt);
             }
         });
 
@@ -197,6 +209,16 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         enviar();
     }//GEN-LAST:event_btnEnviarActionPerformed
 
+    private void txtMensajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMensajeKeyReleased
+         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            enviar();
+        }
+    }//GEN-LAST:event_txtMensajeKeyReleased
+
+    private void txtAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaKeyTyped
+        error();
+    }//GEN-LAST:event_txtAreaKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -232,6 +254,6 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        this.txtArea.append((String) arg);
+        this.txtArea.setText((String) arg);
     }
 }

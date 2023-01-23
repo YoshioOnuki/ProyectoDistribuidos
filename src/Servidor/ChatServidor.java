@@ -559,7 +559,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 
     private void txtMensajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMensajeKeyReleased
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            
+//            btnEnv();
         }
     }//GEN-LAST:event_txtMensajeKeyReleased
 
@@ -602,6 +602,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        this.txtArea.append((String) arg);
+        this.txtArea.setText((String) arg);
     }
 }
