@@ -41,9 +41,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     
     FileOutputStream fos;
     
-    ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
-    ImageIcon icoOk = new ImageIcon("src/Imagenes/IconOk.png");
-    
     String mensajeError = "";
     
     
@@ -430,6 +427,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         txtArea.setColumns(20);
         txtArea.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
         txtArea.setRows(5);
+        txtArea.setPreferredSize(new java.awt.Dimension(264, 110));
         txtArea.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtAreaKeyReleased(evt);
@@ -460,8 +458,8 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             panelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEstadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(salir)
                 .addContainerGap())
         );
@@ -485,7 +483,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(298, 298, 298)
+                .addGap(451, 451, 451)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -506,11 +504,10 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();

@@ -6,10 +6,14 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 public class ChatCliente extends javax.swing.JFrame implements Observer{
+    
+    ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
 
     public ChatCliente() {
 
@@ -37,17 +41,22 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         }else if(m.equalsIgnoreCase("Eliminado...")){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla fue Eliminada correctamente en la base de datos TXT...");
-        }else{
+        }else if(!m.isEmpty()){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla visualizada correctamente...");
         }
     }
     
     void enviar(){
+        if(txtMensaje.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Campo de texto vacío.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+            txtMensaje.requestFocus();
+        }
         String mensaje = "" + this.txtMensaje.getText() + "\n";
         //this.txtArea.setText(mensaje);
         this.txtArea.setText(mensaje);
         this.txtMensaje.setText("");
+        txtMensaje.requestFocus();
         
         Cliente c = new Cliente("192.168.1.47",5050,mensaje);
         Thread t = new Thread(c); 
@@ -102,8 +111,8 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
             panelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEstadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(salir)
                 .addContainerGap())
         );
@@ -127,7 +136,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(302, 302, 302)
+                .addGap(461, 461, 461)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -164,14 +173,14 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(911, Short.MAX_VALUE)
                 .addComponent(btnEnviar)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(99, Short.MAX_VALUE)))
+                    .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(100, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,10 +209,10 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
