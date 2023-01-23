@@ -409,6 +409,9 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         txtArea.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
         txtArea.setRows(5);
         txtArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAreaKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtAreaKeyTyped(evt);
             }
@@ -564,8 +567,12 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_txtMensajeKeyReleased
 
     private void txtAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaKeyTyped
-        btnEnv();
+//        btnEnv();
     }//GEN-LAST:event_txtAreaKeyTyped
+
+    private void txtAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaKeyReleased
+        btnEnv();
+    }//GEN-LAST:event_txtAreaKeyReleased
 
     /**
      * @param args the command line arguments
