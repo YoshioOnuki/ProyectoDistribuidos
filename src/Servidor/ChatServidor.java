@@ -541,6 +541,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         this.txtArea.setText((String) arg);
+        this.tabla.setText((String) arg);
         btnEnv();
     }
 }

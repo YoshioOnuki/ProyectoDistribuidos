@@ -29,7 +29,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
             this.txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else if(m.equalsIgnoreCase("Correcto...")){
             panelEstado.setBackground(new Color(76, 175, 80));
-            txtError.setText("Correcto:  Tabla "+tabla+" creada correctamente en la base de datos TXT...");
+            txtError.setText("Correcto:  Tabla "+tabla.getText()+" creada correctamente en la base de datos TXT...");
         }
     }
     
@@ -269,6 +269,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         this.txtArea.setText((String) arg);
+        this.tabla.setText((String) arg);
         error();
     }
 }
