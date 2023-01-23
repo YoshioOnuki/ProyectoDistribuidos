@@ -77,7 +77,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         datos = new String[puntero][cantidadAtributos];
         
         if(da[0] == null){
-            enviar("Correcto...");
+            enviar("Error...");
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
@@ -113,7 +113,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 
             try {
                 if(crearArchi.exists()){
-                    enviar("Correcto...");
+                    enviar("Error...");
                     panelEstado.setBackground(new Color(228, 65, 65));
                     txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
     //                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
