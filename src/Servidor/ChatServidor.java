@@ -502,6 +502,9 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             System.out.println("");
             System.out.println(cantAtri);
             System.out.println(puntero);
+            txtArea.setText("Correcto...");
+            panelEstado.setBackground(new Color(76, 175, 80));
+            txtError.setText("Correcto:  Tabla visualizada correctamente...");
         }
     }
     
@@ -587,7 +590,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             }else if(tipoConsulta().equalsIgnoreCase("SELECT")){
                 select();
             }else if(tipoConsulta().equalsIgnoreCase("UPDATE")){
-                update();
+                update2();
             }else if(tipoConsulta().equalsIgnoreCase("DELETE")){
                 
             }else if(tipoConsulta().equalsIgnoreCase("INSERT")){
