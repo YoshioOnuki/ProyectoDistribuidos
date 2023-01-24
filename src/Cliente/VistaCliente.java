@@ -16,7 +16,7 @@ import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 public class VistaCliente extends javax.swing.JFrame implements Observer{
     
     ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
-    public static String consulta = "";
+    public static String men = "";
 
     public VistaCliente() {
 
@@ -37,7 +37,6 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
             JOptionPane.showMessageDialog(null, "Campo de texto vacío.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
             txtMensaje.requestFocus();
         }
-        consulta = txtMensaje.getText();
         String mensaje = "" + this.txtMensaje.getText() + "\n";
         //this.txtArea.setText(mensaje);
         this.txtArea.setText(mensaje);
@@ -61,9 +60,13 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
     }
     
     void error(){
+        
         String str = "";
-        for (int i = 0; i < 34; i++) {
-            str += consulta.charAt(i);
+        
+        if(men.length() > 0){
+            for (int i = 0; i < 34; i++) {
+                str += men.charAt(i);
+            }
         }
         
         String m = txtArea.getText();
@@ -80,7 +83,6 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla fue Eliminada correctamente en la base de datos TXT...");
         }else if(str.equalsIgnoreCase("Tabla actualizada correctamente...")){
-//            Tabla actualizada correctamente...
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla actualizada correctamente...");
         }else if(!m.isEmpty()){
@@ -320,6 +322,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
                 proceso(120);
                 lblLoading.setVisible(false);
                 txtArea.setText((String) arg);
+                men = arg.toString();
                 error();
             }
         }.start();
