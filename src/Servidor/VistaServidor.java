@@ -521,10 +521,13 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 for (int i = 0; i < cantAtriIngre; i++) {
                     if(i%2!=0){
                         datIngre[contadorIngre] = d[i];
-                        datoUpd[contadorIngre] = d[i+1];
-                        System.out.println(d[i]);
-                        System.out.println(d[i+1]);
+                        System.out.println(datIngre[contadorIngre]);
                         contadorIngre++;
+                    }if(i != 0){
+                        if(i%2==0){
+                            datoUpd[contadorIngre] = d[i+1];
+                            System.out.println(datoUpd[contadorIngre]);
+                        }
                     }
                 }
                 String at = "";
@@ -580,7 +583,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 txtArea.setText("Correcto...");
                 enviar("Correcto...");
                 panelEstado.setBackground(new Color(76, 175, 80));
-                txtError.setText("Correcto:  Tabla visualizada correctamente...");
+                txtError.setText("Correcto:  Tabla actualizada correctamente...");
                 
             } catch (IOException ex) {
                 Logger.getLogger(VistaServidor.class.getName()).log(Level.SEVERE, null, ex);
