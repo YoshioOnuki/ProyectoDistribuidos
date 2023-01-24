@@ -283,6 +283,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             cont++;
                             pAtri++;
                             nombre = "";
+                            break;
                         }else{
                             System.out.println(nombre);
                             r[cont] = nombre;
@@ -295,6 +296,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         
                     }
                 }
+                nombre = "";
             }
             
         }
