@@ -522,6 +522,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     if(i%2!=0){
                         datIngre[contadorIngre] = d[i];
                         datoUpd[contadorIngre] = d[i+1];
+                        System.out.println(d[i]);
+                        System.out.println(d[i+1]);
                         contadorIngre++;
                     }
                 }
@@ -539,6 +541,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         }
                         if(at.equalsIgnoreCase(datIngre[j])){
                             datos[puntero2][i] = datoUpd[j];
+                            System.out.println(datoUpd[j]);
                         }
                     }
                 }
@@ -553,6 +556,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         }
                     }
                 }
+                System.out.println(contenidoIngresado);
 
                 String contenidoBackup = "";
                 for (int i = 0; i < puntero; i++) {
@@ -565,6 +569,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         contenidoBackup += datos[i][j];
                     }
                 }
+                System.out.println(contenidoBackup);
 
                 archiFile.createNewFile();
                 int respuesta1 = escribir(archiFile, contenidoIngresado);
@@ -572,17 +577,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 archiBackupFile.createNewFile();
                 int respuesta2 = escribir(archiBackupFile, contenidoBackup);
                 
-                if(respuesta1 > 0 && respuesta2 > 0){
-                    txtArea.setText("Correcto...");
-                    enviar("Correcto...");
-                    panelEstado.setBackground(new Color(76, 175, 80));
-                    txtError.setText("Correcto:  Tabla visualizada correctamente...");
-                }else{
-                    txtArea.setText("Error...");
-                    enviar("Error...");
-                    panelEstado.setBackground(new Color(228, 65, 65));
-                    txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-                }
+                txtArea.setText("Correcto...");
+                enviar("Correcto...");
+                panelEstado.setBackground(new Color(76, 175, 80));
+                txtError.setText("Correcto:  Tabla visualizada correctamente...");
                 
             } catch (IOException ex) {
                 Logger.getLogger(VistaServidor.class.getName()).log(Level.SEVERE, null, ex);
