@@ -305,7 +305,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         new Thread(){
             public void run(){
                 txtArea.setText("");
-                proceso(10);
+                proceso(120);
                 lblLoading.setVisible(false);
                 txtArea.setText((String) arg);
                 error();

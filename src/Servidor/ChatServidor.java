@@ -700,7 +700,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
 
     public void proceso(){
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException ex) {
             System.out.println("Error en pantalla de carga..."+ex);
         }
