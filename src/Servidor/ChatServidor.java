@@ -495,6 +495,11 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         txtArea.setText("");
     }
     
+    void limpiarError(){
+        panelEstado.setBackground(new Color(255,255,255));
+        txtError.setText("");
+    }
+    
     void btnEnv(){
         txtConsulta = txtArea.getText();
 //        System.out.println(txtConsulta);
@@ -705,6 +710,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     public void update(Observable o, Object arg) {
         new Thread(){
             public void run(){
+                limpiarError();
                 txtArea.setText("");
                 lblLoading.setVisible(true);
                 proceso();

@@ -40,6 +40,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         this.txtArea.setText(mensaje);
         this.txtMensaje.setText("");
         txtMensaje.requestFocus();
+        limpiarError();
         
         Cliente c = new Cliente("192.168.1.79",5050,mensaje);
         Thread t = new Thread(c); 
@@ -66,6 +67,10 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         }
     }
     
+    void limpiarError(){
+        panelEstado.setBackground(new Color(255,255,255));
+        txtError.setText("");
+    }
     
     
 
@@ -222,8 +227,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirMouseClicked
-        panelEstado.setBackground(new Color(255,255,255));
-        txtError.setText("");
+        limpiarError();
     }//GEN-LAST:event_salirMouseClicked
 
     private void txtMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMensajeActionPerformed
