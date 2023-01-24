@@ -531,6 +531,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     }
                 }
                 String at = "";
+                int n = 0;
                 for (int j = 0; j < cantAtriIngre; j++) {
                     for (int i = 0; i < cantAtri; i++) {
                         
@@ -544,8 +545,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             }
                         }
                         if(at.equalsIgnoreCase(datIngre[j])){
-                            datos[puntero2][i] = datoUpd[j];
-                            System.out.println(datoUpd[j]);
+                            datos[puntero2][i] = datoUpd[n];
+                            System.out.println(datoUpd[n]);
+                            n++;
                         }
                     }
                 }
