@@ -546,15 +546,16 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             if(dat.charAt(y) != espacio.charAt(0)){
                                 at += dat.charAt(y);
                             }else if(dat.charAt(y) == espacio.charAt(0)){
-                                break;
+                                if(at.equalsIgnoreCase(datIngre[j])){
+                                    datos[puntero2][i] = datoUpd[n];
+                                    System.out.println(datoUpd[n]);
+                                    n++;
+                                    at = "";
+                                    break;
+                                }
                             }
                         }
-                        if(at.equalsIgnoreCase(datIngre[j])){
-                            datos[puntero2][i] = datoUpd[n];
-                            System.out.println(datoUpd[n]);
-                            n++;
-                        }
-                        at = "";
+                        
                     }
                 }
                 String contenidoIngresado = "";
