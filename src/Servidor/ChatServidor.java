@@ -523,6 +523,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblLoading = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtArea = new javax.swing.JTextArea();
         panelEstado = new javax.swing.JPanel();
@@ -534,12 +535,22 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         txtMensaje = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblLoading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLoading.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/loading2.gif"))); // NOI18N
+        lblLoading.setMaximumSize(new java.awt.Dimension(200, 200));
+        lblLoading.setMinimumSize(new java.awt.Dimension(200, 200));
+        lblLoading.setPreferredSize(new java.awt.Dimension(200, 200));
+        getContentPane().add(lblLoading, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, -1, -1));
 
         txtArea.setEditable(false);
         txtArea.setColumns(20);
         txtArea.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
         txtArea.setRows(5);
         jScrollPane1.setViewportView(txtArea);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 39, 1000, 433));
 
         panelEstado.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -575,6 +586,8 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 .addContainerGap())
         );
 
+        getContentPane().add(panelEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 472, -1, -1));
+
         jPanel3.setBackground(new java.awt.Color(8, 32, 50));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -594,6 +607,8 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -626,26 +641,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 522, 1000, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -688,17 +684,35 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblLoading;
     private javax.swing.JPanel panelEstado;
     private javax.swing.JLabel salir;
-    private javax.swing.JTextArea txtArea;
+    public static javax.swing.JTextArea txtArea;
     private javax.swing.JLabel txtError;
     private javax.swing.JTextField txtMensaje;
     // End of variables declaration//GEN-END:variables
 
+    public void proceso(){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            System.out.println("Error en pantalla de carga..."+ex);
+        }
+    }
+    
     @Override
     public void update(Observable o, Object arg) {
-        this.txtArea.setText((String) arg);
-        txtMensaje.setText((String) arg);
-        btnEnv();
+        new Thread(){
+            public void run(){
+                lblLoading.setVisible(true);
+                proceso();
+                lblLoading.setVisible(false);
+                ChatServidor.txtArea.setText((String) arg);
+                txtMensaje.setText((String) arg);
+                btnEnv();
+            }
+        }.start();
+        
+        
     }
 }
