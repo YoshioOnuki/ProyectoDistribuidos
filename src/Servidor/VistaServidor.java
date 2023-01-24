@@ -68,7 +68,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 //        this.txtError.setText(mensajeError);
         
         
-        Cliente c1 = new Cliente("192.168.1.79",5050,mensa);
+        Cliente c1 = new Cliente("192.168.1.49",5050,mensa);
         Thread t1 = new Thread(c1); 
         t1.start();
     }
@@ -354,7 +354,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         cantAtri++;
         System.out.println(cantAtri);
         
-        String[] r = new String[(cantAtri*2)+3];
+        String[] r = new String[(cantAtri*2)+4];
         
         if(!consul.equalsIgnoreCase(consulta)){
 //            JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
@@ -486,10 +486,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     //            System.out.println(dat.length());
                     for (int i = posi; i < dat.length(); i++) {
                         //                System.out.println(coma);
-                        if(dat.charAt(posi) != coma.charAt(0)){
+                        if(dat.charAt(i) != coma.charAt(0)){
                             atri += dat.charAt(i);
                             posi++;
-                        }else if(dat.charAt(posi) == coma.charAt(0)){
+                        }else if(dat.charAt(i) == coma.charAt(0)){
                             posi++;
                             break;
                         }
@@ -509,10 +509,12 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 
                 int tamanio = d.length;
                 
-                int puntero2 = Integer.parseInt(d[tamanio-1]);
+                int puntero2 = Integer.parseInt(d[tamanio-2]);
                 System.out.println(puntero2);
                 
-                int cantAtriIngre = Integer.parseInt(d[tamanio]);
+                int cantAtriIngre = Integer.parseInt(d[tamanio-1]);
+                System.out.println(cantAtriIngre);
+                
                 String[] datIngre = new String[cantAtriIngre];
                 String[] datoUpd = new String[cantAtriIngre];
                 int contadorIngre = 0;
@@ -529,9 +531,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         int c = datos[0][i].length();
                         
                         for (int y = 0; y < c; y++) {
-                            if(dat.charAt(posi) != espacio.charAt(0)){
+                            if(dat.charAt(y) != coma.charAt(0)){
                                 at += dat.charAt(y);
-                            }else if(dat.charAt(posi) == espacio.charAt(0)){
+                            }else if(dat.charAt(y) == coma.charAt(0)){
                                 break;
                             }
                         }
