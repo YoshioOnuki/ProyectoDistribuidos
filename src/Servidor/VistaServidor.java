@@ -591,9 +591,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 archiBackupFile.createNewFile();
                 int respuesta2 = escribir(archiBackupFile, contenidoBackup);
                 
-                txtArea.setText("Tabla actualizada correctamente...\n");
+                txtArea.setText("Tabla actualizada correctamente...\n \n");
                 txtArea.append(contenidoIngresado);
-                enviar("Tabla actualizada correctamente...\n"+contenidoIngresado);
+                enviar("Tabla actualizada correctamente...\n \n"+contenidoIngresado);
                 panelEstado.setBackground(new Color(76, 175, 80));
                 txtError.setText("Correcto:  Tabla actualizada correctamente...");
                 

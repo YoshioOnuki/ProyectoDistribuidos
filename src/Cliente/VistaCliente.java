@@ -64,8 +64,12 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         String str = "";
         
         if(men.length() > 0){
-            for (int i = 0; i < 34; i++) {
-                str += men.charAt(i);
+            if(men.length() < 34){
+                
+            }else{
+                for (int i = 0; i < 34; i++) {
+                    str += men.charAt(i);
+                }
             }
         }
         
