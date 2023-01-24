@@ -284,7 +284,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             cont++;
                             pAtri++;
                             nombre = "";
-                            break;
+//                            break;
                         }else if(pAtri%2==0){
                             System.out.println(nombre);
                             r[cont] = nombre;
