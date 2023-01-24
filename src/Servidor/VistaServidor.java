@@ -518,6 +518,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String[] datIngre = new String[cantAtriIngre];
                 String[] datoUpd = new String[cantAtriIngre];
                 int contadorIngre = 0;
+                int contadorUpd = 0;
                 
                 for (int i = 0; i < tamanio; i++) {
                     if(i%2!=0){
@@ -526,8 +527,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         contadorIngre++;
                     }if(i != 0){
                         if(i%2==0){
-                            datoUpd[contadorIngre] = d[i];
-                            System.out.println(datoUpd[contadorIngre]);
+                            datoUpd[contadorUpd] = d[i];
+                            System.out.println(datoUpd[contadorUpd]);
+                            contadorUpd++;
                         }
                     }
                 }
