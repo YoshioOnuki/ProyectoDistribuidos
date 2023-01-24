@@ -30,6 +30,22 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         lblLoading.setVisible(false);
     }
     
+    void enviar(){
+        if(txtMensaje.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Campo de texto vacío.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+            txtMensaje.requestFocus();
+        }
+        String mensaje = "" + this.txtMensaje.getText() + "\n";
+        //this.txtArea.setText(mensaje);
+        this.txtArea.setText(mensaje);
+        this.txtMensaje.setText("");
+        txtMensaje.requestFocus();
+        
+        Cliente c = new Cliente("192.168.1.79",5050,mensaje);
+        Thread t = new Thread(c); 
+        t.start();
+    }
+    
     void error(){
         String m = txtArea.getText();
         if(m.equalsIgnoreCase("Error...")){
@@ -50,21 +66,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         }
     }
     
-    void enviar(){
-        if(txtMensaje.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Campo de texto vacío.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-            txtMensaje.requestFocus();
-        }
-        String mensaje = "" + this.txtMensaje.getText() + "\n";
-        //this.txtArea.setText(mensaje);
-        this.txtArea.setText(mensaje);
-        this.txtMensaje.setText("");
-        txtMensaje.requestFocus();
-        
-        Cliente c = new Cliente("192.168.0.127",5050,mensaje);
-        Thread t = new Thread(c); 
-        t.start();
-    }
+    
     
 
     @SuppressWarnings("unchecked")
@@ -271,16 +273,32 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
     private javax.swing.JLabel lblLoading;
     private javax.swing.JPanel panelEstado;
     private javax.swing.JLabel salir;
-    private javax.swing.JTextArea txtArea;
+    public static javax.swing.JTextArea txtArea;
     private javax.swing.JLabel txtError;
     private javax.swing.JTextField txtMensaje;
     // End of variables declaration//GEN-END:variables
 
+    public void proceso(){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            System.out.println("Error en pantalla de carga..."+ex);
+        }
+    }
+    
     @Override
     public void update(Observable o, Object arg) {
-        new Proceso(lblLoading).start();
-        this.txtArea.setText((String) arg);
-        error();
+        new Thread(){
+            public void run(){
+                lblLoading.setVisible(true);
+                proceso();
+                lblLoading.setVisible(false);
+                ChatCliente.txtArea.setText((String) arg);
+                error();
+            }
+        }.start();
+//        new Proceso(lblLoading).start();
+        
         
     }
 }

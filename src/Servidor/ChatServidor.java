@@ -55,6 +55,21 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         btnEnv();
     }
     
+    void enviar(String mensa){
+        // TODO add your handling code here:
+//        String mensaje = "" + this.txtMensaje.getText() + "\n";
+//        this.txtArea.setText(mensaje);
+        this.txtArea.setText(mensa);
+        
+//        panelEstado.setBackground(new Color(228, 65, 65));
+//        this.txtError.setText(mensajeError);
+        
+        
+        Cliente c1 = new Cliente("192.168.1.79",5050,mensa);
+        Thread t1 = new Thread(c1); 
+        t1.start();
+    }
+    
     void initMetodos(){
         Servidor s = new Servidor(5050);
         s.addObserver(this);
@@ -477,21 +492,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     
     void limpiarTodo(){
         txtArea.setText("");
-    }
-    
-    void enviar(String mensa){
-        // TODO add your handling code here:
-//        String mensaje = "" + this.txtMensaje.getText() + "\n";
-//        this.txtArea.setText(mensaje);
-        this.txtArea.setText(mensa);
-        
-//        panelEstado.setBackground(new Color(228, 65, 65));
-//        this.txtError.setText(mensajeError);
-        
-        
-        Cliente c1 = new Cliente("192.168.0.127",5050,mensa);
-        Thread t1 = new Thread(c1); 
-        t1.start();
     }
     
     void btnEnv(){
