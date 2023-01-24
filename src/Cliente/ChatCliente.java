@@ -39,6 +39,16 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         //this.txtArea.setText(mensaje);
         this.txtArea.setText(mensaje);
         this.txtMensaje.setText("");
+        
+        new Thread(){
+            public void run(){
+                txtArea.setText("");
+                lblLoading.setVisible(true);
+                proceso(300);
+                error();
+            }
+        }.start();
+        
         txtMensaje.requestFocus();
         limpiarError();
         
@@ -282,9 +292,9 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
     private javax.swing.JTextField txtMensaje;
     // End of variables declaration//GEN-END:variables
 
-    public void proceso(){
+    public void proceso(int tiempo){
         try {
-            Thread.sleep(2000);
+            Thread.sleep(tiempo);
         } catch (InterruptedException ex) {
             System.out.println("Error en pantalla de carga..."+ex);
         }
@@ -295,8 +305,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         new Thread(){
             public void run(){
                 txtArea.setText("");
-                lblLoading.setVisible(true);
-                proceso();
+                proceso(500);
                 lblLoading.setVisible(false);
                 txtArea.setText((String) arg);
                 error();
