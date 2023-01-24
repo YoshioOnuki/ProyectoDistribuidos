@@ -554,6 +554,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             System.out.println(datoUpd[n]);
                             n++;
                         }
+                        at = "";
                     }
                 }
                 String contenidoIngresado = "";
