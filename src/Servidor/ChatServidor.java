@@ -47,7 +47,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     
     
     public ChatServidor() {
-        
         initComponents();
         initMetodos();
         setLocationRelativeTo(null);
@@ -125,6 +124,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                     txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
     //                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
                 }else{
+                    
                     crearUbi.mkdirs();
                     crearArchi.createNewFile();
 
@@ -134,6 +134,9 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                     crearUbiBackupPuntero.mkdirs();
                     crearArchiBackupPuntero.createNewFile();
 
+                    crearUbiBackupCantidad.mkdirs();
+                    crearArchiBackupCantidad.createNewFile();
+                    
                     int respuesta0 = escribir(crearArchiBackupCantidad, contenidoCantidad);
                     
                     int respuesta1 = escribir(crearArchiBackupPuntero, contenidopuntero);

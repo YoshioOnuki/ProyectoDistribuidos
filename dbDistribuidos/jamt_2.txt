@@ -1,0 +1,1 @@
+id int | nombre varchar(255) | edad int
