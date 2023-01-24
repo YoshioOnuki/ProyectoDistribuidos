@@ -543,6 +543,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         for (int m = 0; m < datos[0][i].length(); m++) {
                             if(datos[0][i].charAt(m) != espacio.charAt(0)){
                                 at += datos[0][i].charAt(m);
+                                System.out.println(at);
                             }else if(datos[0][i].charAt(m) == espacio.charAt(0)){
                                 if(datIngre[j].equalsIgnoreCase(at)){
                                     datos[puntero2][i] = datoUpd[n];
@@ -556,6 +557,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             }
                         }
                     }
+                    at = "";
                 }
                 String contenidoIngresado = "";
                 for (int i = 0; i < puntero; i++) {
