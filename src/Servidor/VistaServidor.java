@@ -557,7 +557,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String contenidoBackup = "";
                 for (int i = 0; i < puntero; i++) {
                     for (int j = 0; j < cantAtri; j++) {
-                        if(j != 0){
+                        if(j != 0 && i == 0){
                             contenidoBackup += ",";
                         }
                         contenidoBackup += datos[i][j];
