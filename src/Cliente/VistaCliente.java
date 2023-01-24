@@ -74,7 +74,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
             txtError.setText("Correcto:  Tabla fue Eliminada correctamente en la base de datos TXT...");
         }else if(!m.isEmpty()){
             panelEstado.setBackground(new Color(76, 175, 80));
-            txtError.setText("Correcto:  Tabla visualizada correctamente...");
+            txtError.setText("Correcto:  Tabla visualizada o actualizada correctamente...");
         }
     }
     
