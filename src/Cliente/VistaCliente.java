@@ -52,7 +52,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         txtMensaje.requestFocus();
         limpiarError();
         
-        Cliente c = new Cliente("192.168.1.49",5050,mensaje);
+        Cliente c = new Cliente("192.168.1.79",5050,mensaje);
         Thread t = new Thread(c); 
         t.start();
     }

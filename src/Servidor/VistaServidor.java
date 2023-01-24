@@ -68,7 +68,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 //        this.txtError.setText(mensajeError);
         
         
-        Cliente c1 = new Cliente("192.168.1.49",5050,mensa);
+        Cliente c1 = new Cliente("192.168.1.79",5050,mensa);
         Thread t1 = new Thread(c1); 
         t1.start();
     }
@@ -553,17 +553,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         }
                     }
                 }
-//                String can = "cantidad_atributo_"+nombreT+".txt";
-//                File archiCan = new File(crearUbicacionBackupCantAtri+can);
-//
-//                String punt = "puntero_"+nombreT+".txt";
-//                File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
-//
-//                String archi = nombreT+".txt";
-//                File archiFile = new File(crearUbicacion+archi);
-//
-//                String archivoBackup = "backup_"+nombreT+".txt";
-//                archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
 
                 String contenidoBackup = "";
                 for (int i = 0; i < puntero; i++) {
