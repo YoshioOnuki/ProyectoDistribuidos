@@ -525,7 +525,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         contadorIngre++;
                     }if(i != 0){
                         if(i%2==0){
-                            datoUpd[contadorIngre] = d[i+1];
+                            datoUpd[contadorIngre] = d[i];
                             System.out.println(datoUpd[contadorIngre]);
                         }
                     }
