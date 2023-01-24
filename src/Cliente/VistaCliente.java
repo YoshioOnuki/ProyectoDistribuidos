@@ -16,6 +16,7 @@ import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 public class VistaCliente extends javax.swing.JFrame implements Observer{
     
     ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
+    public static String consulta = "";
 
     public VistaCliente() {
 
@@ -36,6 +37,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
             JOptionPane.showMessageDialog(null, "Campo de texto vacío.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
             txtMensaje.requestFocus();
         }
+        consulta = txtMensaje.getText();
         String mensaje = "" + this.txtMensaje.getText() + "\n";
         //this.txtArea.setText(mensaje);
         this.txtArea.setText(mensaje);
@@ -59,6 +61,11 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
     }
     
     void error(){
+        String str = "";
+        for (int i = 0; i < 34; i++) {
+            str += consulta.charAt(i);
+        }
+        
         String m = txtArea.getText();
         if(m.equalsIgnoreCase("Error...")){
             panelEstado.setBackground(new Color(228, 65, 65));
@@ -72,9 +79,13 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         }else if(m.equalsIgnoreCase("Eliminado...")){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla fue Eliminada correctamente en la base de datos TXT...");
+        }else if(str.equalsIgnoreCase("Tabla actualizada correctamente...")){
+//            Tabla actualizada correctamente...
+            panelEstado.setBackground(new Color(76, 175, 80));
+            txtError.setText("Correcto:  Tabla actualizada correctamente...");
         }else if(!m.isEmpty()){
             panelEstado.setBackground(new Color(76, 175, 80));
-            txtError.setText("Correcto:  Tabla visualizada o actualizada correctamente...");
+            txtError.setText("Correcto:  Tabla visualizada correctamente...");
         }
     }
     
