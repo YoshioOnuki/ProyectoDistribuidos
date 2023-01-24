@@ -278,14 +278,14 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     if(txtConsulta.charAt(i) != espacio.charAt(0)){
                         nombre += txtConsulta.charAt(i);
                     }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
-                        if(pAtri%2!=0){
+                        if(pAtri%2==0){
                             System.out.println(nombre);
                             r[cont] = nombre;
                             cont++;
                             pAtri++;
                             nombre = "";
 //                            break;
-                        }else if(pAtri%2==0){
+                        }else if(pAtri%2!=0){
                             System.out.println(nombre);
                             r[cont] = nombre;
                             cont++;
