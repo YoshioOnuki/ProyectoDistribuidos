@@ -529,12 +529,12 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             if(contadorIngre == 2){
                                 break;
                             }
-                        }if(i != 0){
+                        }else if(i != 0){
                             if(i%2==0){
                                 datoUpd[contadorUpd] = d[i];
                                 System.out.println(datoUpd[contadorUpd]);
                                 contadorUpd++;
-                                if(contadorIngre == 2){
+                                if(contadorUpd == 2){
                                     break;
                                 }
                             }
