@@ -433,26 +433,91 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 
     }
     
-    void update(String nombreT){
+    void update(){
+        String[] d = validarUpdate();
+        String nombreT = d[0];
+        
+        String can = "cantidad_atributo_"+nombreT+".txt";
+        File archiCan = new File(crearUbicacionBackupCantAtri+can);
+        
         String punt = "puntero_"+nombreT+".txt";
         File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
         
-        String archivoUpd = nombreT+".txt";
-        File archivoUpdFile = new File(crearUbicacionBackup+archivoUpd);
+        String archi = nombreT+".txt";
+        File archiFile = new File(crearUbicacionBackup+archi);
         
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
             
-        if(!archivoUpdFile.exists()){
+        if(!archiFile.exists()){
             enviar("Error...");
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
-            int cantAtri = 0;
-            
             ChatServidor obj = new ChatServidor();
-
+            int cantAtri = Integer.parseInt(obj.leerDatos(archiCan));
             int puntero = Integer.parseInt(obj.leerDatos(archiPuntero));
+            
+            datos = new String[puntero][cantAtri];
+            
+            String dat = obj.leerDatos(archiBackupFile);
+            String atri = "";
+            int posi = 0;
+            int k = 0;
+            int l = 0;
+            for (int j = 0; j < cantAtri*puntero; j++) {
+    //            System.out.println(dat.length());
+                for (int i = posi; i < dat.length(); i++) {
+    //                System.out.println(coma);
+                    if(dat.charAt(posi) != coma.charAt(0)){
+                        atri += dat.charAt(i);
+                        posi++;
+                    }else if(dat.charAt(posi) == coma.charAt(0)){
+                        posi++;
+                        break;
+                    }
+                }
+                datos[k][l] = atri;
+                System.out.print(datos[k][l]+" ");
+                l++;
+                if(l == cantAtri && k != puntero-1){
+                    k++;
+                    l=0;
+                }
+                atri = "";
+            }
+            System.out.println("");
+            System.out.println(cantAtri);
+            System.out.println(puntero);
+        }
+            
+        
+        
+//        String[][] d = dat;
+    }
+    
+    void insert(String nombreT){
+        String can = "cantidad_atributo_"+nombreT+".txt";
+        File archiCan = new File(crearUbicacionBackupCantAtri+can);
+        
+        String punt = "puntero_"+nombreT+".txt";
+        File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
+        
+        String archi = nombreT+".txt";
+        File archiFile = new File(crearUbicacionBackup+archi);
+        
+        String archivoBackup = "backup_"+nombreT+".txt";
+        archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
+            
+        if(!archiFile.exists()){
+            enviar("Error...");
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+        }else{
+            ChatServidor obj = new ChatServidor();
+            int cantAtri = Integer.parseInt(obj.leerDatos(archiCan));
+            int puntero = Integer.parseInt(obj.leerDatos(archiPuntero));
+            
             datos = new String[puntero][cantAtri];
             
             String dat = obj.leerDatos(archiBackupFile);
@@ -513,8 +578,10 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             }else if(tipoConsulta().equalsIgnoreCase("SELECT")){
                 select();
             }else if(tipoConsulta().equalsIgnoreCase("UPDATE")){
-                
+                update();
             }else if(tipoConsulta().equalsIgnoreCase("DELETE")){
+                
+            }else if(tipoConsulta().equalsIgnoreCase("INSERT")){
                 
             }else{
                 enviar("Error...");
