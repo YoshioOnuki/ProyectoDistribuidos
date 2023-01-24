@@ -446,7 +446,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 
     }
     
-    void update(){
+    void update2(){
         String[] d = validarUpdateDelete("UPDATE ");
         String nombreT = d[0];
         
@@ -503,10 +503,6 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             System.out.println(cantAtri);
             System.out.println(puntero);
         }
-            
-        
-        
-//        String[][] d = dat;
     }
     
     void insert(String nombreT){
