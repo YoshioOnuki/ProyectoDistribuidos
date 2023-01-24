@@ -28,6 +28,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         t.start();
         error();
         lblLoading.setVisible(false);
+        txtMensaje.requestFocus();
     }
     
     void enviar(){
