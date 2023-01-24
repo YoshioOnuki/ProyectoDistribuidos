@@ -446,7 +446,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 
     }
     
-    void update2(){
+    void updt(){
         String[] d = validarUpdateDelete("UPDATE ");
         String nombreT = d[0];
         
@@ -467,13 +467,12 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
-            ChatServidor obj = new ChatServidor();
-            int cantAtri = Integer.parseInt(obj.leerDatos(archiCan));
-            int puntero = Integer.parseInt(obj.leerDatos(archiPuntero));
+            int cantAtri = Integer.parseInt(leerDatos(archiCan));
+            int puntero = Integer.parseInt(leerDatos(archiPuntero));
             
             datos = new String[puntero][cantAtri];
             
-            String dat = obj.leerDatos(archiBackupFile);
+            String dat = leerDatos(archiBackupFile);
             String atri = "";
             int posi = 0;
             int k = 0;
@@ -590,7 +589,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             }else if(tipoConsulta().equalsIgnoreCase("SELECT")){
                 select();
             }else if(tipoConsulta().equalsIgnoreCase("UPDATE")){
-                update2();
+                updt();
             }else if(tipoConsulta().equalsIgnoreCase("DELETE")){
                 
             }else if(tipoConsulta().equalsIgnoreCase("INSERT")){
