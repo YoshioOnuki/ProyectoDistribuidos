@@ -533,12 +533,13 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String at = "";
                 for (int j = 0; j < cantAtriIngre; j++) {
                     for (int i = 0; i < cantAtri; i++) {
+                        
                         int c = datos[0][i].length();
                         
                         for (int y = 0; y < c; y++) {
-                            if(dat.charAt(y) != coma.charAt(0)){
+                            if(dat.charAt(y) != espacio.charAt(0)){
                                 at += dat.charAt(y);
-                            }else if(dat.charAt(y) == coma.charAt(0)){
+                            }else if(dat.charAt(y) == espacio.charAt(0)){
                                 break;
                             }
                         }
