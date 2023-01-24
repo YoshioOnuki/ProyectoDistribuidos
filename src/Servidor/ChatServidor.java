@@ -371,22 +371,30 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                 }
             }
             
+            int estad = 0;
+            
             for (int j = 0; j < cantAtri*2; j++) {
                 for (int i = posi; i < txtConsulta.length(); i++) {
                     if(txtConsulta.charAt(i) != espacio.charAt(0)){
                         if(txtConsulta.charAt(i) != comillaSimple.charAt(0)){
                             nombre += txtConsulta.charAt(i);
+                        }else{
+                            estad++;
                         }
                     }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
-                        System.out.println(nombre);
-                        r[cont] = nombre;
-                        cont++;
-                        if(j == cantAtri*2 - 1){
-                            posi = i+7;
+                        if(estad%2!=0){
+                            
                         }else{
-                            posi = i+3;
+                            System.out.println(nombre);
+                            r[cont] = nombre;
+                            cont++;
+                            if(j == cantAtri*2 - 1){
+                                posi = i+7;
+                            }else{
+                                posi = i+3;
+                            }
+                            nombre = "";
                         }
-                        nombre = "";   
                     }
                 }
             }
