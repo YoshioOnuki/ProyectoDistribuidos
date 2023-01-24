@@ -520,16 +520,24 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 int contadorIngre = 0;
                 int contadorUpd = 0;
                 
-                for (int i = 0; i < tamanio; i++) {
-                    if(i%2!=0){
-                        datIngre[contadorIngre] = d[i];
-                        System.out.println(datIngre[contadorIngre]);
-                        contadorIngre++;
-                    }if(i != 0){
-                        if(i%2==0){
-                            datoUpd[contadorUpd] = d[i];
-                            System.out.println(datoUpd[contadorUpd]);
-                            contadorUpd++;
+                for (int j = 0; j < cantAtriIngre; j++) {
+                    for (int i = 0; i < tamanio; i++) {
+                        if(i%2!=0){
+                            datIngre[contadorIngre] = d[i];
+                            System.out.println(datIngre[contadorIngre]);
+                            contadorIngre++;
+                            if(contadorIngre == 2){
+                                break;
+                            }
+                        }if(i != 0){
+                            if(i%2==0){
+                                datoUpd[contadorUpd] = d[i];
+                                System.out.println(datoUpd[contadorUpd]);
+                                contadorUpd++;
+                                if(contadorIngre == 2){
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
