@@ -11,12 +11,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
-public class ChatServidor extends javax.swing.JFrame implements Observer{
+public class VistaServidor extends javax.swing.JFrame implements Observer{
 
     
     public static String[][] datos;
@@ -46,7 +48,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     String mensajeError = "";
     
     
-    public ChatServidor() {
+    public VistaServidor() {
         initComponents();
         initMetodos();
         setLocationRelativeTo(null);
@@ -424,6 +426,8 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             
         }
         
+        r[cont] = ""+cantAtri;
+        
         return r;
     }
     
@@ -467,43 +471,129 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
-            int cantAtri = Integer.parseInt(leerDatos(archiCan));
-            int puntero = Integer.parseInt(leerDatos(archiPuntero));
-            
-            datos = new String[puntero][cantAtri];
-            
-            String dat = leerDatos(archiBackupFile);
-            String atri = "";
-            int posi = 0;
-            int k = 0;
-            int l = 0;
-            for (int j = 0; j < cantAtri*puntero; j++) {
-    //            System.out.println(dat.length());
-                for (int i = posi; i < dat.length(); i++) {
-    //                System.out.println(coma);
-                    if(dat.charAt(posi) != coma.charAt(0)){
-                        atri += dat.charAt(i);
-                        posi++;
-                    }else if(dat.charAt(posi) == coma.charAt(0)){
-                        posi++;
-                        break;
+            try {
+                int cantAtri = Integer.parseInt(leerDatos(archiCan));
+                int puntero = Integer.parseInt(leerDatos(archiPuntero));
+                
+                datos = new String[puntero][cantAtri];
+                
+                String dat = leerDatos(archiBackupFile);
+                String atri = "";
+                int posi = 0;
+                int k = 0;
+                int l = 0;
+                for (int j = 0; j < cantAtri*puntero; j++) {
+                    //            System.out.println(dat.length());
+                    for (int i = posi; i < dat.length(); i++) {
+                        //                System.out.println(coma);
+                        if(dat.charAt(posi) != coma.charAt(0)){
+                            atri += dat.charAt(i);
+                            posi++;
+                        }else if(dat.charAt(posi) == coma.charAt(0)){
+                            posi++;
+                            break;
+                        }
+                    }
+                    datos[k][l] = atri;
+                    System.out.print(datos[k][l]+" ");
+                    l++;
+                    if(l == cantAtri && k != puntero-1){
+                        k++;
+                        l=0;
+                    }
+                    atri = "";
+                }
+                System.out.println("");
+                System.out.println(cantAtri);
+                System.out.println(puntero);
+                
+                int tamanio = d.length;
+                
+                int puntero2 = Integer.parseInt(d[tamanio-1]);
+                System.out.println(puntero2);
+                
+                int cantAtriIngre = Integer.parseInt(d[tamanio]);
+                String[] datIngre = new String[cantAtriIngre];
+                String[] datoUpd = new String[cantAtriIngre];
+                int contadorIngre = 0;
+                for (int i = 0; i < cantAtriIngre; i++) {
+                    if(i%2!=0){
+                        datIngre[contadorIngre] = d[i];
+                        datoUpd[contadorIngre] = d[i+1];
+                        contadorIngre++;
                     }
                 }
-                datos[k][l] = atri;
-                System.out.print(datos[k][l]+" ");
-                l++;
-                if(l == cantAtri && k != puntero-1){
-                    k++;
-                    l=0;
+                String at = "";
+                for (int j = 0; j < cantAtriIngre; j++) {
+                    for (int i = 0; i < cantAtri; i++) {
+                        int c = datos[0][i].length();
+                        
+                        for (int y = 0; y < c; y++) {
+                            if(dat.charAt(posi) != espacio.charAt(0)){
+                                at += dat.charAt(y);
+                            }else if(dat.charAt(posi) == espacio.charAt(0)){
+                                break;
+                            }
+                        }
+                        if(at.equalsIgnoreCase(datIngre[j])){
+                            datos[puntero2][i] = datoUpd[j];
+                        }
+                    }
                 }
-                atri = "";
+                String contenidoIngresado = "";
+                for (int i = 0; i < puntero; i++) {
+                    for (int j = 0; j < cantAtri; j++) {
+                        contenidoIngresado += datos[i][j];
+                        if(j != cantAtri-1){
+                            contenidoIngresado += espacio+"|"+espacio;
+                        }else{
+                            contenidoIngresado += "\n";
+                        }
+                    }
+                }
+//                String can = "cantidad_atributo_"+nombreT+".txt";
+//                File archiCan = new File(crearUbicacionBackupCantAtri+can);
+//
+//                String punt = "puntero_"+nombreT+".txt";
+//                File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
+//
+//                String archi = nombreT+".txt";
+//                File archiFile = new File(crearUbicacion+archi);
+//
+//                String archivoBackup = "backup_"+nombreT+".txt";
+//                archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
+
+                String contenidoBackup = "";
+                for (int i = 0; i < puntero; i++) {
+                    for (int j = 0; j < cantAtri; j++) {
+                        if(j != 0){
+                            contenidoBackup += ",";
+                        }
+                        contenidoBackup += datos[i][j];
+                    }
+                }
+
+                archiFile.createNewFile();
+                int respuesta1 = escribir(archiFile, contenidoIngresado);
+                
+                archiBackupFile.createNewFile();
+                int respuesta2 = escribir(archiBackupFile, contenidoBackup);
+                
+                if(respuesta1 > 0 && respuesta2 > 0){
+                    txtArea.setText("Correcto...");
+                    enviar("Correcto...");
+                    panelEstado.setBackground(new Color(76, 175, 80));
+                    txtError.setText("Correcto:  Tabla visualizada correctamente...");
+                }else{
+                    txtArea.setText("Error...");
+                    enviar("Error...");
+                    panelEstado.setBackground(new Color(228, 65, 65));
+                    txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+                }
+                
+            } catch (IOException ex) {
+                Logger.getLogger(VistaServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("");
-            System.out.println(cantAtri);
-            System.out.println(puntero);
-            txtArea.setText("Correcto...");
-            panelEstado.setBackground(new Color(76, 175, 80));
-            txtError.setText("Correcto:  Tabla visualizada correctamente...");
         }
     }
     
@@ -525,7 +615,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
-            ChatServidor obj = new ChatServidor();
+            VistaServidor obj = new VistaServidor();
             int cantAtri = Integer.parseInt(obj.leerDatos(archiCan));
             int puntero = Integer.parseInt(obj.leerDatos(archiPuntero));
             
@@ -758,7 +848,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChatServidor().setVisible(true);
+                new VistaServidor().setVisible(true);
             }
         });
     }

@@ -1,7 +1,7 @@
 package Cliente;
 
 import Servidor.*;
-import static Servidor.ChatServidor.nombreTabla;
+import static Servidor.VistaServidor.nombreTabla;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.Observable;
@@ -13,11 +13,11 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
-public class ChatCliente extends javax.swing.JFrame implements Observer{
+public class VistaCliente extends javax.swing.JFrame implements Observer{
     
     ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
 
-    public ChatCliente() {
+    public VistaCliente() {
 
         initComponents();
         setLocationRelativeTo(null);
@@ -273,7 +273,7 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChatCliente().setVisible(true);
+                new VistaCliente().setVisible(true);
             }
         });
     }
