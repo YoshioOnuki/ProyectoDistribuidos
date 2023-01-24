@@ -290,10 +290,11 @@ public class ChatCliente extends javax.swing.JFrame implements Observer{
     public void update(Observable o, Object arg) {
         new Thread(){
             public void run(){
+                txtArea.setText("");
                 lblLoading.setVisible(true);
                 proceso();
                 lblLoading.setVisible(false);
-                ChatCliente.txtArea.setText((String) arg);
+                txtArea.setText((String) arg);
                 error();
             }
         }.start();

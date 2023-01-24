@@ -52,6 +52,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         setLocationRelativeTo(null);
         txtArea.setEditable(false);
         txtMensaje.setEditable(false);
+        lblLoading.setVisible(false);
         btnEnv();
     }
     
@@ -704,10 +705,11 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     public void update(Observable o, Object arg) {
         new Thread(){
             public void run(){
+                txtArea.setText("");
                 lblLoading.setVisible(true);
                 proceso();
                 lblLoading.setVisible(false);
-                ChatServidor.txtArea.setText((String) arg);
+                txtArea.setText((String) arg);
                 txtMensaje.setText((String) arg);
                 btnEnv();
             }
