@@ -330,7 +330,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         return r;
     }
     
-    String[] validarUpdate(){
+    String[] validarUpdateDelete(String consulta){
         String consul = "";
         int posi = 7;
         String nombre = "";
@@ -354,7 +354,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         
         String[] r = new String[(cantAtri*2)+3];
         
-        if(!consul.equalsIgnoreCase("UPDATE ")){
+        if(!consul.equalsIgnoreCase(consulta)){
 //            JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
             System.out.println(consul);
         }else{
@@ -447,7 +447,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
     }
     
     void update(){
-        String[] d = validarUpdate();
+        String[] d = validarUpdateDelete("UPDATE ");
         String nombreT = d[0];
         
         String can = "cantidad_atributo_"+nombreT+".txt";
@@ -457,7 +457,7 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
         File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
         
         String archi = nombreT+".txt";
-        File archiFile = new File(crearUbicacionBackup+archi);
+        File archiFile = new File(crearUbicacion+archi);
         
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
