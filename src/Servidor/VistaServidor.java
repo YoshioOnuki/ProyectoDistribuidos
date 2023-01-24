@@ -539,7 +539,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 int n = 0;
                 for (int j = 0; j < cantAtriIngre; j++) {
                     for (int i = 0; i < cantAtri; i++) {
-                        
                         for (int m = 0; m < datos[0][i].length(); m++) {
                             if(datos[0][i].charAt(m) != espacio.charAt(0)){
                                 at += datos[0][i].charAt(m);
@@ -553,6 +552,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                                     break;
                                 }else{
                                     at = "";
+                                    break;
                                 }
                             }
                         }
