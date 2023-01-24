@@ -383,17 +383,19 @@ public class ChatServidor extends javax.swing.JFrame implements Observer{
                         }
                     }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
                         if(estad%2!=0){
-                            
+                            nombre += " ";
                         }else{
                             System.out.println(nombre);
                             r[cont] = nombre;
                             cont++;
+                            nombre = "";
                             if(j == cantAtri*2 - 1){
                                 posi = i+7;
+                                break;
                             }else{
                                 posi = i+3;
+                                break;
                             }
-                            nombre = "";
                         }
                     }
                 }
