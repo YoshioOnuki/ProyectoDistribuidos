@@ -59,16 +59,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     }
     
     void enviar(String mensa){
-        // TODO add your handling code here:
-//        String mensaje = "" + this.txtMensaje.getText() + "\n";
-//        this.txtArea.setText(mensaje);
         this.txtArea.setText(mensa);
         
-//        panelEstado.setBackground(new Color(228, 65, 65));
-//        this.txtError.setText(mensajeError);
-        
-        
-        Cliente c1 = new Cliente("192.168.1.79",5050,mensa);
+        Cliente c1 = new Cliente("192.168.1.77",5050,mensa);
         Thread t1 = new Thread(c1); 
         t1.start();
     }
@@ -717,22 +710,20 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         txtMensaje = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setMaximumSize(new java.awt.Dimension(1000, 604));
+        setMinimumSize(new java.awt.Dimension(1000, 604));
 
         lblLoading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLoading.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/loading2.gif"))); // NOI18N
         lblLoading.setMaximumSize(new java.awt.Dimension(200, 200));
         lblLoading.setMinimumSize(new java.awt.Dimension(200, 200));
         lblLoading.setPreferredSize(new java.awt.Dimension(200, 200));
-        getContentPane().add(lblLoading, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, -1, -1));
 
         txtArea.setEditable(false);
         txtArea.setColumns(20);
         txtArea.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
         txtArea.setRows(5);
         jScrollPane1.setViewportView(txtArea);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 39, 1000, 433));
 
         panelEstado.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -768,8 +759,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 .addContainerGap())
         );
 
-        getContentPane().add(panelEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 472, -1, -1));
-
         jPanel3.setBackground(new java.awt.Color(8, 32, 50));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -783,14 +772,12 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(451, 451, 451)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(452, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
         );
-
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -812,7 +799,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtMensaje)
+                .addComponent(txtMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -823,7 +810,31 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 522, 1000, -1));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(400, 400, 400)
+                .addComponent(lblLoading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(lblLoading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
