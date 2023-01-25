@@ -327,9 +327,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         return r;
     }
     
-    String[] validarUpdateDelete(String consulta){
+    String[] validarUpdate(String consulta, int posicion){
         String consul = "";
-        int posi = 7;
+        int posi = posicion;
         String nombre = "";
         
         int cantAtri = 0;
@@ -337,15 +337,18 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         int pAtri = 1;
         
         
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < posi; i++) {
             consul += txtConsulta.charAt(i);
         }
         
-        for (int i = posi; i < txtConsulta.length(); i++) {
-            if(txtConsulta.charAt(i) == coma.charAt(0)){
-                cantAtri++;
+        if(consulta.equalsIgnoreCase("UPDATE ")){
+            for (int i = posi; i < txtConsulta.length(); i++) {
+                if(txtConsulta.charAt(i) == coma.charAt(0)){
+                    cantAtri++;
+                }
             }
         }
+        
         cantAtri++;
         System.out.println(cantAtri);
         
@@ -355,6 +358,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 //            JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
             System.out.println(consul);
         }else{
+            
             for (int i = posi; i < txtConsulta.length(); i++) {
                 if(txtConsulta.charAt(i) != espacio.charAt(0)){
                     nombre += txtConsulta.charAt(i);
@@ -397,6 +401,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     }
                 }
             }
+            
             for (int j = 0; j < 2; j++) {
                 for (int i = posi; i < txtConsulta.length(); i++) {
                     if(txtConsulta.charAt(i) != espacio.charAt(0)){
@@ -446,7 +451,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     }
     
     void updt(){
-        String[] d = validarUpdateDelete("UPDATE ");
+        String[] d = validarUpdate("UPDATE ", 7);
         String nombreT = d[0];
         
         String can = "cantidad_atributo_"+nombreT+".txt";
