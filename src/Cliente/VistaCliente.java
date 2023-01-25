@@ -46,7 +46,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
             public void run(){
                 txtArea.setText("");
                 lblLoading.setVisible(true);
-                txtError.setBackground(Color.black);
+                txtError.setForeground(Color.black);
                 txtError.setText("Cargando...");
                 proceso(10);
                 error();
@@ -56,7 +56,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         txtMensaje.requestFocus();
         limpiarError();
         
-        Cliente c = new Cliente("192.168.1.77",5050,mensaje);
+        Cliente c = new Cliente("192.168.1.79",5050,mensaje);
         Thread t = new Thread(c); 
         t.start();
     }
@@ -343,7 +343,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         new Thread(){
             public void run(){
                 txtArea.setText("");
-                txtError.setBackground(Color.WHITE);
+                txtError.setForeground(Color.WHITE);
                 txtError.setText("");
                 proceso(120);
                 lblLoading.setVisible(false);

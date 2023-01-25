@@ -61,7 +61,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     void enviar(String mensa){
         this.txtArea.setText(mensa);
         
-        Cliente c1 = new Cliente("192.168.1.77",5050,mensa);
+        Cliente c1 = new Cliente("192.168.1.79",5050,mensa);
         Thread t1 = new Thread(c1); 
         t1.start();
     }
@@ -900,8 +900,12 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 limpiarError();
                 txtArea.setText("");
                 lblLoading.setVisible(true);
+                txtError.setForeground(Color.black);
+                txtError.setText("Cargando...");
                 proceso();
                 lblLoading.setVisible(false);
+                txtError.setForeground(Color.WHITE);
+                txtError.setText("");
                 txtArea.setText((String) arg);
                 txtMensaje.setText((String) arg);
                 btnEnv();
