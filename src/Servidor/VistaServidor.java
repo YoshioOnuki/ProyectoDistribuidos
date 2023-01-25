@@ -20,7 +20,7 @@ import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 public class VistaServidor extends javax.swing.JFrame implements Observer{
 
-    
+    public static String ip = "192.168.1.79";
     public static String[][] datos;
     public static int puntero;
     public static int cantidadAtributos;
@@ -61,7 +61,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     void enviar(String mensa){
         this.txtArea.setText(mensa);
         
-        Cliente c1 = new Cliente("192.168.1.79",5050,mensa);
+        Cliente c1 = new Cliente(this.ip,5050,mensa);
         Thread t1 = new Thread(c1); 
         t1.start();
     }
@@ -327,7 +327,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         return r;
     }
     
-    String[] validarUpdate(String consulta, int posicion){
+    String[] validarUpdateDelete(String consulta, int posicion){
         String consul = "";
         int posi = posicion;
         String nombre = "";
@@ -352,7 +352,15 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         cantAtri++;
         System.out.println(cantAtri);
         
-        String[] r = new String[(cantAtri*2)+4];
+        int cantArray = 0;
+        
+        if(consulta.equalsIgnoreCase("UPDATE ")){
+            cantArray = (cantAtri * 2) + 4;
+        }else if(consulta.equalsIgnoreCase("DELETE FROM ")){
+            cantArray = 3;
+        }
+        
+        String[] r = new String[cantArray];
         
         if(!consul.equalsIgnoreCase(consulta)){
 //            JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
@@ -366,36 +374,41 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     System.out.println(nombre);
                     r[cont] = nombre;
                     cont++;
-                    posi = i+5;
+                    if(consulta.equalsIgnoreCase("DELETE FROM ")){
+                        posi = i+7;
+                    }else if(consulta.equalsIgnoreCase("UPDATE ")){
+                        posi = i+5;
+                    }
                     nombre = "";
                     break;
                 }
             }
             
             int estad = 0;
-            
-            for (int j = 0; j < cantAtri*2; j++) {
-                for (int i = posi; i < txtConsulta.length(); i++) {
-                    if(txtConsulta.charAt(i) != espacio.charAt(0)){
-                        if(txtConsulta.charAt(i) != comillaSimple.charAt(0)){
-                            nombre += txtConsulta.charAt(i);
-                        }else{
-                            estad++;
-                        }
-                    }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
-                        if(estad%2!=0){
-                            nombre += " ";
-                        }else{
-                            System.out.println(nombre);
-                            r[cont] = nombre;
-                            cont++;
-                            nombre = "";
-                            if(j == cantAtri*2 - 1){
-                                posi = i+7;
-                                break;
+            if(consulta.equalsIgnoreCase("UPDATE ")){
+                for (int j = 0; j < cantAtri*2; j++) {
+                    for (int i = posi; i < txtConsulta.length(); i++) {
+                        if(txtConsulta.charAt(i) != espacio.charAt(0)){
+                            if(txtConsulta.charAt(i) != comillaSimple.charAt(0)){
+                                nombre += txtConsulta.charAt(i);
                             }else{
-                                posi = i+3;
-                                break;
+                                estad++;
+                            }
+                        }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
+                            if(estad%2!=0){
+                                nombre += " ";
+                            }else{
+                                System.out.println(nombre);
+                                r[cont] = nombre;
+                                cont++;
+                                nombre = "";
+                                if(j == cantAtri*2 - 1){
+                                    posi = i+7;
+                                    break;
+                                }else{
+                                    posi = i+3;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -426,7 +439,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             
         }
         
-        r[cont] = ""+cantAtri;
+        if(consulta.equalsIgnoreCase("UPDATE ")){
+            r[cont] = ""+cantAtri;
+        }
         
         return r;
     }
@@ -451,7 +466,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     }
     
     void updt(){
-        String[] d = validarUpdate("UPDATE ", 7);
+        String[] d = validarUpdateDelete("UPDATE ", 7);
         String nombreT = d[0];
         
         String can = "cantidad_atributo_"+nombreT+".txt";
@@ -471,6 +486,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
+            
             try {
                 int cantAtri = Integer.parseInt(leerDatos(archiCan));
                 int puntero = Integer.parseInt(leerDatos(archiPuntero));
@@ -596,10 +612,11 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 enviar("Tabla actualizada correctamente...\n \n"+contenidoIngresado);
                 panelEstado.setBackground(new Color(76, 175, 80));
                 txtError.setText("Correcto:  Tabla actualizada correctamente...");
-                
             } catch (IOException ex) {
                 Logger.getLogger(VistaServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
+                
+            
         }
     }
     
@@ -661,6 +678,32 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
         
 //        String[][] d = dat;
+    }
+    
+    void delete(){
+        String[] d = validarUpdateDelete("DELETE FROM ", 7);
+        String nombreT = d[0];
+        
+        String can = "cantidad_atributo_"+nombreT+".txt";
+        File archiCan = new File(crearUbicacionBackupCantAtri+can);
+        
+        String punt = "puntero_"+nombreT+".txt";
+        File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
+        
+        String archi = nombreT+".txt";
+        File archiFile = new File(crearUbicacion+archi);
+        
+        String archivoBackup = "backup_"+nombreT+".txt";
+        archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
+            
+        if(!archiFile.exists()){
+            enviar("Error...");
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+        }else{
+            
+        }
+        
     }
     
     void limpiarTodo(){

@@ -17,6 +17,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
     
     ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
     public static String men = "";
+    public static String ip = VistaServidor.ip;
 
     public VistaCliente() {
 
@@ -56,7 +57,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         txtMensaje.requestFocus();
         limpiarError();
         
-        Cliente c = new Cliente("192.168.1.79",5050,mensaje);
+        Cliente c = new Cliente(this.ip,5050,mensaje);
         Thread t = new Thread(c); 
         t.start();
     }
