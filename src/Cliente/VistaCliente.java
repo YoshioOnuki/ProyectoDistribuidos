@@ -6,18 +6,14 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 public class VistaCliente extends javax.swing.JFrame implements Observer{
     
     ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
     public static String men = "";
-    public static String ip = VistaServidor.ip;
+    public static String ip = LoginCliente.ipCliente;
 
     public VistaCliente() {
 
@@ -31,6 +27,8 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         error();
         lblLoading.setVisible(false);
         txtMensaje.requestFocus();
+        
+        System.out.println(ip);
     }
     
     void enviar(){
@@ -177,8 +175,10 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         );
 
         jPanel3.setBackground(new java.awt.Color(8, 32, 50));
+        jPanel3.setMaximumSize(new java.awt.Dimension(1000, 39));
+        jPanel3.setMinimumSize(new java.awt.Dimension(1000, 39));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SF UI Display", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("CLIENTE");
 
@@ -187,9 +187,9 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(461, 461, 461)
+                .addGap(455, 455, 455)
                 .addComponent(jLabel1)
-                .addContainerGap(461, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,13 +250,16 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(400, 400, 400)
-                .addComponent(lblLoading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(400, 400, 400)
+                        .addComponent(lblLoading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,15 +304,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        try {
-            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.translucencySmallShadow;
-            BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
-            UIManager.put("RootPane.setupButtonVisible", false);
-            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
-            
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VistaCliente().setVisible(true);

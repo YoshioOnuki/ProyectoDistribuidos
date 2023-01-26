@@ -3,7 +3,6 @@ package Servidor;
 
 import Cliente.*;
 import java.awt.Color;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,14 +12,10 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 public class VistaServidor extends javax.swing.JFrame implements Observer{
 
-    public static String ip = "192.168.1.79";
+    public static String ip = LoginServidor.ipServidor;
     public static String[][] datos;
     public static int puntero;
     public static int cantidadAtributos;
@@ -56,6 +51,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         txtMensaje.setEditable(false);
         lblLoading.setVisible(false);
         btnEnv();
+        
+        System.out.println(ip);
     }
     
     void enviar(String mensa){
@@ -108,7 +105,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 conteBackup += datos[0][i];
                 System.out.println(conteBackup);
             }
-//
+            
             String archivoCantidad = "cantidad_atributo_"+nombreTabla+".txt";
             String contenidoCantidad = ""+cantidadAtributos; 
             File crearUbiBackupCantidad = new File(crearUbicacionBackupCantAtri);
@@ -334,7 +331,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
         int cantAtri = 0;
         int cont = 0;
-        int pAtri = 1;
+        int pAtri = 1;  
         
         
         for (int i = 0; i < posi; i++) {
@@ -809,7 +806,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 
         jPanel3.setBackground(new java.awt.Color(8, 32, 50));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SF UI Display", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("SERVIDOR");
 
@@ -904,15 +901,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        try {
-            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.translucencySmallShadow;
-            BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
-            UIManager.put("RootPane.setupButtonVisible", false);
-            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
-            
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VistaServidor().setVisible(true);
