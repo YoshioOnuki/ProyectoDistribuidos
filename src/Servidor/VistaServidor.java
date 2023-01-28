@@ -78,7 +78,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         String contenido = "";
         String conteBackup = "";
         int c = 1;
-                
+        
         String archivo = nombreTabla+".txt";
         
         datos = new String[puntero][cantidadAtributos];
