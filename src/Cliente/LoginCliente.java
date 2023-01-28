@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Cliente;
 
 import Placeholders.TextPlace;
@@ -30,6 +26,7 @@ public class LoginCliente extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         placeholders();
+        txtip.setText("192.168.1.49");
     }
 
     
@@ -43,34 +40,49 @@ public class LoginCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "¡Campo de texto IP es requerido!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
         }else{
             //192.168.1.79
-            if(ip.length() < 11){
-                JOptionPane.showMessageDialog(null, "¡Le faltan números a su IP!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-            }else{
-                int cont = 0;
-                int punt = 0;
-                for (int i = 0; i < ip.length(); i++) {
+            int estado = 0;
+            for (int i = 0; i < ip.length(); i++) {
+                if(ip.charAt(i) < '0'|| ip.charAt(i) > '9'){
                     if(ip.charAt(i) == punto.charAt(0)){
-                        punt++;
-                        if(i != ip.length()-1){
-                            if(ip.charAt(i+1) == punto.charAt(0)){
-                                cont++;
+                        
+                    }else{
+                        estado++;
+                    }
+                }
+            }
+            
+            if(estado > 0){
+                JOptionPane.showMessageDialog(null, "¡Formato de IP incorrecto!\nNota: Solo se aceptan números en la IP", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+            }else{
+                if(ip.length() < 11){
+                    JOptionPane.showMessageDialog(null, "¡Le faltan números a su IP!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+                }else{
+                    int cont = 0;
+                    int punt = 0;
+                    for (int i = 0; i < ip.length(); i++) {
+                        if(ip.charAt(i) == punto.charAt(0)){
+                            punt++;
+                            if(i != ip.length()-1){
+                                if(ip.charAt(i+1) == punto.charAt(0)){
+                                    cont++;
+                                }
                             }
                         }
                     }
-                }
-                if(cont > 0){
-                    JOptionPane.showMessageDialog(null, "¡Formato de IP incorrecto!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-                }else{
-                    if(punt < 3){
-                        JOptionPane.showMessageDialog(null, "¡Le faltan números o puntos a su IP!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+                    if(cont > 0){
+                        JOptionPane.showMessageDialog(null, "¡Formato de IP incorrecto!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
                     }else{
-                        if(ip.charAt(ip.length()-1) == punto.charAt(0)){
-                            JOptionPane.showMessageDialog(null, "¡La IP no puede terminar en un punto!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+                        if(punt < 3){
+                            JOptionPane.showMessageDialog(null, "¡Le faltan números o puntos a su IP!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
                         }else{
-                            ipCliente = txtip.getText();
-                            VistaCliente cliente = new VistaCliente();
-                            cliente.setVisible(true);
-                            dispose();
+                            if(ip.charAt(ip.length()-1) == punto.charAt(0)){
+                                JOptionPane.showMessageDialog(null, "¡La IP no puede terminar en un punto!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
+                            }else{
+                                ipCliente = txtip.getText();
+                                VistaCliente cliente = new VistaCliente();
+                                cliente.setVisible(true);
+                                dispose();
+                            }
                         }
                     }
                 }
