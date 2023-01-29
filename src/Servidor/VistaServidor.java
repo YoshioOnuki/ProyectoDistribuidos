@@ -820,9 +820,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         File[] ficheros = dir.listFiles();
         int corre = ficheros.length;
         if (corre == 0) {
-            enviar("Error...");
+            enviar("Error de tablas...");
             panelEstado.setBackground(new Color(228, 65, 65));
-            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+            txtError.setText("Error:  No se encontraron tablas en la base de datos TXT...");
             return;
         }
 
