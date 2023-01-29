@@ -26,6 +26,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         initComponents();
         setLocationRelativeTo(null);
         this.getRootPane().setDefaultButton(this.btnEnviar);
+        initService();
         error();
         lblLoading.setVisible(false);
         txtMensaje.requestFocus();
@@ -33,7 +34,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
     }
     
     //Inicializamos al servidor
-    void initMetodos(){
+    void initService(){
         Servidor s = new Servidor(5050);
         s.addObserver(this);
         Thread t = new Thread (s);

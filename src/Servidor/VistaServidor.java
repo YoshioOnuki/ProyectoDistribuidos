@@ -54,12 +54,12 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     
     public VistaServidor() {
         initComponents();
-        initMetodos();
+        initService();
         setLocationRelativeTo(null);
         txtArea.setEditable(false);
         txtMensaje.setEditable(false);
         lblLoading.setVisible(false);
-        ValidarTipoConsulta();
+        validarTipoConsulta();
         
         System.out.println(ip);
     }
@@ -74,7 +74,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     }
     
     //Inicializamos al servidor
-    void initMetodos(){
+    void initService(){
         Servidor s = new Servidor(5050);
         s.addObserver(this);
         Thread t = new Thread (s);
@@ -604,6 +604,31 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             
         }
     }
+    void delete(){
+        String[] d = validarUpdateDelete("DELETE FROM ", 7);
+        String nombreT = d[0];
+        
+        String can = "cantidad_atributo_"+nombreT+".txt";
+        File archiCan = new File(crearUbicacionBackupCantAtri+can);
+        
+        String punt = "puntero_"+nombreT+".txt";
+        File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
+        
+        String archi = nombreT+".txt";
+        File archiFile = new File(crearUbicacion+archi);
+        
+        String archivoBackup = "backup_"+nombreT+".txt";
+        archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
+            
+        if(!archiFile.exists()){
+            enviar("Error...");
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+        }else{
+            
+        }
+        
+    }
     
     //Métodos para validar consulta e Ingresar datos en la base de datos TXT
     String[] validarInsert(){
@@ -718,67 +743,31 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }else{
             int cantAtri = Integer.parseInt(leerDatos(archiCan));
             int puntero = Integer.parseInt(leerDatos(archiPuntero));
-            
+            String contenido = "";
+            String conteBackup = "";
             datos = new String[puntero][cantAtri];
             
-            String dat = leerDatos(archiBackupFile);
-            String atri = "";
-            int posi = 0;
-            int k = 0;
-            int l = 0;
-            for (int j = 0; j < cantAtri*puntero; j++) {
-    //            System.out.println(dat.length());
-                for (int i = posi; i < dat.length(); i++) {
-    //                System.out.println(coma);
-                    if(dat.charAt(posi) != coma.charAt(0)){
-                        atri += dat.charAt(i);
-                        posi++;
-                    }else if(dat.charAt(posi) == coma.charAt(0)){
-                        posi++;
-                        break;
-                    }
+            for (int i = 0; i < cantidadAtributos; i++) {
+                datos[0][i] = da[c]+" "+da[c+1];
+                c += 2;
+                contenido += datos[0][i];
+                if(i != cantidadAtributos-1){
+                    contenido += espacio+"|"+espacio;
+                }else{
+                    contenido += "\n";
                 }
-                datos[k][l] = atri;
-                System.out.print(datos[k][l]+" ");
-                l++;
-                if(l == cantAtri && k != puntero-1){
-                    k++;
-                    l=0;
-                }
-                atri = "";
             }
-            System.out.println("");
-            System.out.println(cantAtri);
-            System.out.println(puntero);
-        }
-            
-        
-        
-    }
-    
-    void delete(){
-        String[] d = validarUpdateDelete("DELETE FROM ", 7);
-        String nombreT = d[0];
-        
-        String can = "cantidad_atributo_"+nombreT+".txt";
-        File archiCan = new File(crearUbicacionBackupCantAtri+can);
-        
-        String punt = "puntero_"+nombreT+".txt";
-        File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
-        
-        String archi = nombreT+".txt";
-        File archiFile = new File(crearUbicacion+archi);
-        
-        String archivoBackup = "backup_"+nombreT+".txt";
-        archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
-            
-        if(!archiFile.exists()){
-            enviar("Error...");
-            panelEstado.setBackground(new Color(228, 65, 65));
-            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-        }else{
+            for (int i = 0; i < cantidadAtributos; i++) {
+                if(i != 0){
+                    conteBackup += ",";
+                }
+                conteBackup += datos[0][i];
+                System.out.println(conteBackup);
+            }
             
         }
+            
+        
         
     }
     
@@ -804,7 +793,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
         return r;
     }
-    void ValidarTipoConsulta(){
+    void validarTipoConsulta(){
         txtConsulta = txtArea.getText();
 //        System.out.println(txtConsulta);
         if(txtConsulta.isEmpty()){
@@ -1039,7 +1028,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 txtError.setText("");
                 txtArea.setText((String) arg);
                 txtMensaje.setText((String) arg);
-                ValidarTipoConsulta();
+                validarTipoConsulta();
             }
         }.start();
         
