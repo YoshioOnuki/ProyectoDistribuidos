@@ -806,6 +806,41 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }
     }
     
+    void showTables() {
+        String sBase = System.getProperty("user.dir") + File.separator + "dbDistribuidos";
+        File dir = new File(sBase);
+        String listaFilestxt = "";
+
+        if (!dir.exists()) {
+            enviar("Error...");
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error:  !No existe la base de datos dbDistribuidos!");
+            return;
+        }
+        File[] ficheros = dir.listFiles();
+        int corre = ficheros.length;
+        if (corre == 0) {
+            enviar("Error...");
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error:  !La base de datos dbDistribuidos esta vacia!");
+            return;
+        }
+
+        for (int x = 0; x < corre; x++) {
+            if (ficheros[x].isFile()) {
+                if (ficheros[x].getName().endsWith(".txt")) {
+                    listaFilestxt = listaFilestxt + ficheros[x].getName() + "\n";
+                }
+            }
+        }
+        
+        txtArea.setText("Lista de tablas ..\n" + listaFilestxt);
+        enviar("Lista de tablas...\n" + listaFilestxt);
+        panelEstado.setBackground(new Color(76, 175, 80));
+        txtError.setText("Correcto:  Tablas listada correctamente...");
+        
+    }
+    
     //Métodos de limpieza
     void limpiarTodo(){
         txtArea.setText("");
@@ -845,7 +880,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }else if(tipoConsulta(6).equalsIgnoreCase("INSERT")){
                 insert();
             }else if(tipoConsulta(11).equalsIgnoreCase("SHOW TABLES")){
-                
+                showTables();
             }else{
                 enviar("Error...");
                 panelEstado.setBackground(new Color(228, 65, 65));
