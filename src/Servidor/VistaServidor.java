@@ -31,7 +31,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     
     //Inicializamos caracteres conocidos para validaciones
     String barra = File.separator;
-    String coma = ",";
+    String punto = ",";
+    String coma = ".";
     String puntoComa = ";";
     String espacio = " ";
     String parenInicio = "(";
@@ -455,6 +456,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     void updt(){
         String[] d = validarUpdateDelete("UPDATE ", 7);
         String nombreT = d[0];
+        System.out.println(nombreT);
         
         String can = "cantidad_atributo_"+nombreT+".txt";
         File archiCan = new File(crearUbicacionBackupCantAtri+can);
@@ -724,8 +726,19 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         //Validamos y capturamos el nombre de la tabla y los atributos a insertar
         String[] atributos = validarInsert();
         
-        //Asignamos el nombre de la tabla a una variable
-        String nombreT = atributos[0];
+        //Declaramos una variable para cargar el nombre de la tabla
+        String cargarNombre = "";
+        String nombreT = "";
+        
+        //Capturar el nombre de la tabla sin su extensión ".txt"
+        for (int i = 0; i < atributos[0].length(); i++) {
+            if(atributos[0].charAt(i) != punto.charAt(0)){
+                cargarNombre += atributos[0].charAt(i);
+            }else if(atributos[0].charAt(i) == punto.charAt(0)){
+                nombreT = cargarNombre;
+                break;
+            }
+        }
         
         //Creamos el nombre y archivo de la cantidad de atributos, puntero, raiz y backup de la tabla
         String can = "cantidad_atributo_"+nombreT+".txt";
@@ -831,7 +844,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }else if(tipoConsulta().equalsIgnoreCase("DELETE")){
                 
             }else if(tipoConsulta().equalsIgnoreCase("INSERT")){
-                String[] atri = validarInsert();
+                insert();
             }else{
                 enviar("Error...");
                 panelEstado.setBackground(new Color(228, 65, 65));
