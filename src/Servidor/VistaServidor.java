@@ -148,7 +148,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         cantAtri++;
         System.out.println(cantAtri);
         
-        String[] r = new String[(cantAtri*2)+2];
+        String[] r = new String[(cantAtri*2)+1];
         
         if(!consul.equalsIgnoreCase("CREATE TABLE ")){
             System.out.println(consul);
@@ -158,6 +158,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     nombre += txtConsulta.charAt(i);
                 }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
                     System.out.println(nombre);
+                    System.out.println(cont);
                     r[cont] = nombre;
                     cont++;
                     pAtri++;
@@ -175,6 +176,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
                         if(pAtri%2==0){
                             System.out.println(nombre);
+                            System.out.println(cont);
                             r[cont] = nombre;
                             cont++;
                             pAtri++;
@@ -182,6 +184,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 //                            break;
                         }else if(pAtri%2!=0){
                             System.out.println(nombre);
+                            System.out.println(cont);
                             r[cont] = nombre;
                             cont++;
                             pAtri++;
