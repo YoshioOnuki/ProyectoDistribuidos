@@ -765,7 +765,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             String atri = "";
             int posi = 0;
             int k = 0;
-            int l = 0;
             
             //Bucle para capturar en un arreglo todos los datos de la tabla a insertar
             for (int j = 0; j < cantAtri*puntero; j++) {
@@ -773,20 +772,19 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     if(dat.charAt(i) != coma.charAt(0)){
                         atri += dat.charAt(i);
                         posi++;
+                        if(i == dat.length()-1){
+                            datos[j][k] = atri;
+                            break;
+                        }
                     }else if(dat.charAt(i) == coma.charAt(0)){
-                        datos[j][i] = atri;
+                        datos[j][k] = atri;
                         posi++;
                         break;
                     }
                 }
                 //Capturamos el atributo en el arreglo
                 
-                System.out.print(datos[k][l]+" ");
-                l++;
-                if(l == cantAtri && k != puntero-1){
-                    k++;
-                    l=0;
-                }
+                System.out.print(datos[j][k]+" ");
                 atri = "";
                 
                 
