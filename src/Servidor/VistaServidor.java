@@ -638,20 +638,21 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 cantAtri = Integer.parseInt(leerDatos(archiCan));
             }
             
-            String[] r1 = new String[cantAtri];
-            r2 = new String[cantAtri+1];
+            String[] r1 = new String[cantAtri-1];
+            int cantAt = 0;
+            r2 = new String[cantAtri];
             r2[cant] = nombre;
             cant++;
             nombre = "";
             
-            for (int j = 0; j < cantAtri; j++) {
+            for (int j = 0; j < cantAtri-1; j++) {
                 for (int i = posi; i < txtConsulta.length(); i++) {
                     if(txtConsulta.charAt(i) != espacio.charAt(0)){
                         nombre += txtConsulta.charAt(i);
                     }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
                         System.out.println(nombre);
-                        r1[cant] = nombre;
-                        cant++;
+                        r1[cantAt] = nombre;
+                        cantAt++;
                         posi = i+3;
                         nombre = "";
                         break;
@@ -659,11 +660,11 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 }
             }
             
-            posi += 8;
+            posi += 9;
             int estad = 0;
             nombre = "";
             
-            for (int j = 0; j < cantAtri; j++) {
+            for (int j = 0; j < cantAtri-1; j++) {
                 for (int i = posi; i < txtConsulta.length(); i++) {
                     if(txtConsulta.charAt(i) != espacio.charAt(0)){
                         if(txtConsulta.charAt(i) != comillaSimple.charAt(0)){
@@ -679,7 +680,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             r2[cant] = nombre;
                             cant++;
                             nombre = "";
-                            if(j == cantAtri - 1){
+                            if(j == cantAtri - 2){
                                 break;
                             }else{
                                 posi = i+3;

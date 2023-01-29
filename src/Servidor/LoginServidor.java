@@ -1,4 +1,3 @@
-
 package Servidor;
 
 import static Cliente.LoginCliente.ipCliente;
@@ -18,10 +17,10 @@ import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 public class LoginServidor extends javax.swing.JFrame {
 
     ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
-    
+
     public static String ipServidor = "";
     public static String punto = ".";
-    
+
     public LoginServidor() {
         initComponents();
         setLocationRelativeTo(null);
@@ -29,40 +28,40 @@ public class LoginServidor extends javax.swing.JFrame {
         txtip.setText("192.168.1.49");
     }
 
-    void placeholders(){
+    void placeholders() {
         Placeholders.TextPlace txtu = new TextPlace("Ingrese IP del Cliente", txtip);
     }
-    
-    void validar(){
+
+    void validar() {
         String ip = txtip.getText();
-        if(ip.isEmpty()){
-            JOptionPane.showMessageDialog(null, "¡Campo de texto IP es requerido!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-        }else{
+        if (ip.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "¡Campo de texto IP es requerido!", "¡Advertencia!", JOptionPane.WARNING_MESSAGE, icoWar);
+        } else {
             //192.168.1.79
-            if(ip.length() < 11){
-                JOptionPane.showMessageDialog(null, "¡Le faltan números a su IP!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-            }else{
+            if (ip.length() < 11) {
+                JOptionPane.showMessageDialog(null, "¡Le faltan números a su IP!", "¡Advertencia!", JOptionPane.WARNING_MESSAGE, icoWar);
+            } else {
                 int cont = 0;
                 int punt = 0;
                 for (int i = 0; i < ip.length(); i++) {
-                    if(ip.charAt(i) == punto.charAt(0)){
+                    if (ip.charAt(i) == punto.charAt(0)) {
                         punt++;
-                        if(i != ip.length()-1){
-                            if(ip.charAt(i+1) == punto.charAt(0)){
+                        if (i != ip.length() - 1) {
+                            if (ip.charAt(i + 1) == punto.charAt(0)) {
                                 cont++;
                             }
                         }
                     }
                 }
-                if(cont > 0){
-                    JOptionPane.showMessageDialog(null, "¡Formato de IP incorrecto!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-                }else{
-                    if(punt < 3){
-                        JOptionPane.showMessageDialog(null, "¡Le faltan números o puntos a su IP!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-                    }else{
-                        if(ip.charAt(ip.length()-1) == punto.charAt(0)){
-                            JOptionPane.showMessageDialog(null, "¡La IP no puede terminar en un punto!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
-                        }else{
+                if (cont > 0) {
+                    JOptionPane.showMessageDialog(null, "¡Formato de IP incorrecto!", "¡Advertencia!", JOptionPane.WARNING_MESSAGE, icoWar);
+                } else {
+                    if (punt < 3) {
+                        JOptionPane.showMessageDialog(null, "¡Le faltan números o puntos a su IP!", "¡Advertencia!", JOptionPane.WARNING_MESSAGE, icoWar);
+                    } else {
+                        if (ip.charAt(ip.length() - 1) == punto.charAt(0)) {
+                            JOptionPane.showMessageDialog(null, "¡La IP no puede terminar en un punto!", "¡Advertencia!", JOptionPane.WARNING_MESSAGE, icoWar);
+                        } else {
                             ipServidor = txtip.getText();
                             VistaServidor servidor = new VistaServidor();
                             servidor.setVisible(true);
@@ -73,7 +72,7 @@ public class LoginServidor extends javax.swing.JFrame {
             }
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -291,14 +290,14 @@ public class LoginServidor extends javax.swing.JFrame {
 
     private void txtipKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtipKeyTyped
         char c = evt.getKeyChar();
-        if(c<'0' || c>'9'){
-            if(c=='.'){
-                
-            }else{
+        if (c < '0' || c > '9') {
+            if (c == '.') {
+
+            } else {
                 evt.consume();
             }
         }
-        if(txtip.getText().length() >= 15){
+        if (txtip.getText().length() >= 15) {
             evt.consume();
         }
     }//GEN-LAST:event_txtipKeyTyped
@@ -312,28 +311,27 @@ public class LoginServidor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIngresarMouseEntered
 
     private void btnIngresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseExited
-        btnIngresar.setBackground(new Color(8,32,50));
+        btnIngresar.setBackground(new Color(8, 32, 50));
     }//GEN-LAST:event_btnIngresarMouseExited
 
     private void txtipKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtipKeyReleased
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             validar();
         }
     }//GEN-LAST:event_txtipKeyReleased
 
-    
     public static void main(String args[]) {
-        
+
         try {
             BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.translucencySmallShadow;
             BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
             UIManager.put("RootPane.setupButtonVisible", false);
             org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LoginServidor().setVisible(true);
