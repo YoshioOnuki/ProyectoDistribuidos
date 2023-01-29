@@ -673,6 +673,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 
             //Capturamos los datos de la tabla en un Array
             System.out.print("ID: "+d[2]);
+            int dd = Integer.parseInt(d[2]);
             System.out.println("");
             for (int j = 0; j < cantAtri*puntero; j++) {
                 for (int i = posi; i < dat.length(); i++) {
@@ -684,7 +685,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         break;
                     }
                 }
-                if(k != 1){
+                if(k != dd){
                     datos[k][l] = atri;
                     System.out.print(datos[k][l]+" ");
                 }
@@ -696,6 +697,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     l=0;
                 }
                 atri = "";
+                
+                if(k == puntero-1){
+                    break;
+                }
                 
             }
             System.out.println("");
