@@ -619,8 +619,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 int respuesta2 = escribirDatos(archiBackupFile, contenidoBackup);
                 
                 //Mensaje de confirmación
-                txtArea.setText("Tabla actualizada correctamente...\n \n"+contenidoIngresado);
-                enviar("Tabla actualizada correctamente...\n \n"+contenidoIngresado);
+                txtArea.setText("Tabla actualizada correctamente...\n "
+                        + "====================================\n"+contenidoIngresado);
+                enviar("Tabla actualizada correctamente...\n "
+                        + "====================================\n"+contenidoIngresado);
                 panelEstado.setBackground(new Color(76, 175, 80));
                 txtError.setText("Correcto:  Tabla actualizada correctamente...");
             } catch (IOException ex) {
@@ -868,12 +870,13 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 int respuesta2 = escribirDatos(archiBackupFile, contenidoBackup);
                 
                 //Creo el archivo backup puntero y escribo el puntero actual en la base de datos backup
-                String envi = ""+puntero+1;
+                int envi = puntero+1;
                 archiPuntero.createNewFile();
-                int respuesta3 = escribirDatos(archiPuntero, envi);
+                int respuesta3 = escribirDatos(archiPuntero, ""+envi);
                 
                 //Mensaje de confirmación
-                txtArea.setText("Tabla insertada correctamente...\n \n"+contenidoIngresado);
+                txtArea.setText("Tabla insertada correctamente...\n "
+                        + "====================================\n"+contenidoIngresado);
                 enviar("Tabla insertada correctamente...\n "
                         + "====================================\n"+contenidoIngresado);
                 panelEstado.setBackground(new Color(76, 175, 80));
