@@ -660,7 +660,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
         
         String archivoDelete = "delete_"+nombreT+".txt";
-        File crearUbiDelete = new File(crearUbicacionBackupCantDelete);
         File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
         
         if(!archiFile.exists()){
@@ -672,7 +671,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //Capturamos la cantidad de atributos y el puntero de la tabla
                 int cantAtri = Integer.parseInt(leerDatos(archiCan));
                 int puntero = Integer.parseInt(leerDatos(archiPuntero));
-                int del = Integer.parseInt(leerDatos(archiDelete));
+                int del = Integer.parseInt(leerDatos(archiDelete)) + 1;
                 
                 
                 //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
@@ -759,6 +758,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     }
                 }
                 System.out.println(contenidoBackup);
+                
+                //Actualizo la cantidad de eliminados de la tabla
+                int respuesta = escribirDatos(archiFile, contenidoIngresado);
                 
                 //Creo el archivo raiz y escribo los datos actualizados en la base de datos TXT
                 archiFile.createNewFile();
