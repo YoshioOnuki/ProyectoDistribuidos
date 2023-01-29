@@ -700,11 +700,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     for (int j = 0; j < cantAtri*puntero; j++) {
                         for (int i = posi; i < dat.length(); i++) {
                             if(dat.charAt(i) != coma.charAt(0)){
-                                if(l == 0 && dd == dat.charAt(i) && cUna == 0){
-                                    estado = 1;
-                                    idAtri = dat.charAt(i);
-                                    System.out.println("ID a eliminar: "+idAtri);
-                                }
+                                idAtri = dat.charAt(i);
                                 atri += dat.charAt(i);
                                 posi++;
                             }else if(dat.charAt(i) == coma.charAt(0)){
@@ -712,8 +708,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                                 break;
                             }
                         }
-                        if(estado == 1  && cUna == 0 && idAtri == dd){
-                            
+                        if(idAtri == dd){
+                            estado = 1;
+                            cUna++;
                         }else{
                             datos[k][l] = atri;
                             System.out.print(datos[k][l]+" ");
