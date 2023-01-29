@@ -837,13 +837,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
                 for (int i = 0; i < puntero+1; i++) {
                     for (int j = 0; j < cantAtri; j++) {
-                        if(j == 0 && i != 0){
-                            contenidoIngresado += generarNumInsert(Integer.parseInt(datos[i][j]));
-                            System.out.println(generarNumInsert(Integer.parseInt(datos[i][j])));
-                            System.out.println(datos[i][j]);
-                        }else{
-                            contenidoIngresado += datos[i][j];
-                        }
+                        contenidoIngresado += datos[i][j];
+                        
                         if(j != cantAtri-1){
                             contenidoIngresado += espacio+"|"+espacio;
                         }else{
@@ -893,37 +888,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }
             
         }
-    }
-    //Generamos el Numero del ID ingresado
-    String generarNumInsert(int datNum){
-        String rNum = "";
-        int j;
-        
-        rNum = generarNum(datNum);
-        
-        return rNum;
-    }
-    //Generamos el numero de ID con formato
-    public String generarNum(int datNum) {
-        int d = datNum;
-        int c = 1;
-        String num = "";
-        
-        // Si  el rango es de 100 a 999, no se aumentan ceros a la izquierda "100"
-        // Si el rango es de 10 a 99, se aumenta un cero a la izquierda "010"
-        // Si el rango es de 10 a 99, se aumenta un dos a la izquierda "001"
-        if ((d >= 99) || (d < 999)) {
-            int can = c;
-            num = "" + can;
-        }else if ((d >= 9) || (d < 99)) {
-            int can = c;
-            num = "0" + can;
-        }else if (d < 9) {
-            int can = c;
-            num = "00" + can;
-        }
-
-        return num;
     }
     
     
