@@ -734,55 +734,62 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         }
 
                     }
+                    
+                    if(cUna == 0){
+                        enviar("Error delete...");
+                        panelEstado.setBackground(new Color(228, 65, 65));
+                        txtError.setText("Error:  No quedan datos de la tabla para eliminar...");
+                    }else{
 
-                    String contenidoIngresado = "";
+                        String contenidoIngresado = "";
 
-                    //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
-                    for (int i = 0; i < puntero-del; i++) {
-                        for (int j = 0; j < cantAtri; j++) {
-                            contenidoIngresado += datos[i][j];
-                            if(j != cantAtri-1){
-                                contenidoIngresado += espacio+"|"+espacio;
-                            }else{
-                                contenidoIngresado += "\n";
+                        //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
+                        for (int i = 0; i < puntero-del; i++) {
+                            for (int j = 0; j < cantAtri; j++) {
+                                contenidoIngresado += datos[i][j];
+                                if(j != cantAtri-1){
+                                    contenidoIngresado += espacio+"|"+espacio;
+                                }else{
+                                    contenidoIngresado += "\n";
+                                }
                             }
                         }
-                    }
-                    System.out.println(contenidoIngresado);
+                        System.out.println(contenidoIngresado);
 
-                    String contenidoBackup = "";
+                        String contenidoBackup = "";
 
-                    //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
-                    for (int i = 0; i < puntero-del; i++) {
-                        for (int j = 0; j < cantAtri; j++) {
-                            if(j == 0 && i == 0){
+                        //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
+                        for (int i = 0; i < puntero-del; i++) {
+                            for (int j = 0; j < cantAtri; j++) {
+                                if(j == 0 && i == 0){
 
-                            }else{
-                                contenidoBackup += ",";
+                                }else{
+                                    contenidoBackup += ",";
+                                }
+                                contenidoBackup += datos[i][j];
                             }
-                            contenidoBackup += datos[i][j];
                         }
+                        System.out.println(contenidoBackup);
+
+                        //Actualizo la cantidad de eliminados de la tabla
+                        int respuesta = escribirDatos(archiDelete, ""+del++);
+
+                        //Creo el archivo raiz y escribo los datos actualizados en la base de datos TXT
+                        archiFile.createNewFile();
+                        int respuesta1 = escribirDatos(archiFile, contenidoIngresado);
+
+                        //Creo el archivo backup y escribo los datos actualizados en la base de datos backup
+                        archiBackupFile.createNewFile();
+                        int respuesta2 = escribirDatos(archiBackupFile, contenidoBackup);
+
+                        //Mensaje de confirmación
+                        txtArea.setText("Registro eliminado correctamente...\n "
+                                + "====================================\n"+contenidoIngresado);
+                        enviar("Registro eliminado correctamente...\n "
+                                + "====================================\n"+contenidoIngresado);
+                        panelEstado.setBackground(new Color(76, 175, 80));
+                        txtError.setText("Correcto:  Registro eliminado correctamente...");
                     }
-                    System.out.println(contenidoBackup);
-
-                    //Actualizo la cantidad de eliminados de la tabla
-                    int respuesta = escribirDatos(archiDelete, ""+del++);
-
-                    //Creo el archivo raiz y escribo los datos actualizados en la base de datos TXT
-                    archiFile.createNewFile();
-                    int respuesta1 = escribirDatos(archiFile, contenidoIngresado);
-
-                    //Creo el archivo backup y escribo los datos actualizados en la base de datos backup
-                    archiBackupFile.createNewFile();
-                    int respuesta2 = escribirDatos(archiBackupFile, contenidoBackup);
-
-                    //Mensaje de confirmación
-                    txtArea.setText("Registro eliminado correctamente...\n "
-                            + "====================================\n"+contenidoIngresado);
-                    enviar("Registro eliminado correctamente...\n "
-                            + "====================================\n"+contenidoIngresado);
-                    panelEstado.setBackground(new Color(76, 175, 80));
-                    txtError.setText("Correcto:  Registro eliminado correctamente...");
                 }
             } catch (IOException ex) {
                 Logger.getLogger(VistaServidor.class.getName()).log(Level.SEVERE, null, ex);
