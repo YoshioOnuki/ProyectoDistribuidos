@@ -673,7 +673,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 int puntero = Integer.parseInt(leerDatos(archiPuntero));
                 int del = Integer.parseInt(leerDatos(archiDelete)) + 1;
                 
-                if(puntero - del == 1){
+                if(puntero - del <= 0){
                     enviar("Error delete...");
                     panelEstado.setBackground(new Color(228, 65, 65));
                     txtError.setText("Error:  No quedan datos de la tabla para eliminar...");
