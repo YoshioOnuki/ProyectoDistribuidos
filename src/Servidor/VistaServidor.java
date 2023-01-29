@@ -432,13 +432,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 }
             }
             
-            int cAtributos;
-            if(consulta.equalsIgnoreCase("DELETE FROM ")){
-                cAtributos = 3;
-            }else{
-                cAtributos = cantAtri;
-            }
-            for (int j = 0; j < cantAtri; j++) {
+            for (int j = 0; j < 2; j++) {
                 for (int i = posi; i < txtConsulta.length(); i++) {
                     if(txtConsulta.charAt(i) != espacio.charAt(0)){
                         if(txtConsulta.charAt(i) != puntoComa.charAt(0)){
