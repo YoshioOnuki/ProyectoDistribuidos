@@ -454,19 +454,21 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         return r;
     }
     void updt(){
+        //Validamos y capturamos el nombre de la tabla y los atributos a actualizar
         String[] d = validarUpdateDelete("UPDATE ", 7);
         String nombreT = d[0];
         System.out.println(nombreT);
         
+        //Creamos el nombre y archivo de la cantidad de atributos, puntero, raiz y backup de la tabla
         String can = "cantidad_atributo_"+nombreT+".txt";
         File archiCan = new File(crearUbicacionBackupCantAtri+can);
-        
+        //
         String punt = "puntero_"+nombreT+".txt";
         File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
-        
+        //
         String archi = nombreT+".txt";
         File archiFile = new File(crearUbicacion+archi);
-        
+        //
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
             
@@ -477,16 +479,23 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }else{
             
             try {
+                //Capturamos la cantidad de atributos y el puntero de la tabla
                 int cantAtri = Integer.parseInt(leerDatos(archiCan));
                 int puntero = Integer.parseInt(leerDatos(archiPuntero));
                 
+                //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
                 datos = new String[puntero][cantAtri];
                 
+                //Capturamos los datos del Backup de la tabla
                 String dat = leerDatos(archiBackupFile);
+                
+                //Variables para el manejo de datos de la tabla
                 String atri = "";
                 int posi = 0;
                 int k = 0;
                 int l = 0;
+                
+                //Capturamos los datos de la tabla en un Array
                 for (int j = 0; j < cantAtri*puntero; j++) {
                     for (int i = posi; i < dat.length(); i++) {
                         if(dat.charAt(i) != coma.charAt(0)){
@@ -510,11 +519,14 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 System.out.println(cantAtri);
                 System.out.println(puntero);
                 
+                //Tamaño de los datos extraidos de la validacion (nombre de la tabla, atributos...
                 int tamanio = d.length;
                 
+                //Puntero donde se encuentra la Fila para actualizar
                 int puntero2 = Integer.parseInt(d[tamanio-2]);
                 System.out.println(puntero2);
                 
+                //Cantidad de atributos ingresados
                 int cantAtriIngre = Integer.parseInt(d[tamanio-1]);
                 System.out.println(cantAtriIngre);
                 
@@ -532,7 +544,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         
                         contadorIngre++;
                         
-                        if(contadorIngre == 2){
+                        if(contadorIngre == cantAtriIngre){
                             break;
                         }
                     }
@@ -766,6 +778,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             int posi = 0;
             int k = 0;
             int l = 0;
+            
+            //Capturamos los datos de la tabla en un Array y le agregamos los nuevos campos al Array
             for (int j = 0; j < cantAtri*puntero; j++) {
                 for (int i = posi; i < dat.length(); i++) {
                     if(dat.charAt(i) != coma.charAt(0)){
@@ -791,7 +805,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     k++;
                     for (int i = 0; i < cantAtri; i++) {
                         if(i == 0){
-                            datos[k][i] = ""+puntero;
+                            datos[k][i] = "0"+puntero;
                             System.out.print(datos[k][i]+" | ");
                         }else{
                             datos[k][i] = atributos[cAtri];
