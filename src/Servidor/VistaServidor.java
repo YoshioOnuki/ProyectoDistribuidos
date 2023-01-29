@@ -765,28 +765,25 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             String atri = "";
             int posi = 0;
             int k = 0;
-            
-            //Bucle para capturar en un arreglo todos los datos de la tabla a insertar
+            int l = 0;
             for (int j = 0; j < cantAtri*puntero; j++) {
                 for (int i = posi; i < dat.length(); i++) {
                     if(dat.charAt(i) != coma.charAt(0)){
                         atri += dat.charAt(i);
-                        posi = i+1;
-                        if(i == dat.length()-1){
-                            datos[k][j] = atri;
-                            break;
-                        }
+                        posi++;
                     }else if(dat.charAt(i) == coma.charAt(0)){
-                        datos[k][j] = atri;
-                        posi = i+1;
+                        posi++;
                         break;
                     }
                 }
-                //Capturamos el atributo en el arreglo
-                
-                System.out.print(datos[k][j]+" ");
-                k++;
-                atri = "";                
+                datos[k][l] = atri;
+                System.out.print(datos[k][l]+" ");
+                l++;
+                if(l == cantAtri && k != puntero-1){
+                    k++;
+                    l=0;
+                }
+                atri = "";
             }
             
             
