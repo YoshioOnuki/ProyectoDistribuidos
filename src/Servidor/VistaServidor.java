@@ -837,7 +837,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
                 for (int i = 0; i < puntero+1; i++) {
                     for (int j = 0; j < cantAtri; j++) {
-                        if(j == 0){
+                        if(j == 0 && i > 0){
                             contenidoIngresado += generarNumInsert(Integer.parseInt(datos[i][j]));
                         }else{
                             contenidoIngresado += datos[i][j];
