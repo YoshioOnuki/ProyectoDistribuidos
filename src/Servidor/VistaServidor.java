@@ -820,7 +820,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         k++;
                         for (int i = 0; i < cantAtri; i++) {
                             if(i == 0){
-                                datos[k][i] = "0"+puntero;
+                                String en = generarNumInsert(puntero);
+                                datos[k][i] = en;
                                 System.out.print(datos[k][i]+" | ");
                             }else{
                                 datos[k][i] = atributos[cAtri];
@@ -887,6 +888,41 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             
         }
     }
+    //Generamos el Numero del ID ingresado
+    String generarNumInsert(int datNum){
+        String rNum = "";
+        int num = datNum;
+        int j;
+        if(num  == 1){
+            rNum = "001";
+        }else{
+            rNum = generarNum(num);
+        }
+        return rNum;
+    }
+    //Generamos el numero de ID con formato
+    public String generarNum(int datNum) {
+        int d = datNum;
+        int c = 1;
+        String num = "";
+        
+        // Si  el rango es de 100 a 999, no se aumentan ceros a la izquierda "100"
+        // Si el rango es de 10 a 99, se aumenta un cero a la izquierda "010"
+        // Si el rango es de 10 a 99, se aumenta un dos a la izquierda "001"
+        if ((d >= 99) || (d < 999)) {
+            int can = c;
+            num = "" + can;
+        }else if ((d >= 9) || (d < 99)) {
+            int can = c;
+            num = "0" + can;
+        }else if (d < 9) {
+            int can = c;
+            num = "00" + can;
+        }
+
+        return num;
+    }
+    
     
     //Método Show, para visualizar todas las tablas de la base de datos TXT
     void showTables() {
