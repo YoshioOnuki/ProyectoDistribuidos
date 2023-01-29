@@ -719,7 +719,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         l++;
 
                         if(l == cantAtri && k != puntero-del){
-                            if(estado == 1){
+                            if(estado == 1 && cUna == 0){
                                 estado = 0;
                                 cUna++;
                                 l=0;
