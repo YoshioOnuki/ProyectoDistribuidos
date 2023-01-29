@@ -1,6 +1,8 @@
 
 CREATE TABLE alumno2 ( id int , nombre varchar(255) );
 CREATE TABLE alumno5 ( id int , nombre varchar(255) , edad int , direccion varchar(255) , estado varchar(255) );
+CREATE TABLE alumno ( id int , nombre varchar(255) , edad int , direccion varchar(255) , estado varchar(255) );
+
 
 SELECT * FROM alumno5;
 
@@ -8,6 +10,6 @@ UPDATE alumno5 SET nombre = 'Aurerio Onuki' , edad = 21 WHERE id = 1;
 
 INSERT INTO alumno5 ( nombre , edad , direccion , estado ) VALUES ( 'Yoshio Onuki' , 22 , 'Jr. Arcia 190' , 'Activo' );
 
-DELETE FROM alumno2 WHERE id = 1;
+DELETE FROM alumno5 WHERE id = 1;
 
 SHOW TABLES;

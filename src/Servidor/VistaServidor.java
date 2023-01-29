@@ -285,7 +285,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     crearUbiDelete.mkdirs();
                     archiDelete.createNewFile();
                     
-                    int respuesta = escribirDatos(crearUbiDelete, ""+0);
+                    int respuesta = escribirDatos(crearUbiDelete, "0");
                     
                     int respuesta0 = escribirDatos(crearArchiBackupCantidad, contenidoCantidad);
                     
