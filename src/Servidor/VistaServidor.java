@@ -676,6 +676,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             int dd = Integer.parseInt(d[2]);
             System.out.println("");
             for (int j = 0; j < cantAtri*puntero; j++) {
+                if(k == puntero){
+                    break;
+                }
                 for (int i = posi; i < dat.length(); i++) {
                     if(dat.charAt(i) != coma.charAt(0)){
                         atri += dat.charAt(i);
@@ -697,10 +700,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     l=0;
                 }
                 atri = "";
-                
-                if(k == puntero-1){
-                    break;
-                }
                 
             }
             System.out.println("");
