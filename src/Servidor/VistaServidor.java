@@ -691,7 +691,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     int l = 0;
                     int estado = 0;
                     int cUna = 0;
-                    int idAtri = 0;
 
                     //Capturamos los datos de la tabla en un Array
                     System.out.print("ID: "+d[2]);
@@ -707,7 +706,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                                 break;
                             }
                         }
-                        if(l == 0 && atri.equalsIgnoreCase(dd) && cUna == 0){
+                        if(l == 0 && atri.equalsIgnoreCase(dd)){
                             estado = 1;
                             cUna++;
                         }else if(estado != 1){
@@ -735,7 +734,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 
                     }
                     
-                    if(cUna == 0){
+                    if(cUna <= 0){
                         enviar("Error delete...");
                         panelEstado.setBackground(new Color(228, 65, 65));
                         txtError.setText("Error:  No quedan datos de la tabla para eliminar...");
