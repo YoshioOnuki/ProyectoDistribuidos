@@ -726,20 +726,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     void insert(){
         //Validamos y capturamos el nombre de la tabla y los atributos a insertar
         String[] atributos = validarInsert();
-        
-        //Declaramos una variable para cargar el nombre de la tabla
-        String cargarNombre = "";
-        String nombreT = "";
-        
-        //Capturar el nombre de la tabla sin su extensión ".txt"
-        for (int i = 0; i < atributos[0].length(); i++) {
-            if(atributos[0].charAt(i) != punto.charAt(0)){
-                cargarNombre += atributos[0].charAt(i);
-            }else if(atributos[0].charAt(i) == punto.charAt(0)){
-                nombreT = cargarNombre;
-                break;
-            }
-        }
+        String nombreT = atributos[0];
         System.out.println(nombreT);
         
         //Creamos el nombre y archivo de la cantidad de atributos, puntero, raiz y backup de la tabla
