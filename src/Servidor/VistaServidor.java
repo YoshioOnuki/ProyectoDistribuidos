@@ -721,18 +721,22 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         return r2;
     }
     void insert(){
+        //Validamos y capturamos el nombre de la tabla y los atributos a insertar
         String[] atributos = validarInsert();
+        
+        //Asignamos el nombre de la tabla a una variable
         String nombreT = atributos[0];
         
+        //Creamos el nombre y archivo de la cantidad de atributos, puntero, raiz y backup de la tabla
         String can = "cantidad_atributo_"+nombreT+".txt";
         File archiCan = new File(crearUbicacionBackupCantAtri+can);
-        
+        //
         String punt = "puntero_"+nombreT+".txt";
         File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
-        
+        //
         String archi = nombreT+".txt";
         File archiFile = new File(crearUbicacionBackup+archi);
-        
+        //
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
         
@@ -741,34 +745,51 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
+            //Capturamos la cantidad de atributos y el puntero de la tabla
             int cantAtri = Integer.parseInt(leerDatos(archiCan));
             int puntero = Integer.parseInt(leerDatos(archiPuntero));
+            
+            //Declaramos nos variables para llenar la base de datos TXT y su backup
             String contenido = "";
             String conteBackup = "";
+            
+            //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
             datos = new String[puntero][cantAtri];
             
-            for (int i = 0; i < cantidadAtributos; i++) {
-                datos[0][i] = da[c]+" "+da[c+1];
-                c += 2;
-                contenido += datos[0][i];
-                if(i != cantidadAtributos-1){
-                    contenido += espacio+"|"+espacio;
-                }else{
-                    contenido += "\n";
+            //Capturamos los datos del Backup de la tabla
+            String dat = leerDatos(archiBackupFile);
+            
+            //Variables para el manejo de datos de la tabla
+            String atri = "";
+            int posi = 0;
+            int k = 0;
+            int l = 0;
+            
+            //Bucle para capturar en un arreglo todos los datos de la tabla a insertar
+            for (int j = 0; j < cantAtri*puntero; j++) {
+                for (int i = posi; i < dat.length(); i++) {
+                    if(dat.charAt(i) != coma.charAt(0)){
+                        atri += dat.charAt(i);
+                        posi++;
+                    }else if(dat.charAt(i) == coma.charAt(0)){
+                        posi++;
+                        break;
+                    }
                 }
-            }
-            for (int i = 0; i < cantidadAtributos; i++) {
-                if(i != 0){
-                    conteBackup += ",";
+                //Capturamos el atributo en el arreglo
+                datos[k][l] = atri;
+                System.out.print(datos[k][l]+" ");
+                l++;
+                if(l == cantAtri && k != puntero-1){
+                    k++;
+                    l=0;
                 }
-                conteBackup += datos[0][i];
-                System.out.println(conteBackup);
+                atri = "";
             }
+            
+            
             
         }
-            
-        
-        
     }
     
     //Métodos de limpieza
