@@ -679,7 +679,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     txtError.setText("Error:  No quedan datos de la tabla para eliminar...");
                 }else{
                     //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
-                    datos = new String[puntero-del][cantAtri];
+                    datos = new String[puntero-del+1][cantAtri];
 
                     //Capturamos los datos del Backup de la tabla
                     String dat = leerDatos(archiBackupFile);
@@ -696,7 +696,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     System.out.print("ID: "+d[2]);
                     String dd = d[2];
                     System.out.println("");
-                    for (int j = 0; j < (puntero-del)*puntero; j++) {
+                    for (int j = 0; j < cantAtri*puntero; j++) {
                         for (int i = posi; i < dat.length(); i++) {
                             if(dat.charAt(i) != coma.charAt(0)){
                                 atri += dat.charAt(i);
@@ -718,7 +718,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         
                         l++;
 
-                        if(l == cantAtri-1 && k != puntero-del){
+                        if(l == cantAtri-1 && k != puntero-del+1){
                             if(estado == 1){
                                 l=0;
                                 estado = 0;
@@ -729,7 +729,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         }
                         atri = "";
 
-                        if(k == puntero-del){
+                        if(k == puntero-del+1){
                             break;
                         }
 
