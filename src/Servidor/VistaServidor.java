@@ -166,7 +166,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     break;
                 }
             }
-            for (int j = 0; j < cantAtri*2; j++) {
+            for (int j = 0; j < cantAtri*2 + 1; j++) {
                 nombre = "";
                 for (int i = posi; i < txtConsulta.length(); i++) {
                     if(txtConsulta.charAt(i) != espacio.charAt(0)){
