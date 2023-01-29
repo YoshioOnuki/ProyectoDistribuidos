@@ -31,8 +31,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     
     //Inicializamos caracteres conocidos para validaciones
     String barra = File.separator;
-    String punto = ",";
-    String coma = ".";
+    String punto = ".";
+    String coma = ",";
     String puntoComa = ";";
     String espacio = " ";
     String parenInicio = "(";
@@ -777,7 +777,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     }
                 }
                 datos[k][l] = atri;
-                System.out.print(datos[k][l]+" ");
+                System.out.print(datos[k][l]+" | ");
                 l++;
                 if(l == cantAtri && k != puntero-1){
                     k++;
