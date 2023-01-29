@@ -773,22 +773,20 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         atri += dat.charAt(i);
                         posi++;
                         if(i == dat.length()-1){
-                            datos[j][k] = atri;
+                            datos[k][j] = atri;
                             break;
                         }
                     }else if(dat.charAt(i) == coma.charAt(0)){
-                        datos[j][k] = atri;
+                        datos[k][j] = atri;
                         posi++;
                         break;
                     }
                 }
                 //Capturamos el atributo en el arreglo
                 
-                System.out.print(datos[j][k]+" ");
+                System.out.print(datos[k][j]+" ");
                 k++;
-                atri = "";
-                
-                
+                atri = "";                
             }
             
             
