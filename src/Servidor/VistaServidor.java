@@ -664,7 +664,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 cantAtri = Integer.parseInt(leerDatos(archiCan));
             }
             
-            String[] r1 = new String[cantAtri-1];
+            int c = cantAtri-1;
+            String[] r1 = new String[c];
             int cantAt = 0;
             r2 = new String[cantAtri];
             r2[cant] = nombre;
@@ -806,6 +807,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }
     }
     
+    //Método Show, para visualizar todas las tablas de la base de datos TXT
     void showTables() {
         String sBase = System.getProperty("user.dir") + File.separator + "dbDistribuidos";
         File dir = new File(sBase);
