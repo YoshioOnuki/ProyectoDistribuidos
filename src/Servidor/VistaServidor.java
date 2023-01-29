@@ -250,6 +250,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             File crearUbiBackup = new File(crearUbicacionBackup);
             File crearArchiBackup = new File(crearUbicacionBackup+archivoBackup);
             
+            String archivoDelete = "delete_"+nombreTabla+".txt";
+            File crearUbiDelete = new File(crearUbicacionBackupCantDelete);
+            File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
             
 
             try {
@@ -270,6 +273,11 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 
                     crearUbiBackupCantidad.mkdirs();
                     crearArchiBackupCantidad.createNewFile();
+                    
+                    crearUbiDelete.mkdirs();
+                    archiDelete.createNewFile();
+                    
+                    int respuesta = escribirDatos(crearUbiDelete, ""+0);
                     
                     int respuesta0 = escribirDatos(crearArchiBackupCantidad, contenidoCantidad);
                     
@@ -650,7 +658,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         //
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
-        //
+        
         String archivoDelete = "delete_"+nombreT+".txt";
         File crearUbiDelete = new File(crearUbicacionBackupCantDelete);
         File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
@@ -664,16 +672,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //Capturamos la cantidad de atributos y el puntero de la tabla
                 int cantAtri = Integer.parseInt(leerDatos(archiCan));
                 int puntero = Integer.parseInt(leerDatos(archiPuntero));
-                int del = 0;
+                int del = Integer.parseInt(leerDatos(archiDelete));
                 
-                if(!archiDelete.exists()){
-                    crearUbiDelete.mkdirs();
-                    archiDelete.createNewFile();
-                    
-                    int respuesta0 = escribirDatos(crearUbiDelete, ""+0);
-                }else{
-                    del = Integer.parseInt(leerDatos(archiDelete));
-                }
                 
                 //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
                 datos = new String[puntero-1][cantAtri];
@@ -712,7 +712,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     
                     l++;
                     
-                    if(l == cantAtri && k != puntero-1){
+                    if(l == cantAtri && k != puntero-del){
                         if(estado == 1){
                             estado = 0;
                             cUna++;
