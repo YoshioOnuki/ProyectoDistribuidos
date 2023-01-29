@@ -737,7 +737,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
         //
         String archi = nombreT+".txt";
-        File archiFile = new File(crearUbicacionBackup+archi);
+        File archiFile = new File(crearUbicacion+archi);
         //
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
