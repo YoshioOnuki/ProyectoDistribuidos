@@ -703,6 +703,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                                 if(l == 0 && dd == dat.charAt(i) && cUna == 0){
                                     estado = 1;
                                     idAtri = dat.charAt(i);
+                                    System.out.println("ID a eliminar: "+idAtri);
                                 }
                                 atri += dat.charAt(i);
                                 posi++;
