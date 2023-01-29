@@ -686,11 +686,11 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 
                     //Variables para el manejo de datos de la tabla
                     String atri = "";
+                    int estado = 0;
+                    int estado2 = 0;
                     int posi = 0;
                     int k = 0;
                     int l = 0;
-                    int estado = 0;
-                    int cUna = 0;
 
                     //Capturamos los datos de la tabla en un Array
                     System.out.print("ID: "+d[2]);
@@ -702,25 +702,26 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                                 atri += dat.charAt(i);
                                 posi++;
                             }else if(dat.charAt(i) == coma.charAt(0)){
+                                if(atri.equalsIgnoreCase(dd) && l == 0){
+                                    estado = 1;
+                                    estado2 = 1;
+                                }
                                 posi++;
                                 break;
                             }
                         }
-                        if(l == 0 && atri.equalsIgnoreCase(dd)){
-                            estado = 1;
-                            cUna++;
-                        }else if(estado != 1){
+                        
+                        if(estado != 1){
                             datos[k][l] = atri;
                             System.out.print(datos[k][l]+" ");
                         }
-
+                        
                         l++;
 
-                        if(l == cantAtri && k != puntero-del){
-                            if(estado == 1 && cUna == 0){
-                                estado = 0;
-                                cUna++;
+                        if(l == cantAtri-1 && k != puntero-del){
+                            if(estado == 1){
                                 l=0;
+                                estado = 0;
                             }else{
                                 k++;
                                 l=0;
@@ -734,7 +735,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 
                     }
                     
-                    if(cUna <= 0){
+                    if(estado2 == 0){
                         enviar("Error delete...");
                         panelEstado.setBackground(new Color(228, 65, 65));
                         txtError.setText("Error:  No quedan datos de la tabla para eliminar...");
