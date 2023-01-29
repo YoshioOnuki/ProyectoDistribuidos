@@ -739,6 +739,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 break;
             }
         }
+        System.out.println(nombreT);
         
         //Creamos el nombre y archivo de la cantidad de atributos, puntero, raiz y backup de la tabla
         String can = "cantidad_atributo_"+nombreT+".txt";
@@ -815,12 +816,12 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     }
     
     //Métodos para validar las consultas ingresadas por el cliente
-    String tipoConsulta(){
+    String tipoConsulta(int cant){
         String r = "";
-        if(txtConsulta.length() < 6){
+        if(txtConsulta.length() < cant){
             
         }else{
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < cant; i++) {
                 r += txtConsulta.charAt(i);
             }
         }
@@ -833,18 +834,18 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         if(txtConsulta.isEmpty()){
             
         }else{
-            
-            System.out.println("\n"+tipoConsulta());
-            if(tipoConsulta().equalsIgnoreCase("CREATE")){
+            if(tipoConsulta(6).equalsIgnoreCase("CREATE")){
                 createTabla();
-            }else if(tipoConsulta().equalsIgnoreCase("SELECT")){
+            }else if(tipoConsulta(6).equalsIgnoreCase("SELECT")){
                 select();
-            }else if(tipoConsulta().equalsIgnoreCase("UPDATE")){
+            }else if(tipoConsulta(6).equalsIgnoreCase("UPDATE")){
                 updt();
-            }else if(tipoConsulta().equalsIgnoreCase("DELETE")){
+            }else if(tipoConsulta(6).equalsIgnoreCase("DELETE")){
                 
-            }else if(tipoConsulta().equalsIgnoreCase("INSERT")){
+            }else if(tipoConsulta(6).equalsIgnoreCase("INSERT")){
                 insert();
+            }else if(tipoConsulta(11).equalsIgnoreCase("SHOW TABLES")){
+                
             }else{
                 enviar("Error...");
                 panelEstado.setBackground(new Color(228, 65, 65));

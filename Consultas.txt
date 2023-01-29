@@ -9,3 +9,5 @@ UPDATE alumno5 SET nombre = 'Aurerio Onuki' , edad = 21 WHERE id = 1;
 INSERT INTO alumno5 ( nombre , edad , direccion , estado ) VALUES ( 'Yoshio Onuki' , 22 , 'Jr. Arcia 190' , 'Activo' );
 
 DELETE FROM alumno2 WHERE id = 1;
+
+SHOW TABLES;
