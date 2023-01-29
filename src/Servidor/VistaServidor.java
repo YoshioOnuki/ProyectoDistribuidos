@@ -44,6 +44,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     String crearUbicacionBackup = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"backup"+barra;
     String crearUbicacionBackupPuntero = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"punteros"+barra;
     String crearUbicacionBackupCantAtri = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"cantidad_atributos"+barra;
+    String crearUbicacionBackupCantDelete = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"cantidad_delete"+barra;
     
     //File para el manejos de archivos en el Backup
     File archiBackupFile = null;
@@ -649,6 +650,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         //
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
+        //
+        String archivoDelete = "delete_"+nombreT+".txt";
+        File crearUbiDelete = new File(crearUbicacionBackupCantDelete);
+        File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
         
         if(!archiFile.exists()){
             enviar("Error...");
@@ -659,6 +664,16 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //Capturamos la cantidad de atributos y el puntero de la tabla
                 int cantAtri = Integer.parseInt(leerDatos(archiCan));
                 int puntero = Integer.parseInt(leerDatos(archiPuntero));
+                int del = 0;
+                
+                if(!archiDelete.exists()){
+                    crearUbiDelete.mkdirs();
+                    archiDelete.createNewFile();
+                    
+                    int respuesta0 = escribirDatos(crearUbiDelete, ""+0);
+                }else{
+                    del = Integer.parseInt(leerDatos(archiDelete));
+                }
                 
                 //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
                 datos = new String[puntero-1][cantAtri];
@@ -697,7 +712,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     
                     l++;
                     
-                    if(l == cantAtri && k != puntero-1){
+                    if(l == cantAtri && k != puntero-del){
                         if(estado == 1){
                             estado = 0;
                             cUna++;
@@ -709,7 +724,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     }
                     atri = "";
                     
-                    if(k == puntero-1){
+                    if(k == puntero-del){
                         break;
                     }
                     
@@ -718,7 +733,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String contenidoIngresado = "";
                 
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
-                for (int i = 0; i < puntero-1; i++) {
+                for (int i = 0; i < puntero-del; i++) {
                     for (int j = 0; j < cantAtri; j++) {
                         contenidoIngresado += datos[i][j];
                         if(j != cantAtri-1){
@@ -733,7 +748,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String contenidoBackup = "";
                 
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
-                for (int i = 0; i < puntero-1; i++) {
+                for (int i = 0; i < puntero-del; i++) {
                     for (int j = 0; j < cantAtri; j++) {
                         if(j == 0 && i == 0){
                             
