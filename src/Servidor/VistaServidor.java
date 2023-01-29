@@ -607,12 +607,13 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }
     }
     
-    String validarInsert(){
-        String r = "";
+    String[] validarInsert(){
+        String[] r2 = null;
+        int cantAtri = 0;
         String consul = "";
         int posi = 12;
+        int cant = 0;
         String nombre = "";
-        
         
         for (int i = 0; i < 12; i++) {
             consul += txtConsulta.charAt(i);
@@ -626,20 +627,78 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     nombre += txtConsulta.charAt(i);
                 }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
                     System.out.println(nombre);
-                    r = nombre;
-                    nombre = "";
+                    posi = i+3;
                     break;
                 }
             }
-            System.out.println(r);
+            
+            String can = "cantidad_atributo_"+nombre+".txt";
+            File archiCan = new File(crearUbicacionBackupCantAtri+can);
+            if(archiCan.exists()){
+                cantAtri = Integer.parseInt(leerDatos(archiCan));
+            }
+            
+            String[] r1 = new String[cantAtri];
+            r2 = new String[cantAtri+1];
+            r2[cant] = nombre;
+            cant++;
+            nombre = "";
+            
+            for (int j = 0; j < cantAtri; j++) {
+                for (int i = posi; i < txtConsulta.length(); i++) {
+                    if(txtConsulta.charAt(i) != espacio.charAt(0)){
+                        nombre += txtConsulta.charAt(i);
+                    }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
+                        System.out.println(nombre);
+                        r1[cant] = nombre;
+                        cant++;
+                        posi = i+3;
+                        nombre = "";
+                        break;
+                    }
+                }
+            }
+            
+            posi += 8;
+            int estad = 0;
+            nombre = "";
+            
+            for (int j = 0; j < cantAtri; j++) {
+                for (int i = posi; i < txtConsulta.length(); i++) {
+                    if(txtConsulta.charAt(i) != espacio.charAt(0)){
+                        if(txtConsulta.charAt(i) != comillaSimple.charAt(0)){
+                            nombre += txtConsulta.charAt(i);
+                        }else{
+                            estad++;
+                        }
+                    }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
+                        if(estad%2!=0){
+                            nombre += " ";
+                        }else{
+                            System.out.println(nombre);
+                            r2[cant] = nombre;
+                            cant++;
+                            nombre = "";
+                            if(j == cantAtri - 1){
+                                break;
+                            }else{
+                                posi = i+3;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
         }
         
-        return r;
+        return r2;
     }
     
     void insert(){
-        String atributos = validarInsert();
-        String nombreT = atributos;
+        String[] atributos = validarInsert();
+        String nombreT = atributos[0];
         
         String can = "cantidad_atributo_"+nombreT+".txt";
         File archiCan = new File(crearUbicacionBackupCantAtri+can);
@@ -652,19 +711,18 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
-            
+        
         if(!archiFile.exists()){
             enviar("Error...");
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
-            VistaServidor obj = new VistaServidor();
-            int cantAtri = Integer.parseInt(obj.leerDatos(archiCan));
-            int puntero = Integer.parseInt(obj.leerDatos(archiPuntero));
+            int cantAtri = Integer.parseInt(leerDatos(archiCan));
+            int puntero = Integer.parseInt(leerDatos(archiPuntero));
             
             datos = new String[puntero][cantAtri];
             
-            String dat = obj.leerDatos(archiBackupFile);
+            String dat = leerDatos(archiBackupFile);
             String atri = "";
             int posi = 0;
             int k = 0;
@@ -751,7 +809,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }else if(tipoConsulta().equalsIgnoreCase("DELETE")){
                 
             }else if(tipoConsulta().equalsIgnoreCase("INSERT")){
-                String atri = validarInsert();
+                String[] atri = validarInsert();
             }else{
                 enviar("Error...");
                 panelEstado.setBackground(new Color(228, 65, 65));

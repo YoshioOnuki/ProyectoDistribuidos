@@ -309,9 +309,6 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         error();
     }//GEN-LAST:event_txtAreaKeyTyped
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
