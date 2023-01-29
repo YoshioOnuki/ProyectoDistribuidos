@@ -718,7 +718,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String contenidoIngresado = "";
                 
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
-                for (int i = 0; i < puntero; i++) {
+                for (int i = 0; i < puntero-1; i++) {
                     for (int j = 0; j < cantAtri; j++) {
                         contenidoIngresado += datos[i][j];
                         if(j != cantAtri-1){
@@ -733,7 +733,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String contenidoBackup = "";
                 
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
-                for (int i = 0; i < puntero; i++) {
+                for (int i = 0; i < puntero-1; i++) {
                     for (int j = 0; j < cantAtri; j++) {
                         if(j == 0 && i == 0){
                             
