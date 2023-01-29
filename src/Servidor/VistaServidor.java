@@ -1068,8 +1068,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }
         }
         
-        txtArea.setText("Lista de tablas...\n" + listaFilestxt);
-        enviar("Lista de tablas...\n" + listaFilestxt);
+        txtArea.setText("Lista de tablas...\n "
+                        + "====================================\n" + listaFilestxt);
+        enviar("Lista de tablas...\n "
+                        + "====================================\n" + listaFilestxt);
         panelEstado.setBackground(new Color(76, 175, 80));
         txtError.setText("Correcto:  Tablas visualizadas correctamente...");
         
