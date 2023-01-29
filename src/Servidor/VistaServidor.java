@@ -696,7 +696,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     System.out.print("ID: "+d[2]);
                     String dd = d[2];
                     System.out.println("");
-                    for (int j = 0; j < cantAtri*puntero; j++) {
+                    for (int j = 0; j < (puntero-del)*puntero; j++) {
                         for (int i = posi; i < dat.length(); i++) {
                             if(dat.charAt(i) != coma.charAt(0)){
                                 atri += dat.charAt(i);
