@@ -189,7 +189,11 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             cont++;
                             pAtri++;
                             nombre = "";
-                            posi = i+3;
+                            if(j == cantAtri*2-1){
+                                posi = i+2;
+                            }else{
+                                posi = i+3; 
+                            }
                             break;
                         }
                         
