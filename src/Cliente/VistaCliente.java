@@ -35,29 +35,38 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         if(txtMensaje.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Campo de texto vacío.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
             txtMensaje.requestFocus();
-        }
-        String mensaje = "" + this.txtMensaje.getText() + "\n";
-        //this.txtArea.setText(mensaje);
-        this.txtArea.setText(mensaje);
-        this.txtMensaje.setText("");
-        
-        new Thread(){
-            public void run(){
+        }else{
+            if(txtMensaje.getText().equalsIgnoreCase("cls")){
                 txtArea.setText("");
-                lblLoading.setVisible(true);
-                txtError.setForeground(Color.black);
-                txtError.setText("Cargando...");
-                proceso(10);
-                error();
+                lblLoading.setVisible(false);
+                limpiarError();
+                txtMensaje.setText("");
+                txtMensaje.requestFocus();
+            }else{
+                String mensaje = "" + this.txtMensaje.getText() + "\n";
+                //this.txtArea.setText(mensaje);
+                this.txtArea.setText(mensaje);
+                this.txtMensaje.setText("");
+
+                new Thread(){
+                    public void run(){
+                        txtArea.setText("");
+                        lblLoading.setVisible(true);
+                        txtError.setForeground(Color.black);
+                        txtError.setText("Cargando...");
+                        proceso(10);
+                        error();
+                    }
+                }.start();
+
+                txtMensaje.requestFocus();
+                limpiarError();
+
+                Cliente c = new Cliente(this.ip,5050,mensaje);
+                Thread t = new Thread(c); 
+                t.start();
             }
-        }.start();
-        
-        txtMensaje.requestFocus();
-        limpiarError();
-        
-        Cliente c = new Cliente(this.ip,5050,mensaje);
-        Thread t = new Thread(c); 
-        t.start();
+        }
     }
     
     void error(){
