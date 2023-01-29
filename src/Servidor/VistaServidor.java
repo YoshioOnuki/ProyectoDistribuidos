@@ -130,7 +130,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     enviar("Error...");
                     panelEstado.setBackground(new Color(228, 65, 65));
                     txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-    //                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
                 }else{
                     
                     crearUbi.mkdirs();
@@ -156,7 +155,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     enviar("Correcto...");
                     panelEstado.setBackground(new Color(76, 175, 80));
                     txtError.setText("Correcto:  Tabla '"+ nombreTabla +"' creada correctamente en la base de datos TXT...");
-    //                JOptionPane.showMessageDialog(null, "Directorios creados correctamente.", "¡Correcto!",JOptionPane.WARNING_MESSAGE, icoOk);
                 }
 
             } catch (Exception e) {
@@ -246,7 +244,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         String[] r = new String[(cantAtri*2)+1];
         
         if(!consul.equalsIgnoreCase("CREATE TABLE ")){
-//            JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
             System.out.println(consul);
         }else{
             for (int i = posi; i < txtConsulta.length(); i++) {
@@ -306,7 +303,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }
         
         if(!consul.equalsIgnoreCase("SELECT * FROM ")){
-//            JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
             System.out.println(consul);
         }else{
             for (int i = posi; i < txtConsulta.length(); i++) {
@@ -360,7 +356,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         String[] r = new String[cantArray];
         
         if(!consul.equalsIgnoreCase(consulta)){
-//            JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
             System.out.println(consul);
         }else{
             
@@ -450,7 +445,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             enviar("Error...");
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-    //                    JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
         }else{
             mensaje = leerDatos(crearArchi);
             enviar(mensaje);
@@ -458,8 +452,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla visualizada correctamente...");
         }
-                
-                
     }
     
     void updt(){
@@ -496,9 +488,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 int k = 0;
                 int l = 0;
                 for (int j = 0; j < cantAtri*puntero; j++) {
-                    //            System.out.println(dat.length());
                     for (int i = posi; i < dat.length(); i++) {
-                        //                System.out.println(coma);
                         if(dat.charAt(i) != coma.charAt(0)){
                             atri += dat.charAt(i);
                             posi++;
@@ -617,7 +607,40 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }
     }
     
-    void insert(String nombreT){
+    String validarInsert(){
+        String r = "";
+        String consul = "";
+        int posi = 12;
+        String nombre = "";
+        
+        
+        for (int i = 0; i < 12; i++) {
+            consul += txtConsulta.charAt(i);
+        }
+        System.out.println(consul);
+        if(!consul.equalsIgnoreCase("INSERT INTO ")){
+            System.out.println(consul);
+        }else{
+            for (int i = posi; i < txtConsulta.length(); i++) {
+                if(txtConsulta.charAt(i) != espacio.charAt(0)){
+                    nombre += txtConsulta.charAt(i);
+                }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
+                    System.out.println(nombre);
+                    r = nombre;
+                    nombre = "";
+                    break;
+                }
+            }
+            System.out.println(r);
+        }
+        
+        return r;
+    }
+    
+    void insert(){
+        String atributos = validarInsert();
+        String nombreT = atributos;
+        
         String can = "cantidad_atributo_"+nombreT+".txt";
         File archiCan = new File(crearUbicacionBackupCantAtri+can);
         
@@ -674,7 +697,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             
         
         
-//        String[][] d = dat;
     }
     
     void delete(){
@@ -729,12 +751,11 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }else if(tipoConsulta().equalsIgnoreCase("DELETE")){
                 
             }else if(tipoConsulta().equalsIgnoreCase("INSERT")){
-                
+                String atri = validarInsert();
             }else{
                 enviar("Error...");
                 panelEstado.setBackground(new Color(228, 65, 65));
                 txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-//                JOptionPane.showMessageDialog(null, "Consulta ingresada es incorrecta.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
             }
         }
     }    
