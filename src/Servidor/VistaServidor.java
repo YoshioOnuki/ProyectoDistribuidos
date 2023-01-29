@@ -706,10 +706,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                                 break;
                             }
                         }
-                        if(l == 0 && atri.equalsIgnoreCase(dd) && cUna == 0){
+                        if(l == 0 && atri.equalsIgnoreCase(dd)){
                             estado = 1;
                             cUna++;
-                        }else if(!atri.equalsIgnoreCase(dd) && estado == 0){
+                        }else if(estado != 1){
                             datos[k][l] = atri;
                             System.out.print(datos[k][l]+" ");
                         }
