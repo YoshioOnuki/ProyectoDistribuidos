@@ -820,7 +820,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         k++;
                         for (int i = 0; i < cantAtri; i++) {
                             if(i == 0){
-                                String en = generarNumInsert(puntero);
+                                String en = ""+puntero;
                                 datos[k][i] = en;
                                 System.out.print(datos[k][i]+" | ");
                             }else{
@@ -837,7 +837,11 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
                 for (int i = 0; i < puntero+1; i++) {
                     for (int j = 0; j < cantAtri; j++) {
-                        contenidoIngresado += datos[i][j];
+                        if(j == 0){
+                            contenidoIngresado += generarNumInsert(Integer.parseInt(datos[i][j]));
+                        }else{
+                            contenidoIngresado += datos[i][j];
+                        }
                         if(j != cantAtri-1){
                             contenidoIngresado += espacio+"|"+espacio;
                         }else{
@@ -891,13 +895,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     //Generamos el Numero del ID ingresado
     String generarNumInsert(int datNum){
         String rNum = "";
-        int num = datNum;
         int j;
-        if(num  == 1){
-            rNum = "001";
-        }else{
-            rNum = generarNum(num);
-        }
+        
+        rNum = generarNum(datNum);
+        
         return rNum;
     }
     //Generamos el numero de ID con formato
