@@ -711,7 +711,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                                 break;
                             }
                         }
-                        if(estado != 1  && cUna != 0){
+                        if(estado == 1  && cUna == 0){
+                            
+                        }else{
                             datos[k][l] = atri;
                             System.out.print(datos[k][l]+" ");
                         }
