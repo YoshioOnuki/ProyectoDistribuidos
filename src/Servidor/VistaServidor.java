@@ -785,6 +785,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //Capturamos el atributo en el arreglo
                 
                 System.out.print(datos[j][k]+" ");
+                k++;
                 atri = "";
                 
                 
