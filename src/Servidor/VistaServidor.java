@@ -633,7 +633,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }
     }
     void delete(){
-        String[] d = validarUpdateDelete("DELETE FROM ", 7);
+        String[] d = validarUpdateDelete("DELETE FROM ", 12);
         String nombreT = d[0];
         
         String can = "cantidad_atributo_"+nombreT+".txt";
