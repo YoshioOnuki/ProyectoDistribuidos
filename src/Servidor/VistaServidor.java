@@ -760,7 +760,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 System.out.println(contenidoBackup);
                 
                 //Actualizo la cantidad de eliminados de la tabla
-                int respuesta = escribirDatos(archiFile, contenidoIngresado);
+                int respuesta = escribirDatos(archiDelete, ""+del++);
                 
                 //Creo el archivo raiz y escribo los datos actualizados en la base de datos TXT
                 archiFile.createNewFile();
