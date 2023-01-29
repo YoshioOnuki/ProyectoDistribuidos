@@ -716,7 +716,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
 
                         l++;
 
-                        if(l == cantAtri && k != puntero-del+1){
+                        if(l == cantAtri && k != puntero-del){
                             if(estado == 1){
                                 estado = 0;
                                 cUna++;
@@ -728,7 +728,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         }
                         atri = "";
 
-                        if(k == puntero-del){
+                        if(k == puntero-del+1){
                             break;
                         }
 
