@@ -633,27 +633,78 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }
     }
     void delete(){
+        //Validamos y capturamos el nombre de la tabla y los atributos a actualizar
         String[] d = validarUpdateDelete("DELETE FROM ", 12);
         String nombreT = d[0];
         
+        //Creamos el nombre y archivo de la cantidad de atributos, puntero, raiz y backup de la tabla
         String can = "cantidad_atributo_"+nombreT+".txt";
         File archiCan = new File(crearUbicacionBackupCantAtri+can);
-        
+        //
         String punt = "puntero_"+nombreT+".txt";
         File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
-        
+        //
         String archi = nombreT+".txt";
         File archiFile = new File(crearUbicacion+archi);
-        
+        //
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
-            
+        
         if(!archiFile.exists()){
             enviar("Error...");
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
+            //Capturamos la cantidad de atributos y el puntero de la tabla
+            int cantAtri = Integer.parseInt(leerDatos(archiCan));
+            int puntero = Integer.parseInt(leerDatos(archiPuntero));
+
+            //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
+            datos = new String[puntero-1][cantAtri];
             
+            //Capturamos los datos del Backup de la tabla
+            String dat = leerDatos(archiBackupFile);
+
+            //Variables para el manejo de datos de la tabla
+            String atri = "";
+            int posi = 0;
+            int k = 0;
+            int l = 0;
+
+            //Capturamos los datos de la tabla en un Array
+            for (int j = 0; j < cantAtri*puntero; j++) {
+                if(j != Integer.parseInt(d[2])){
+                    for (int i = posi; i < dat.length(); i++) {
+                        if(dat.charAt(i) != coma.charAt(0)){
+                            atri += dat.charAt(i);
+                            posi++;
+                        }else if(dat.charAt(i) == coma.charAt(0)){
+                            posi++;
+                            break;
+                        }
+                    }
+                    datos[k][l] = atri;
+                    System.out.print(datos[k][l]+" ");
+                    l++;
+                    if(l == cantAtri && k != puntero-1){
+                        k++;
+                        l=0;
+                    }
+                    atri = "";
+                }
+            }
+            System.out.println("");
+            System.out.println(cantAtri);
+            System.out.println(puntero);
+                
+                
+            //Variables para el manejo de datos de la tabla
+            //Capturamos los datos de la tabla en un Array
+            //Tamaño de los datos extraidos de la validacion (nombre de la tabla, atributos...
+            //Puntero donde se encuentra la Fila para actualizar
+            //Cantidad de atributos ingresados
+            //Capturo las cabeceras y sus filas de lo que quiere actualizar
+            //Se carga el Array "datos" con los campos actualizados
         }
         
     }
