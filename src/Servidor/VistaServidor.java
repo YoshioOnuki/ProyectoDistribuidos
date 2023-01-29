@@ -168,7 +168,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 }
             }
             
-            for (int j = 0; j < cantAtri*2; j++) {
+            for (int j = 0; j < cantAtri*2+1; j++) {
                 nombre = "";
                 for (int i = posi; i < txtConsulta.length(); i++) {
                     if(txtConsulta.charAt(i) != espacio.charAt(0)){
@@ -189,6 +189,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             cont++;
                             pAtri++;
                             nombre = "";
+                            if((i+3) == txtConsulta.length()){
+                                posi = i+2;
+                                break;
+                            }
                             posi = i+3;
                             break;
                         }
