@@ -530,10 +530,13 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 int cantAtriIngre = Integer.parseInt(d[tamanio-1]);
                 System.out.println(cantAtriIngre);
                 
+                //Instancio Arrays de datos de cabecera y sus filas actualizadas
                 String[] datIngre = new String[cantAtriIngre];
                 String[] datoUpd = new String[cantAtriIngre];
+                
                 int contadorIngre = 0;
                 
+                //Capturo las cabeceras y sus filas de lo que quiere actualizar
                 for (int i = 0; i < tamanio; i++) {
                     if(i%2!=0){
                         datIngre[contadorIngre] = d[i];
@@ -552,6 +555,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 
                 String at = "";
                 int n = 0;
+                
+                //Se carga el Array "datos" con los campos actualizados
                 for (int j = 0; j < cantAtriIngre; j++) {
                     for (int i = 0; i < cantAtri; i++) {
                         for (int m = 0; m < datos[0][i].length(); m++) {
@@ -574,7 +579,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     }
                     at = "";
                 }
+                
                 String contenidoIngresado = "";
+                
+                //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
                 for (int i = 0; i < puntero; i++) {
                     for (int j = 0; j < cantAtri; j++) {
                         contenidoIngresado += datos[i][j];
@@ -588,6 +596,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 System.out.println(contenidoIngresado);
 
                 String contenidoBackup = "";
+                
+                //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
                 for (int i = 0; i < puntero; i++) {
                     for (int j = 0; j < cantAtri; j++) {
                         if(j == 0 && i == 0){
@@ -600,14 +610,16 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 }
                 System.out.println(contenidoBackup);
 
+                //Creo el archivo raiz y escribo los datos actualizados en la base de datos TXT
                 archiFile.createNewFile();
                 int respuesta1 = escribirDatos(archiFile, contenidoIngresado);
                 
+                //Creo el archivo backup y escribo los datos actualizados en la base de datos backup
                 archiBackupFile.createNewFile();
                 int respuesta2 = escribirDatos(archiBackupFile, contenidoBackup);
                 
-                txtArea.setText("Tabla actualizada correctamente...\n \n");
-                txtArea.append(contenidoIngresado);
+                //Mensaje de confirmación
+                txtArea.setText("Tabla actualizada correctamente...\n \n"+contenidoIngresado);
                 enviar("Tabla actualizada correctamente...\n \n"+contenidoIngresado);
                 panelEstado.setBackground(new Color(76, 175, 80));
                 txtError.setText("Correcto:  Tabla actualizada correctamente...");
@@ -759,65 +771,115 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
-            //Capturamos la cantidad de atributos y el puntero de la tabla
-            int cantAtri = Integer.parseInt(leerDatos(archiCan));
-            int puntero = Integer.parseInt(leerDatos(archiPuntero));
-            
-            //Declaramos nos variables para llenar la base de datos TXT y su backup
-            String contenido = "";
-            String conteBackup = "";
-            
-            //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
-            datos = new String[puntero+1][cantAtri];
-            
-            //Capturamos los datos del Backup de la tabla
-            String dat = leerDatos(archiBackupFile);
-            
-            //Variables para el manejo de datos de la tabla
-            String atri = "";
-            int posi = 0;
-            int k = 0;
-            int l = 0;
-            
-            //Capturamos los datos de la tabla en un Array y le agregamos los nuevos campos al Array
-            for (int j = 0; j < cantAtri*puntero; j++) {
-                for (int i = posi; i < dat.length(); i++) {
-                    if(dat.charAt(i) != coma.charAt(0)){
-                        atri += dat.charAt(i);
-                        posi++;
-                    }else if(dat.charAt(i) == coma.charAt(0)){
-                        posi++;
-                        break;
+            try {
+                //Capturamos la cantidad de atributos y el puntero de la tabla
+                int cantAtri = Integer.parseInt(leerDatos(archiCan));
+                int puntero = Integer.parseInt(leerDatos(archiPuntero));
+                
+                //Declaramos nos variables para llenar la base de datos TXT y su backup
+                String contenido = "";
+                String conteBackup = "";
+                
+                //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
+                datos = new String[puntero+1][cantAtri];
+                
+                //Capturamos los datos del Backup de la tabla
+                String dat = leerDatos(archiBackupFile);
+                
+                //Variables para el manejo de datos de la tabla
+                String atri = "";
+                int posi = 0;
+                int k = 0;
+                int l = 0;
+                
+                //Capturamos los datos de la tabla en un Array y le agregamos los nuevos campos al Array
+                for (int j = 0; j < cantAtri*puntero; j++) {
+                    for (int i = posi; i < dat.length(); i++) {
+                        if(dat.charAt(i) != coma.charAt(0)){
+                            atri += dat.charAt(i);
+                            posi++;
+                        }else if(dat.charAt(i) == coma.charAt(0)){
+                            posi++;
+                            break;
+                        }
                     }
-                }
-                datos[k][l] = atri;
-                System.out.print(datos[k][l]+" | ");
-                l++;
-                if(l == cantAtri && k != puntero-1){
-                    k++;
-                    l=0;
-                }
-                
-                atri = "";
-                int cAtri = 1;
-                
-                if(j == cantAtri*puntero - 1){
-                    k++;
-                    for (int i = 0; i < cantAtri; i++) {
-                        if(i == 0){
-                            datos[k][i] = "0"+puntero;
-                            System.out.print(datos[k][i]+" | ");
-                        }else{
-                            datos[k][i] = atributos[cAtri];
-                            System.out.print(datos[k][i]+" | ");
-                            cAtri++;
+                    datos[k][l] = atri;
+                    System.out.print(datos[k][l]+" | ");
+                    l++;
+                    if(l == cantAtri && k != puntero-1){
+                        k++;
+                        l=0;
+                    }
+                    
+                    atri = "";
+                    int cAtri = 1;
+                    
+                    if(j == cantAtri*puntero - 1){
+                        k++;
+                        for (int i = 0; i < cantAtri; i++) {
+                            if(i == 0){
+                                datos[k][i] = "0"+puntero;
+                                System.out.print(datos[k][i]+" | ");
+                            }else{
+                                datos[k][i] = atributos[cAtri];
+                                System.out.print(datos[k][i]+" | ");
+                                cAtri++;
+                            }
                         }
                     }
                 }
+                
+                String contenidoIngresado = "";
+                
+                //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
+                for (int i = 0; i < puntero; i++) {
+                    for (int j = 0; j < cantAtri; j++) {
+                        contenidoIngresado += datos[i][j];
+                        if(j != cantAtri-1){
+                            contenidoIngresado += espacio+"|"+espacio;
+                        }else{
+                            contenidoIngresado += "\n";
+                        }
+                    }
+                }
+                System.out.println(contenidoIngresado);
+                
+                String contenidoBackup = "";
+                
+                //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
+                for (int i = 0; i < puntero; i++) {
+                    for (int j = 0; j < cantAtri; j++) {
+                        if(j == 0 && i == 0){
+                            
+                        }else{
+                            contenidoBackup += ",";
+                        }
+                        contenidoBackup += datos[i][j];
+                    }
+                }
+                System.out.println(contenidoBackup);
+                    
+                //Creo el archivo raiz y escribo los datos actualizados en la base de datos TXT
+                archiFile.createNewFile();
+                int respuesta1 = escribirDatos(archiFile, contenidoIngresado);
+                
+                //Creo el archivo backup y escribo los datos actualizados en la base de datos backup
+                archiBackupFile.createNewFile();
+                int respuesta2 = escribirDatos(archiBackupFile, contenidoBackup);
+                
+                //Creo el archivo backup puntero y escribo el puntero actual en la base de datos backup
+                String envi = ""+puntero+1;
+                archiPuntero.createNewFile();
+                int respuesta3 = escribirDatos(archiPuntero, envi);
+                
+                //Mensaje de confirmación
+                txtArea.setText("Tabla insertada correctamente...\n \n"+contenidoIngresado);
+                enviar("Tabla insertada correctamente...\n \n"+contenidoIngresado);
+                panelEstado.setBackground(new Color(76, 175, 80));
+                txtError.setText("Correcto:  Tabla actualizada correctamente...");
+            } catch (IOException ex) {
+                Logger.getLogger(VistaServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
-            
             
         }
     }
