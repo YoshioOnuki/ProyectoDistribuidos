@@ -9,28 +9,38 @@ import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author yoshio
+ */
 public class VistaCliente extends javax.swing.JFrame implements Observer{
     
+    //Inicializamos un Icono de alerta para mis alertar JOptionPane
     ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
+    
+    //Inicializamos variables estáticas para el manejo de datos
     public static String men = "";
     public static String ip = LoginCliente.ipCliente;
 
     public VistaCliente() {
-
         initComponents();
         setLocationRelativeTo(null);
         this.getRootPane().setDefaultButton(this.btnEnviar);
+        error();
+        lblLoading.setVisible(false);
+        txtMensaje.requestFocus();
+        System.out.println(ip);
+    }
+    
+    //Inicializamos al servidor
+    void initMetodos(){
         Servidor s = new Servidor(5050);
         s.addObserver(this);
         Thread t = new Thread (s);
         t.start();
-        error();
-        lblLoading.setVisible(false);
-        txtMensaje.requestFocus();
-        
-        System.out.println(ip);
     }
     
+    //Validamos y enviamos el mensaje o la consulta al servidor de base de datos TXT
     void enviar(){
         if(txtMensaje.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Campo de texto vacío.", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
@@ -69,6 +79,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         }
     }
     
+    //Validamos que tipo de error de consulta se enviará a la vista
     void error(){
         
         String str = "";
@@ -105,6 +116,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         }
     }
     
+    //Limpiamos el error de la vista
     void limpiarError(){
         panelEstado.setBackground(new Color(255,255,255));
         txtError.setText("");
@@ -300,7 +312,8 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void txtMensajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMensajeKeyReleased
-         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        //Para ingresar el mensaje o la consulta mediante ENTER
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             enviar();
         }
     }//GEN-LAST:event_txtMensajeKeyReleased
@@ -332,6 +345,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
     private javax.swing.JTextField txtMensaje;
     // End of variables declaration//GEN-END:variables
 
+    //Hilo para Sleep, madando el tiempo de espera que se realizará
     public void proceso(int tiempo){
         try {
             Thread.sleep(tiempo);

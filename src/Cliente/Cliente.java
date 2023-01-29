@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Cliente;
 
 import Servidor.*;
@@ -15,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author 51993
+ * @author yoshio
  */
 public class Cliente implements Runnable 
 {
@@ -23,31 +19,23 @@ public class Cliente implements Runnable
     private int puerto;
     private String mensaje;
      
-    public Cliente(String host, int puerto, String mensaje)
-    {
+    public Cliente(String host, int puerto, String mensaje){
         this.host=host;
         this.puerto=puerto;
         this.mensaje=mensaje;
     }
     
     @Override
-    public void run() {
+    public void run(){
 
-        //DataInputStream in;
         DataOutputStream out;
     
         try {
-            
             Socket sc = new Socket(host,puerto);
-            
-            //in = new DataInputStream(sc.getInputStream());
             out = new  DataOutputStream(sc.getOutputStream());
-            
             out.writeUTF(mensaje);
                         
             sc.close();
-                    
-            
         } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }

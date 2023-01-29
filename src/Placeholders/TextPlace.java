@@ -3,11 +3,10 @@ package Placeholders;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
 
-//esta csirve para crear los placeholders
+//Clase para crear los placeholders
 
 public class TextPlace extends JLabel implements FocusListener, DocumentListener {
 	/**

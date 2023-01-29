@@ -40,11 +40,12 @@ public class Servidor extends Observable implements Runnable {
                 in = new DataInputStream(sc.getInputStream());
 
                 String mensaje = in.readUTF();
-
                 System.out.println(mensaje);
+
                 this.setChanged();
                 this.notifyObservers(mensaje);
                 this.clearChanged();
+                
                 sc.close();
                 System.out.println("Cliente desconectado");
             }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Cliente;
 
 import Servidor.*;
@@ -17,7 +13,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author 51993
+ * @author yoshio
  */
 public class Servidor extends Observable implements Runnable {
 
@@ -38,18 +34,17 @@ public class Servidor extends Observable implements Runnable {
             System.out.println("Servidor Iniciado");
 
             while (true) {
-
                 sc = servidor.accept();
-
                 System.out.println("Cliente conectado");
                 in = new DataInputStream(sc.getInputStream());
 
                 String mensaje = in.readUTF();
-
                 System.out.println(mensaje);
+                
                 this.setChanged();
                 this.notifyObservers(mensaje);
                 this.clearChanged();
+                
                 sc.close();
                 System.out.println("Cliente desconectado");
             }

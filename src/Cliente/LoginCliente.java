@@ -18,8 +18,10 @@ import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
  */
 public class LoginCliente extends javax.swing.JFrame {
 
+    //Inicializamos un Icono de alerta para mis alertar JOptionPane
     ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
     
+    //Inicializamos una variable estática de la IP
     public static String ipCliente = "";
     
     public LoginCliente() {
@@ -29,11 +31,12 @@ public class LoginCliente extends javax.swing.JFrame {
         txtip.setText("192.168.1.49");
     }
 
-    
+    //Place Holders para el campo de texto IP
     void placeholders(){
         Placeholders.TextPlace txtu = new TextPlace("Ingrese IP del Servidor", txtip);
     }
     
+    //Validar el ingreso de IP en el login
     void validar(){
         String ip = txtip.getText();
         if(ip.isEmpty()){
@@ -305,6 +308,7 @@ public class LoginCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtipActionPerformed
 
     private void txtipKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtipKeyTyped
+        //Restringir la escritura de caracteres que no sean los números enteros y el punto
         char c = evt.getKeyChar();
         if(c<'0' || c>'9'){
             if(c=='.'){
@@ -331,6 +335,7 @@ public class LoginCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIngresarMouseExited
 
     private void txtipKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtipKeyReleased
+        //Para ingresar la IP mediante ENTER
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             validar();
         }
@@ -339,6 +344,7 @@ public class LoginCliente extends javax.swing.JFrame {
     
     public static void main(String args[]) {
         
+        //Look And Feel
         try {
             BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.translucencySmallShadow;
             BeautyEyeLNFHelper.translucencyAtFrameInactive = false;

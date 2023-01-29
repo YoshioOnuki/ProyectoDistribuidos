@@ -13,24 +13,24 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author yoshio
+ */
 public class VistaServidor extends javax.swing.JFrame implements Observer{
 
+    //Inicializamos variables y variables estáticas para el manejo de datos
     public static String ip = LoginServidor.ipServidor;
     public static String[][] datos;
     public static int puntero;
     public static int cantidadAtributos;
     public static String txtConsulta = "";
     public static String nombreTabla = "";
-    
-    String barra = File.separator;
-    String crearUbicacion = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra;
-    
-    String crearUbicacionBackup = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"backup"+barra;
-    String crearUbicacionBackupPuntero = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"punteros"+barra;
-    String crearUbicacionBackupCantAtri = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"cantidad_atributos"+barra;
     String mensaje = "";
-    File archiBackupFile = null;
+    String mensajeError = "";
     
+    //Inicializamos caracteres conocidos para validaciones
+    String barra = File.separator;
     String coma = ",";
     String puntoComa = ";";
     String espacio = " ";
@@ -38,9 +38,18 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     String parenFinal = ")";
     String comillaSimple = "'";
     
-    FileOutputStream fos;
+    //Inicializamos las rutas de la base de datos, backups. Todos desde la carpeta raíz del proyecto
+    String crearUbicacion = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra;
+    String crearUbicacionBackup = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"backup"+barra;
+    String crearUbicacionBackupPuntero = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"punteros"+barra;
+    String crearUbicacionBackupCantAtri = System.getProperty("user.dir")+barra+"dbDistribuidos"+barra+"datos"+barra+"cantidad_atributos"+barra;
     
-    String mensajeError = "";
+    //File para el manejos de archivos en el Backup
+    File archiBackupFile = null;
+    //FileOutputStream para la escritura de datos
+    FileOutputStream fos;
+    //FileInputStream para la lectura de datos
+    FileInputStream fis;
     
     
     public VistaServidor() {
@@ -50,11 +59,12 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         txtArea.setEditable(false);
         txtMensaje.setEditable(false);
         lblLoading.setVisible(false);
-        btnEnv();
+        ValidarTipoConsulta();
         
         System.out.println(ip);
     }
     
+    //Método para enviar una respuesta al cliente
     void enviar(String mensa){
         this.txtArea.setText(mensa);
         
@@ -63,6 +73,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         t1.start();
     }
     
+    //Inicializamos al servidor
     void initMetodos(){
         Servidor s = new Servidor(5050);
         s.addObserver(this);
@@ -70,7 +81,121 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         t.start();
     }
     
-    private void crearTabla(){
+    //Métodos de manejos de archivos (leer y escribirDatos)
+    public String leerDatos(File file){
+        String r = "";
+        
+        try {
+            fis = new FileInputStream(file);
+            int dato;
+            
+            while(true){
+                dato = fis.read();
+                if(dato != -1){
+                    r += (char)dato;
+                }else
+                    break;
+            }
+            fis.close();
+            
+        } catch (FileNotFoundException ex) {
+            System.out.println("Archivo no ubicado");
+        } catch (IOException ex){
+            System.out.println("Error de Entrada o Salida");
+        }
+        return r;
+        
+    }
+    public int escribirDatos(File file, String contenido){
+        int r = 0;
+        
+        if(file != null){
+            try {
+                fos = new FileOutputStream(file);
+                byte[] bytes= contenido.getBytes();
+                fos.write(bytes);
+                fos.close();
+            } catch (FileNotFoundException ex) {
+                System.out.println("Error 3: "+ex.getMessage());
+            } catch (IOException ex) {
+                System.out.println("Error 3: "+ex.getMessage());
+            }
+        }
+        
+        return r;
+    }
+    
+    //Métodos para validar consulta y Crear tablas en la base de datos TXT
+    String[] validarCreate(){
+        int cantAtri = 0;
+        int cont = 0;
+        String consul = "";
+        int posi = 13;
+        String nombre = "";
+        int pAtri = 1;
+        
+        for (int i = 0; i < 13; i++) {
+            consul += txtConsulta.charAt(i);
+        }
+        
+        for (int i = posi; i < txtConsulta.length(); i++) {
+            if(txtConsulta.charAt(i) == coma.charAt(0)){
+                cantAtri++;
+            }
+        }
+        cantAtri++;
+        System.out.println(cantAtri);
+        
+        String[] r = new String[(cantAtri*2)+1];
+        
+        if(!consul.equalsIgnoreCase("CREATE TABLE ")){
+            System.out.println(consul);
+        }else{
+            for (int i = posi; i < txtConsulta.length(); i++) {
+                if(txtConsulta.charAt(i) != espacio.charAt(0)){
+                    nombre += txtConsulta.charAt(i);
+                }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
+                    System.out.println(nombre);
+                    r[cont] = nombre;
+                    cont++;
+                    pAtri++;
+                    nombre = "";
+                    posi = i+3;
+                    break;
+                }
+            }
+            for (int j = 0; j < cantAtri*2; j++) {
+                nombre = "";
+                for (int i = posi; i < txtConsulta.length(); i++) {
+                    if(txtConsulta.charAt(i) != espacio.charAt(0)){
+                        nombre += txtConsulta.charAt(i);
+                    }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
+                        if(pAtri%2==0){
+                            System.out.println(nombre);
+                            r[cont] = nombre;
+                            cont++;
+                            pAtri++;
+                            nombre = "";
+//                            break;
+                        }else if(pAtri%2!=0){
+                            System.out.println(nombre);
+                            r[cont] = nombre;
+                            cont++;
+                            pAtri++;
+                            nombre = "";
+                            posi = i+3;
+                            break;
+                        }
+                        
+                    }
+                }
+            }
+            
+        }
+        
+        return r;
+    }
+    private void createTabla(){
         String[] da = validarCreate();
         nombreTabla = da[0];
         cantidadAtributos = (da.length-1)/2;
@@ -144,13 +269,13 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     crearUbiBackupCantidad.mkdirs();
                     crearArchiBackupCantidad.createNewFile();
                     
-                    int respuesta0 = escribir(crearArchiBackupCantidad, contenidoCantidad);
+                    int respuesta0 = escribirDatos(crearArchiBackupCantidad, contenidoCantidad);
                     
-                    int respuesta1 = escribir(crearArchiBackupPuntero, contenidopuntero);
+                    int respuesta1 = escribirDatos(crearArchiBackupPuntero, contenidopuntero);
 
-                    int respuesta2 = escribir(crearArchiBackup, conteBackup);
+                    int respuesta2 = escribirDatos(crearArchiBackup, conteBackup);
 
-                    int respuesta3 = escribir(crearArchi, contenido);
+                    int respuesta3 = escribirDatos(crearArchi, contenido);
 
                     enviar("Correcto...");
                     panelEstado.setBackground(new Color(76, 175, 80));
@@ -164,133 +289,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
     }
     
-    public String leerDatos(File file){
-        String r = "";
-        
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            int dato;
-            
-            while(true){
-                dato = fis.read();
-                if(dato != -1){
-                    r += (char)dato;
-                }else
-                    break;
-            }
-            fis.close();
-            
-        } catch (FileNotFoundException ex) {
-            System.out.println("Archivo no ubicado");
-        } catch (IOException ex){
-            System.out.println("Error de Entrada o Salida");
-        }
-        return r;
-        
-    }
-    
-    public int escribir(File file, String contenido){
-        int r = 0;
-        
-        if(file != null){
-            try {
-                fos = new FileOutputStream(file);
-                byte[] bytes= contenido.getBytes();
-                fos.write(bytes);
-                fos.close();
-            } catch (FileNotFoundException ex) {
-                System.out.println("Error 3: "+ex.getMessage());
-            } catch (IOException ex) {
-                System.out.println("Error 3: "+ex.getMessage());
-            }
-        }
-        
-        return r;
-    }
-    
-    String tipoConsulta(){
-        String r = "";
-        if(txtConsulta.length() < 6){
-            
-        }else{
-            for (int i = 0; i < 6; i++) {
-                r += txtConsulta.charAt(i);
-            }
-        }
-        
-        return r;
-    }
-    
-    String[] validarCreate(){
-        int cantAtri = 0;
-        int cont = 0;
-        String consul = "";
-        int posi = 13;
-        String nombre = "";
-        int pAtri = 1;
-        
-        for (int i = 0; i < 13; i++) {
-            consul += txtConsulta.charAt(i);
-        }
-        
-        for (int i = posi; i < txtConsulta.length(); i++) {
-            if(txtConsulta.charAt(i) == coma.charAt(0)){
-                cantAtri++;
-            }
-        }
-        cantAtri++;
-        System.out.println(cantAtri);
-        
-        String[] r = new String[(cantAtri*2)+1];
-        
-        if(!consul.equalsIgnoreCase("CREATE TABLE ")){
-            System.out.println(consul);
-        }else{
-            for (int i = posi; i < txtConsulta.length(); i++) {
-                if(txtConsulta.charAt(i) != espacio.charAt(0)){
-                    nombre += txtConsulta.charAt(i);
-                }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
-                    System.out.println(nombre);
-                    r[cont] = nombre;
-                    cont++;
-                    pAtri++;
-                    nombre = "";
-                    posi = i+3;
-                    break;
-                }
-            }
-            for (int j = 0; j < cantAtri*2; j++) {
-                nombre = "";
-                for (int i = posi; i < txtConsulta.length(); i++) {
-                    if(txtConsulta.charAt(i) != espacio.charAt(0)){
-                        nombre += txtConsulta.charAt(i);
-                    }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
-                        if(pAtri%2==0){
-                            System.out.println(nombre);
-                            r[cont] = nombre;
-                            cont++;
-                            pAtri++;
-                            nombre = "";
-//                            break;
-                        }else if(pAtri%2!=0){
-                            System.out.println(nombre);
-                            r[cont] = nombre;
-                            cont++;
-                            pAtri++;
-                            nombre = "";
-                            posi = i+3;
-                            break;
-                        }
-                        
-                    }
-                }
-            }
-            
-        }
-        
-        return r;
-    }
-    
+    //Métodos para validar consulta y Seleccionar tablas de la base de datos TXT
     String validarSelect(){
         String r = "";
         String consul = "";
@@ -319,7 +318,23 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
         return r;
     }
+    void select(){
+        String tab = validarSelect();
+        File crearArchi = new File(crearUbicacion+tab+".txt");
+        if(!crearArchi.exists()){
+            enviar("Error...");
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
+        }else{
+            mensaje = leerDatos(crearArchi);
+            enviar(mensaje);
+            txtArea.setText(mensaje);
+            panelEstado.setBackground(new Color(76, 175, 80));
+            txtError.setText("Correcto:  Tabla visualizada correctamente...");
+        }
+    }
     
+    //Métodos para validar consulta y Actualizar atributos de una tabla de la base de datos TXT
     String[] validarUpdateDelete(String consulta, int posicion){
         String consul = "";
         int posi = posicion;
@@ -437,23 +452,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
         return r;
     }
-    
-    void select(){
-        String tab = validarSelect();
-        File crearArchi = new File(crearUbicacion+tab+".txt");
-        if(!crearArchi.exists()){
-            enviar("Error...");
-            panelEstado.setBackground(new Color(228, 65, 65));
-            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
-        }else{
-            mensaje = leerDatos(crearArchi);
-            enviar(mensaje);
-            txtArea.setText(mensaje);
-            panelEstado.setBackground(new Color(76, 175, 80));
-            txtError.setText("Correcto:  Tabla visualizada correctamente...");
-        }
-    }
-    
     void updt(){
         String[] d = validarUpdateDelete("UPDATE ", 7);
         String nombreT = d[0];
@@ -589,10 +587,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 System.out.println(contenidoBackup);
 
                 archiFile.createNewFile();
-                int respuesta1 = escribir(archiFile, contenidoIngresado);
+                int respuesta1 = escribirDatos(archiFile, contenidoIngresado);
                 
                 archiBackupFile.createNewFile();
-                int respuesta2 = escribir(archiBackupFile, contenidoBackup);
+                int respuesta2 = escribirDatos(archiBackupFile, contenidoBackup);
                 
                 txtArea.setText("Tabla actualizada correctamente...\n \n");
                 txtArea.append(contenidoIngresado);
@@ -607,6 +605,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }
     }
     
+    //Métodos para validar consulta e Ingresar datos en la base de datos TXT
     String[] validarInsert(){
         String[] r2 = null;
         int cantAtri = 0;
@@ -696,7 +695,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
         return r2;
     }
-    
     void insert(){
         String[] atributos = validarInsert();
         String nombreT = atributos[0];
@@ -784,16 +782,29 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
     }
     
+    //Métodos de limpieza
     void limpiarTodo(){
         txtArea.setText("");
     }
-    
     void limpiarError(){
         panelEstado.setBackground(new Color(255,255,255));
         txtError.setText("");
     }
     
-    void btnEnv(){
+    //Métodos para validar las consultas ingresadas por el cliente
+    String tipoConsulta(){
+        String r = "";
+        if(txtConsulta.length() < 6){
+            
+        }else{
+            for (int i = 0; i < 6; i++) {
+                r += txtConsulta.charAt(i);
+            }
+        }
+        
+        return r;
+    }
+    void ValidarTipoConsulta(){
         txtConsulta = txtArea.getText();
 //        System.out.println(txtConsulta);
         if(txtConsulta.isEmpty()){
@@ -802,7 +813,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             
             System.out.println("\n"+tipoConsulta());
             if(tipoConsulta().equalsIgnoreCase("CREATE")){
-                crearTabla();
+                createTabla();
             }else if(tipoConsulta().equalsIgnoreCase("SELECT")){
                 select();
             }else if(tipoConsulta().equalsIgnoreCase("UPDATE")){
@@ -1028,7 +1039,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 txtError.setText("");
                 txtArea.setText((String) arg);
                 txtMensaje.setText((String) arg);
-                btnEnv();
+                ValidarTipoConsulta();
             }
         }.start();
         
