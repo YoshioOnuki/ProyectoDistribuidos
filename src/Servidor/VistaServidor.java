@@ -962,7 +962,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }else if(tipoConsulta(6).equalsIgnoreCase("UPDATE")){
                 updt();
             }else if(tipoConsulta(6).equalsIgnoreCase("DELETE")){
-                
+                delete();
             }else if(tipoConsulta(6).equalsIgnoreCase("INSERT")){
                 insert();
             }else if(tipoConsulta(11).equalsIgnoreCase("SHOW TABLES")){
