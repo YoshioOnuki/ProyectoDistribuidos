@@ -839,6 +839,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     for (int j = 0; j < cantAtri; j++) {
                         if(j == 0 && i != 0){
                             contenidoIngresado += generarNumInsert(Integer.parseInt(datos[i][j]));
+                            System.out.println(generarNumInsert(Integer.parseInt(datos[i][j])));
+                            System.out.println(datos[i][j]);
                         }else{
                             contenidoIngresado += datos[i][j];
                         }
