@@ -655,66 +655,104 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
         }else{
-            //Capturamos la cantidad de atributos y el puntero de la tabla
-            int cantAtri = Integer.parseInt(leerDatos(archiCan));
-            int puntero = Integer.parseInt(leerDatos(archiPuntero));
-
-            //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
-            datos = new String[puntero][cantAtri];
-            
-            //Capturamos los datos del Backup de la tabla
-            String dat = leerDatos(archiBackupFile);
-
-            //Variables para el manejo de datos de la tabla
-            String atri = "";
-            int posi = 0;
-            int k = 0;
-            int l = 0;
-
-            //Capturamos los datos de la tabla en un Array
-            System.out.print("ID: "+d[2]);
-            int dd = Integer.parseInt(d[2]);
-            System.out.println("");
-            for (int j = 0; j < cantAtri*puntero; j++) {
-                for (int i = posi; i < dat.length(); i++) {
-                    if(dat.charAt(i) != coma.charAt(0)){
-                        atri += dat.charAt(i);
-                        posi++;
-                    }else if(dat.charAt(i) == coma.charAt(0)){
-                        posi++;
+            try {
+                //Capturamos la cantidad de atributos y el puntero de la tabla
+                int cantAtri = Integer.parseInt(leerDatos(archiCan));
+                int puntero = Integer.parseInt(leerDatos(archiPuntero));
+                
+                //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
+                datos = new String[puntero][cantAtri];
+                
+                //Capturamos los datos del Backup de la tabla
+                String dat = leerDatos(archiBackupFile);
+                
+                //Variables para el manejo de datos de la tabla
+                String atri = "";
+                int posi = 0;
+                int k = 0;
+                int l = 0;
+                
+                //Capturamos los datos de la tabla en un Array
+                System.out.print("ID: "+d[2]);
+                int dd = Integer.parseInt(d[2]);
+                System.out.println("");
+                for (int j = 0; j < cantAtri*puntero; j++) {
+                    for (int i = posi; i < dat.length(); i++) {
+                        if(dat.charAt(i) != coma.charAt(0)){
+                            atri += dat.charAt(i);
+                            posi++;
+                        }else if(dat.charAt(i) == coma.charAt(0)){
+                            posi++;
+                            break;
+                        }
+                    }
+                    if(k != dd){
+                        datos[k][l] = atri;
+                        System.out.print(datos[k][l]+" ");
+                    }
+                    
+                    l++;
+                    
+                    if(l == cantAtri && k != puntero-1){
+                        k++;
+                        l=0;
+                    }
+                    atri = "";
+                    
+                    if(k == puntero){
                         break;
                     }
-                }
-                if(k != dd){
-                    datos[k][l] = atri;
-                    System.out.print(datos[k][l]+" ");
+                    
                 }
                 
-                l++;
+                String contenidoIngresado = "";
                 
-                if(l == cantAtri && k != puntero-1){
-                    k++;
-                    l=0;
+                //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
+                for (int i = 0; i < puntero; i++) {
+                    for (int j = 0; j < cantAtri; j++) {
+                        contenidoIngresado += datos[i][j];
+                        if(j != cantAtri-1){
+                            contenidoIngresado += espacio+"|"+espacio;
+                        }else{
+                            contenidoIngresado += "\n";
+                        }
+                    }
                 }
-                atri = "";
+                System.out.println(contenidoIngresado);
                 
-                if(k == puntero){
-                    break;
+                String contenidoBackup = "";
+                
+                //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
+                for (int i = 0; i < puntero; i++) {
+                    for (int j = 0; j < cantAtri; j++) {
+                        if(j == 0 && i == 0){
+                            
+                        }else{
+                            contenidoBackup += ",";
+                        }
+                        contenidoBackup += datos[i][j];
+                    }
                 }
+                System.out.println(contenidoBackup);
                 
+                //Creo el archivo raiz y escribo los datos actualizados en la base de datos TXT
+                archiFile.createNewFile();
+                int respuesta1 = escribirDatos(archiFile, contenidoIngresado);
+                
+                //Creo el archivo backup y escribo los datos actualizados en la base de datos backup
+                archiBackupFile.createNewFile();
+                int respuesta2 = escribirDatos(archiBackupFile, contenidoBackup);
+                
+                //Mensaje de confirmación
+                txtArea.setText("Registro eliminado correctamente...\n "
+                        + "====================================\n"+contenidoIngresado);
+                enviar("Registro eliminado correctamente...\n "
+                        + "====================================\n"+contenidoIngresado);
+                panelEstado.setBackground(new Color(76, 175, 80));
+                txtError.setText("Correcto:  Registro eliminado correctamente...");
+            } catch (IOException ex) {
+                Logger.getLogger(VistaServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("");
-            System.out.println(cantAtri);
-            System.out.println(puntero);
-                
-                
-            //Variables para el manejo de datos de la tabla
-            //Capturamos los datos de la tabla en un Array
-            //Tamaño de los datos extraidos de la validacion (nombre de la tabla, atributos...
-            //Puntero donde se encuentra la Fila para actualizar
-            //Cantidad de atributos ingresados
-            //Capturo las cabeceras y sus filas de lo que quiere actualizar
-            //Se carga el Array "datos" con los campos actualizados
         }
         
     }
