@@ -688,11 +688,11 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             break;
                         }
                     }
-                    if(k != dd && cUna == 0){
+                    if(k == dd && cUna == 0){
+                        estado = 1;
+                    }else{
                         datos[k][l] = atri;
                         System.out.print(datos[k][l]+" ");
-                    }else{
-                        estado = 1;
                     }
                     
                     l++;
