@@ -84,6 +84,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
     void error(){
         
         String str = "";
+        String str2 = "";
         
         if(men.length() > 0){
             if(men.length() < 34){
@@ -93,6 +94,16 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
                     str += men.charAt(i);
                 }
             }
+            
+            if(men.length() < 18){
+                
+            }else{
+                for (int i = 0; i < 18; i++) {
+                    str2 += men.charAt(i);
+                }
+            }
+            
+            
         }
         
         String m = txtArea.getText();
@@ -111,6 +122,9 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         }else if(str.equalsIgnoreCase("Tabla actualizada correctamente...")){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla actualizada correctamente...");
+        }else if(str2.equalsIgnoreCase("Lista de tablas...")){
+            panelEstado.setBackground(new Color(76, 175, 80));
+            txtError.setText("Correcto:  Tablas visualizadas correctamente...");
         }else if(!m.isEmpty()){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla visualizada correctamente...");

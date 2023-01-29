@@ -814,7 +814,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         if (!dir.exists()) {
             enviar("Error...");
             panelEstado.setBackground(new Color(228, 65, 65));
-            txtError.setText("Error:  !No existe la base de datos dbDistribuidos!");
+            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
             return;
         }
         File[] ficheros = dir.listFiles();
@@ -822,7 +822,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         if (corre == 0) {
             enviar("Error...");
             panelEstado.setBackground(new Color(228, 65, 65));
-            txtError.setText("Error:  !La base de datos dbDistribuidos esta vacia!");
+            txtError.setText("Error:  Se encontraron errores en la consulta a la base de datos TXT...");
             return;
         }
 
@@ -834,10 +834,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }
         }
         
-        txtArea.setText("Lista de tablas ..\n" + listaFilestxt);
+        txtArea.setText("Lista de tablas...\n" + listaFilestxt);
         enviar("Lista de tablas...\n" + listaFilestxt);
         panelEstado.setBackground(new Color(76, 175, 80));
-        txtError.setText("Correcto:  Tablas listada correctamente...");
+        txtError.setText("Correcto:  Tablas visualizadas correctamente...");
         
     }
     
