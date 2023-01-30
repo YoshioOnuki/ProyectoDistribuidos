@@ -450,6 +450,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             r[cont] = nombre;
                             cont++;
                             nombre = "";
+                            break;
                         }
                     }else if(txtConsulta.charAt(i) == espacio.charAt(0)){
                         System.out.println(nombre);
@@ -666,7 +667,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         //
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
-        
+        //
         String archivoDelete = "delete_"+nombreT+".txt";
         File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
         
@@ -915,6 +916,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         //
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
+        //
+        String archivoDelete = "delete_"+nombreT+".txt";
+        File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
         
         if(!archiFile.exists()){
             enviar("Error...");
@@ -925,13 +929,14 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //Capturamos la cantidad de atributos y el puntero de la tabla
                 int cantAtri = Integer.parseInt(leerDatos(archiCan));
                 int puntero = Integer.parseInt(leerDatos(archiPuntero));
+                int delete = Integer.parseInt(leerDatos(archiDelete));
                 
                 //Declaramos nos variables para llenar la base de datos TXT y su backup
                 String contenido = "";
                 String conteBackup = "";
                 
                 //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
-                datos = new String[puntero+1][cantAtri];
+                datos = new String[puntero+1-delete][cantAtri];
                 
                 //Capturamos los datos del Backup de la tabla
                 String dat = leerDatos(archiBackupFile);
@@ -983,7 +988,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String contenidoIngresado = "";
                 
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
-                for (int i = 0; i < puntero+1; i++) {
+                for (int i = 0; i < puntero+1-delete; i++) {
                     for (int j = 0; j < cantAtri; j++) {
                         contenidoIngresado += datos[i][j];
                         
@@ -999,7 +1004,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String contenidoBackup = "";
                 
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
-                for (int i = 0; i < puntero+1; i++) {
+                for (int i = 0; i < puntero+1-delete; i++) {
                     for (int j = 0; j < cantAtri; j++) {
                         if(j == 0 && i == 0){
                             
