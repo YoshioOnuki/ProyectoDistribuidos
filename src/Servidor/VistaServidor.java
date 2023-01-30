@@ -1116,12 +1116,17 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             archiPuntero.delete();
             archiDelete.delete();
             
+            txtArea.setText("Tabla eliminada correctamente...");
+            enviar("Tabla eliminada correctamente...");
+            panelEstado.setBackground(new Color(76, 175, 80));
+            txtError.setText("Correcto:  Tabla eliminada correctamente...");
+        }else{
+            enviar("Error: DROP TABLE...");
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error:  No se encontro la tabla a eliminar...");
         }
         
-        txtArea.setText("Tabla eliminada correctamente...");
-        enviar("Tabla eliminada correctamente...");
-        panelEstado.setBackground(new Color(76, 175, 80));
-        txtError.setText("Correcto:  Tabla eliminada correctamente...");
+        
         
     }
     
@@ -1166,6 +1171,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 showTables();
             }else if(tipoConsulta(10).equalsIgnoreCase("DROP TABLE")){
                 System.out.println("Drop");
+                dropTable();
             }else if(tipoConsulta(14).equalsIgnoreCase("TRUNCATE TABLE")){
                 System.out.println("Truncate");
             }else{
