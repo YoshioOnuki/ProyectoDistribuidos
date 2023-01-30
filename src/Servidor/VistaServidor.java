@@ -1079,7 +1079,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     
     //Método Drop, para eliminar una tabla de la base de datos TXT
     void dropTable() {
-        int posi = 12;
+        int posi = 11;
         String nombre = "";
         
         //Capturamos el nombre de la tabla a eliminar
