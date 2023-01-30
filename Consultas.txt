@@ -5,7 +5,7 @@ CREATE TABLE alumno ( id int , nombre varchar(255) , edad int , direccion varcha
 SELECT * FROM alumno;
 
 UPDATE alumno SET nombre = 'Onuki' , edad = 21 WHERE id = 1;
-UPDATE alumno2 edad = 21 WHERE id = 1;
+UPDATE alumno2 SET edad = 21 WHERE id = 1;
 UPDATE alumno5 SET nombre = 'Yoshio Onuki' , edad = 21 , direccion = 'Av. Centenario' , estado = 'Inactivo' WHERE id = 1;
 UPDATE alumno SET nombre = 'Yoshio Onuki' , edad = 21 , direccion = 'Av. Centenario' WHERE id = 1;
 
