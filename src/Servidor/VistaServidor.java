@@ -936,7 +936,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String conteBackup = "";
                 
                 //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
-                datos = new String[puntero+1-delete][cantAtri];
+                datos = new String[puntero - delete + 2][cantAtri];
                 
                 //Capturamos los datos del Backup de la tabla
                 String dat = leerDatos(archiBackupFile);
@@ -948,7 +948,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 int l = 0;
                 
                 //Capturamos los datos de la tabla en un Array y le agregamos los nuevos campos al Array
-                for (int j = 0; j < cantAtri*puntero; j++) {
+                for (int j = 0; j < cantAtri*puntero - (delete*cantAtri); j++) {
                     for (int i = posi; i < dat.length(); i++) {
                         if(dat.charAt(i) != coma.charAt(0)){
                             atri += dat.charAt(i);
@@ -961,7 +961,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     datos[k][l] = atri;
                     System.out.print(datos[k][l]+" | ");
                     l++;
-                    if(l == cantAtri && k != puntero-1){
+                    if(l == cantAtri && k != puntero - delete - 1){
                         k++;
                         l=0;
                     }
@@ -969,7 +969,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     atri = "";
                     int cAtri = 1;
                     
-                    if(j == cantAtri*puntero - 1){
+                    if(j == cantAtri*puntero - (delete*cantAtri) - 1){
                         k++;
                         for (int i = 0; i < cantAtri; i++) {
                             if(i == 0){
