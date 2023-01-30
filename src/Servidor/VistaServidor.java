@@ -1110,7 +1110,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         String archivoDelete = "delete_"+nombre+".txt";
         File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
         
-        //Validamos el tipo de consulta (DROP y TRUNCATE)
         if(tipo == 1){
             if(archiFile.exists()){
                 archiFile.delete();

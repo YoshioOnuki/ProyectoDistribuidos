@@ -27,7 +27,7 @@ public class LoginServidor extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         placeholders();
-        txtip.setText("192.168.0.155");
+        txtip.setText("192.168.1.49");
     }
     
     //Place Holders para el campo de texto IP
