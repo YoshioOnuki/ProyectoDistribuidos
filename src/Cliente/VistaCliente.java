@@ -134,6 +134,9 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         }else if(m.equalsIgnoreCase("Error delete...")){
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  No quedan datos de la tabla para eliminar...");
+        }else if(m.equalsIgnoreCase("Tabla eliminada correctamente...")){
+            panelEstado.setBackground(new Color(76, 175, 80));
+            txtError.setText("Correcto:  Tabla eliminada correctamente...");
         }else if(!m.isEmpty()){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla visualizada correctamente...");

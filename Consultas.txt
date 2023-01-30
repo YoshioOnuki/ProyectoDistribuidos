@@ -1,15 +1,22 @@
-
-CREATE TABLE alumno2 ( id int , nombre varchar(255) );
+CREATE TABLE alumno2 ( id int , nombre varchar(255) , edad int );
 CREATE TABLE alumno5 ( id int , nombre varchar(255) , edad int , direccion varchar(255) , estado varchar(255) );
-CREATE TABLE alumno ( id int , nombre varchar(255) , edad int , direccion varchar(255) , estado varchar(255) );
+CREATE TABLE alumno ( id int , nombre varchar(255) , edad int , direccion varchar(255) );
 
+SELECT * FROM alumno;
 
-SELECT * FROM alumno5;
+UPDATE alumno SET nombre = 'Onuki' , edad = 21 WHERE id = 1;
+UPDATE alumno2 edad = 21 WHERE id = 1;
+UPDATE alumno5 SET nombre = 'Yoshio Onuki' , edad = 21 , direccion = 'Av. Centenario' , estado = 'Inactivo' WHERE id = 1;
+UPDATE alumno SET nombre = 'Yoshio Onuki' , edad = 21 , direccion = 'Av. Centenario' WHERE id = 1;
 
-UPDATE alumno5 SET nombre = 'Aurerio Onuki' , edad = 21 WHERE id = 1;
-
-INSERT INTO alumno5 ( nombre , edad , direccion , estado ) VALUES ( 'Yoshio Onuki' , 22 , 'Jr. Arcia 190' , 'Activo' );
+INSERT INTO alumno2 ( nombre , edad ) VALUES ( 'Yoshio Onuki' , 22 );
+INSERT INTO alumno5 ( nombre , edad , direccion , estado ) VALUES ( 'Hector Lopez' , 21 , 'Jr. Brasil' , 'Activo' );
+INSERT INTO alumno ( nombre , edad , direccion , estado ) VALUES ( 'Susana Suarez' , 21 , 'Jr. Cementerio' );
 
 DELETE FROM alumno5 WHERE id = 1;
 
 SHOW TABLES;
+
+DROP TABLE alumno;
+
+TRUNCATE TABLE alumno;

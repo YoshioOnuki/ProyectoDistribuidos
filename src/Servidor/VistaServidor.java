@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author yoshio
  */
 public class VistaServidor extends javax.swing.JFrame implements Observer{
-
+    
     //Inicializamos variables y variables estáticas para el manejo de datos
     public static String ip = LoginServidor.ipServidor;
     public static String[][] datos;
@@ -1077,6 +1077,54 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
     }
     
+    //Método Drop, para eliminar una tabla de la base de datos TXT
+    void dropTable() {
+        int posi = 12;
+        String nombre = "";
+        
+        //Capturamos el nombre de la tabla a eliminar
+        for (int i = posi; i < txtConsulta.length(); i++) {
+            if(txtConsulta.charAt(i) != puntoComa.charAt(0)){
+                nombre += txtConsulta.charAt(i);
+            }else if(txtConsulta.charAt(i) == puntoComa.charAt(0)){
+                
+                System.out.println(nombre);
+                break;
+            }
+        }
+        
+        //Creamos el nombre y archivo de la cantidad de atributos, puntero, raiz y backup de la tabla
+        String archi = nombre+".txt";
+        File archiFile = new File(crearUbicacion+archi);
+        //
+        String archivoBackup = "backup_"+nombre+".txt";
+        archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
+        //
+        String can = "cantidad_atributo_"+nombre+".txt";
+        File archiCan = new File(crearUbicacionBackupCantAtri+can);
+        //
+        String punt = "puntero_"+nombre+".txt";
+        File archiPuntero = new File(crearUbicacionBackupPuntero+punt);
+        //
+        String archivoDelete = "delete_"+nombre+".txt";
+        File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
+        
+        if(archiFile.exists()){
+            archiFile.delete();
+            archiBackupFile.delete();
+            archiCan.delete();
+            archiPuntero.delete();
+            archiDelete.delete();
+            
+        }
+        
+        txtArea.setText("Tabla eliminada correctamente...");
+        enviar("Tabla eliminada correctamente...");
+        panelEstado.setBackground(new Color(76, 175, 80));
+        txtError.setText("Correcto:  Tabla eliminada correctamente...");
+        
+    }
+    
     //Métodos de limpieza
     void limpiarTodo(){
         txtArea.setText("");
@@ -1101,10 +1149,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     }
     void validarTipoConsulta(){
         txtConsulta = txtArea.getText();
-//        System.out.println(txtConsulta);
-        if(txtConsulta.isEmpty()){
-            
-        }else{
+        
+        //Validamos el tipo de consulta que mandó el Cliente
+        if(!txtConsulta.isEmpty()){
             if(tipoConsulta(6).equalsIgnoreCase("CREATE")){
                 createTabla();
             }else if(tipoConsulta(6).equalsIgnoreCase("SELECT")){
@@ -1117,6 +1164,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 insert();
             }else if(tipoConsulta(11).equalsIgnoreCase("SHOW TABLES")){
                 showTables();
+            }else if(tipoConsulta(10).equalsIgnoreCase("DROP TABLE")){
+                System.out.println("Drop");
+            }else if(tipoConsulta(14).equalsIgnoreCase("TRUNCATE TABLE")){
+                System.out.println("Truncate");
             }else{
                 enviar("Error...");
                 panelEstado.setBackground(new Color(228, 65, 65));
