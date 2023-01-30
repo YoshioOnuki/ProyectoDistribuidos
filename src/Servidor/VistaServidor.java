@@ -1078,8 +1078,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
     }
     
     //Método Drop, para eliminar una tabla de la base de datos TXT
-    void dropTable() {
-        int posi = 11;
+    //Tipo: 1 == DROP && 2 == TRUNCATE
+    void dropTruncateTable(int pos, int tipo) {
+        int posi = pos;
         String nombre = "";
         
         //Capturamos el nombre de la tabla a eliminar
@@ -1109,24 +1110,63 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         String archivoDelete = "delete_"+nombre+".txt";
         File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
         
-        if(archiFile.exists()){
-            archiFile.delete();
-            archiBackupFile.delete();
-            archiCan.delete();
-            archiPuntero.delete();
-            archiDelete.delete();
-            
-            txtArea.setText("Tabla eliminada correctamente...");
-            enviar("Tabla eliminada correctamente...");
-            panelEstado.setBackground(new Color(76, 175, 80));
-            txtError.setText("Correcto:  Tabla eliminada correctamente...");
-        }else{
-            enviar("Error: DROP TABLE...");
-            panelEstado.setBackground(new Color(228, 65, 65));
-            txtError.setText("Error:  No se encontro la tabla a eliminar...");
+        if(tipo == 1){
+            if(archiFile.exists()){
+                archiFile.delete();
+                archiBackupFile.delete();
+                archiCan.delete();
+                archiPuntero.delete();
+                archiDelete.delete();
+
+                txtArea.setText("Tabla eliminada correctamente...");
+                enviar("Tabla eliminada correctamente...");
+                panelEstado.setBackground(new Color(76, 175, 80));
+                txtError.setText("Correcto:  Tabla eliminada correctamente...");
+            }else{
+                enviar("Error: DROP TABLE...");
+                panelEstado.setBackground(new Color(228, 65, 65));
+                txtError.setText("Error:  No se encontro la tabla a eliminar...");
+            }
+        }else if(tipo == 2){
+            if(archiFile.exists()){
+                //Capturamos la cantidad de atributos y el puntero de la tabla
+                int cantAtri = Integer.parseInt(leerDatos(archiCan));
+                int puntero = Integer.parseInt(leerDatos(archiPuntero));
+                
+                //Instanciamos el arreglo con los parametros 1 y cantidad de atributos
+                datos = new String[1][cantAtri];
+                
+                //Capturamos los datos del Backup de la tabla
+                String dat = leerDatos(archiBackupFile);
+                
+                //Variables para el manejo de datos de la tabla
+                String atri = "";
+                int posii = 0;
+                int l = 0;
+                
+                //Capturamos los datos de la tabla en un Array
+                for (int j = 0; j < cantAtri; j++) {
+                    for (int i = posii; i < dat.length(); i++) {
+                        if(dat.charAt(i) != coma.charAt(0)){
+                            atri += dat.charAt(i);
+                            posii++;
+                        }else if(dat.charAt(i) == coma.charAt(0)){
+                            posii++;
+                            break;
+                        }
+                    }
+                    datos[0][l] = atri;
+                    System.out.print(datos[0][l]+" ");
+                    l++;
+                    atri = "";
+                }
+                
+            }else{
+                enviar("Error: TRUNCATE TABLE...");
+                panelEstado.setBackground(new Color(228, 65, 65));
+                txtError.setText("Error:  No se encontro la tabla a limpiar...");
+            }
         }
-        
-        
         
     }
     
@@ -1171,9 +1211,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 showTables();
             }else if(tipoConsulta(10).equalsIgnoreCase("DROP TABLE")){
                 System.out.println("Drop");
-                dropTable();
+                dropTruncateTable(11,1);
             }else if(tipoConsulta(14).equalsIgnoreCase("TRUNCATE TABLE")){
                 System.out.println("Truncate");
+                dropTruncateTable(15,2);
             }else{
                 enviar("Error...");
                 panelEstado.setBackground(new Color(228, 65, 65));

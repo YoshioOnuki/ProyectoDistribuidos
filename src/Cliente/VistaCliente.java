@@ -140,6 +140,9 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         }else if(m.equalsIgnoreCase("Error: DROP TABLE...")){
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  No se encontro la tabla a eliminar...");
+        }else if(m.equalsIgnoreCase("Error: TRUNCATE TABLE...")){
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error:  No se encontro la tabla a limpiar...");
         }else if(!m.isEmpty()){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla visualizada correctamente...");
