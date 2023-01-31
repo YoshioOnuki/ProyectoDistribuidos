@@ -492,7 +492,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         //
         String archivoDelete = "delete_"+nombreT+".txt";
         File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
-            
+        
         if(!archiFile.exists()){
             enviar("Error...");
             panelEstado.setBackground(new Color(228, 65, 65));
@@ -581,7 +581,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //puntero-delete][cantAtri]
                 for (int i = 0; i < puntero - delete; i++) {
                     if(datos[i][0].equalsIgnoreCase(""+puntero2)){
-                        puntero2 = Integer.parseInt(datos[i][0]);
+                        puntero2 = i;
                         System.out.println(puntero2);
                         estadoEncuentro = 1;
                         break;
