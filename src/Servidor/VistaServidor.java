@@ -522,7 +522,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 
                 //Puntero donde se va igualar al ID de donde se encuentra la Fila para actualizar
                 int puntero2 = Integer.parseInt(d[tamanio-2]);
-                System.out.println("Posision ID para actualizar"+puntero2);
+                System.out.println("Posision ID para actualizar: "+puntero2);
                 
                 //Capturamos los datos de la tabla en un Array
                 for (int j = 0; j < cantAtri*puntero - (delete*puntero); j++) {
@@ -584,8 +584,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         puntero2 = Integer.parseInt(datos[i][0]);
                         System.out.println(puntero2);
                         estadoEncuentro = 1;
-                    }else{
-                        estadoEncuentro = 0;
+                        break;
                     }
                 }
                 
@@ -603,7 +602,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                             for (int m = 0; m < datos[0][i].length(); m++) {
                                 if(datos[0][i].charAt(m) != espacio.charAt(0)){
                                     at += datos[0][i].charAt(m);
-                                    System.out.println(at);
                                 }else if(datos[0][i].charAt(m) == espacio.charAt(0)){
                                     if(datIngre[j].equalsIgnoreCase(at)){
                                         datos[puntero2][i] = datoUpd[n];
