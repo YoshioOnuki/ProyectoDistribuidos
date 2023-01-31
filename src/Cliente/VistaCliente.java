@@ -53,31 +53,50 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
                 limpiarError();
                 txtMensaje.setText("");
                 txtMensaje.requestFocus();
+            }else if(tipoConsulta(10).equalsIgnoreCase("DROP TABLE")){
+                if (JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar la tabla?\nUna vez borrado no  habrá vuelta atrás.", "¡Advertencia!",
+                JOptionPane.YES_NO_OPTION, 1, icoWar) == JOptionPane.YES_OPTION) {
+                    String mensaje = "" + this.txtMensaje.getText() + "\n";
+                    //this.txtArea.setText(mensaje);
+                    this.txtArea.setText(mensaje);
+                    this.txtMensaje.setText("");
+                    runCli(mensaje);
+                } else {
+                    String mensaje = "Error...\n";
+                    this.txtArea.setText(mensaje);
+                    this.txtMensaje.setText("");
+                    runCli(mensaje);
+                    panelEstado.setBackground(new Color(228, 65, 65));
+                    txtError.setText("Error:  ...");
+                }
             }else{
                 String mensaje = "" + this.txtMensaje.getText() + "\n";
                 //this.txtArea.setText(mensaje);
                 this.txtArea.setText(mensaje);
                 this.txtMensaje.setText("");
-
-                new Thread(){
-                    public void run(){
-                        txtArea.setText("");
-                        lblLoading.setVisible(true);
-                        txtError.setForeground(Color.black);
-                        txtError.setText("Cargando...");
-                        proceso(10);
-                        error();
-                    }
-                }.start();
-
-                txtMensaje.requestFocus();
-                limpiarError();
-
-                Cliente c = new Cliente(this.ip,5050,mensaje);
-                Thread t = new Thread(c); 
-                t.start();
+                runCli(mensaje);
+               
             }
         }
+    }
+    void runCli(String mensaje){
+         new Thread(){
+            public void run(){
+                txtArea.setText("");
+                lblLoading.setVisible(true);
+                txtError.setForeground(Color.black);
+                txtError.setText("Cargando...");
+                proceso(10);
+                error();
+            }
+        }.start();
+
+        txtMensaje.requestFocus();
+        limpiarError();
+
+        Cliente c = new Cliente(this.ip,5050,mensaje);
+        Thread t = new Thread(c); 
+        t.start();
     }
     
     //Validamos que tipo de error de consulta se enviará a la vista
@@ -119,7 +138,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         }else if(m.equalsIgnoreCase("Eliminado...")){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla fue Eliminada correctamente en la base de datos TXT...");
-        }else if(str.equalsIgnoreCase("Tabla actualizada correctamente...")){
+        }else if(str.equalsIgnoreCase("Tabla actualizad a correctamente...")){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla actualizada correctamente...");
         }else if(str2.equalsIgnoreCase("Lista de tablas...")){
@@ -143,6 +162,9 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         }else if(m.equalsIgnoreCase("Error: TRUNCATE TABLE...")){
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  No se encontro la tabla a limpiar...");
+        }else if(m.equalsIgnoreCase("Error: No se encontró el ID en la tabla...")){
+            panelEstado.setBackground(new Color(228, 65, 65));
+            txtError.setText("Error: No se encontró el ID en la tabla...");
         }else if(!m.isEmpty()){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla visualizada correctamente...");
@@ -155,7 +177,21 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         txtError.setText("");
     }
     
-    
+    //Métodos para validar las consultas ingresadas por el cliente
+    String tipoConsulta(int cant){
+        String r = "";
+        String txtConsulta = txtMensaje.getText();
+        
+        if(txtConsulta.length() < cant){
+            
+        }else{
+            for (int i = 0; i < cant; i++) {
+                r += txtConsulta.charAt(i);
+            }
+        }
+        
+        return r;
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
