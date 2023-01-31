@@ -3,11 +3,15 @@ package Servidor;
 
 import Cliente.*;
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
@@ -307,6 +311,96 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         
     }
     
+    //Métodos para validar con atrinbutos internos
+    String validarSelect(String consulta, int posicion, String archi) {
+        int posi = posicion;
+
+        String[] atributo = atributos(consulta, posi);
+
+        File archiFile = new File(crearUbicacion + archi);
+
+        return  leerDatos(archiFile, atributo);
+        
+    }
+    
+    public String leerDatos(File file, String[] r2) {
+        String r = "";
+
+        BufferedReader br = null;
+        try {
+            // Crear un objeto BufferedReader al que se le pasa 
+            //   un objeto FileReader con el nombre del fichero
+            br = new BufferedReader(new FileReader(file));
+            // Leer la primera línea, guardando en un String
+            List<String> texto = null;
+            String cabecera = br.readLine();
+            if (cabecera != null) {
+                String[] cabeList = cabecera.split("\\|");
+                String detalle = "";
+                int[] cabePos = new int[r2.length];
+                for (int x = 0; x < r2.length; x++) {
+                    for (int i = 0; i < cabeList.length; i++) {
+                        if (cabeList[i].contains(r2[x])) {
+                            cabePos[x] = i;
+                            detalle = detalle + r2[x] + " | ";
+                        }
+                    }
+                }
+                texto = new ArrayList<>();
+                if (detalle.lastIndexOf("|") > 1) {
+                    detalle = detalle.substring(0, detalle.lastIndexOf("|") - 1);
+                }
+                texto.add(detalle);
+                detalle = cabecera;
+                // Repetir mientras no se llegue al final del fichero
+                while (detalle != null) {
+                    // Hacer lo que sea con la línea leída
+                    // En este ejemplo sólo se muestra por consola
+                    System.out.println(texto);
+                    // Leer la siguiente línea
+                    detalle = br.readLine();
+                    if (detalle != null) {
+                        String[] detaSplit = detalle.split("\\|");
+                        detalle = "";
+                        for (int x = 0; x < cabePos.length; x++) {
+                            detalle = detalle + detaSplit[cabePos[x]] + " | ";
+                        }
+                        if (detalle.lastIndexOf("|") > 1) {
+                            detalle = detalle.substring(0, detalle.lastIndexOf("|") - 1);
+                        }
+                        texto.add(detalle);
+                    }
+                }
+            }
+            if (texto != null) {
+                for (String string : texto) {
+                    r = r + string + "\n";
+                }
+            }
+        } // Captura de excepción por fichero no encontrado
+        catch (FileNotFoundException ex) {
+            System.out.println("Error: Fichero no encontrado");
+            ex.printStackTrace();
+        } // Captura de cualquier otra excepción
+        catch (Exception ex) {
+            System.out.println("Error de lectura del fichero");
+            ex.printStackTrace();
+        } // Asegurar el cierre del fichero en cualquier caso
+        finally {
+            try {
+                // Cerrar el fichero si se ha podido abrir
+                if (br != null) {
+                    br.close();
+                }
+            } catch (Exception ex) {
+                System.out.println("Error al cerrar el fichero");
+                ex.printStackTrace();
+            }
+        }
+        return r;
+
+    }
+    
     //Métodos para validar consulta y Seleccionar tablas de la base de datos TXT
     String validarSelect(){
         String r = "";
@@ -320,6 +414,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         }
         
         if(!consul.equalsIgnoreCase("SELECT * FROM ")){
+            r = nombrefile(txtConsulta);
             System.out.println(consul);
         }else{
             for (int i = posi; i < txtConsulta.length(); i++) {
@@ -1248,6 +1343,18 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }
         }
     }    
+    
+    //Métodos para extraer atributos del archivo y el nombre el archivo para extraer el índice
+    private String[] atributos(String consulta, int posi) {
+        int posfin = consulta.indexOf("FROM");
+        return (consulta.substring(posi, posfin)).split(",");
+    }
+    private String nombrefile(String consulta) {
+        int posfin = consulta.indexOf("FROM");
+        String[] resto = (consulta.substring(posfin + 4).trim().replace(";", "")).split(" ");
+        String nombre = resto[0];
+        return nombre;
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -1331,7 +1438,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -1362,7 +1469,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
