@@ -489,6 +489,9 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         //
         String archivoBackup = "backup_"+nombreT+".txt";
         archiBackupFile = new File(crearUbicacionBackup+archivoBackup);
+        //
+        String archivoDelete = "delete_"+nombreT+".txt";
+        File archiDelete = new File(crearUbicacionBackupCantDelete+archivoDelete);
             
         if(!archiFile.exists()){
             enviar("Error...");
@@ -500,9 +503,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //Capturamos la cantidad de atributos y el puntero de la tabla
                 int cantAtri = Integer.parseInt(leerDatos(archiCan));
                 int puntero = Integer.parseInt(leerDatos(archiPuntero));
+                int delete = Integer.parseInt(leerDatos(archiDelete));
                 
                 //Instanciamos el arreglo con los parametros del puntero y cantidad de atributos
-                datos = new String[puntero][cantAtri];
+                datos = new String[puntero-delete][cantAtri];
                 
                 //Capturamos los datos del Backup de la tabla
                 String dat = leerDatos(archiBackupFile);
@@ -513,8 +517,15 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 int k = 0;
                 int l = 0;
                 
+                //Tamaño de los datos extraidos de la validacion (nombre de la tabla, atributos...
+                int tamanio = d.length;
+                
+                //Puntero donde se va igualar al ID de donde se encuentra la Fila para actualizar
+                int puntero2 = Integer.parseInt(d[tamanio-2]);
+                System.out.println("Posision ID para actualizar"+puntero2);
+                
                 //Capturamos los datos de la tabla en un Array
-                for (int j = 0; j < cantAtri*puntero; j++) {
+                for (int j = 0; j < cantAtri*puntero - (delete*puntero); j++) {
                     for (int i = posi; i < dat.length(); i++) {
                         if(dat.charAt(i) != coma.charAt(0)){
                             atri += dat.charAt(i);
@@ -527,7 +538,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     datos[k][l] = atri;
                     System.out.print(datos[k][l]+" ");
                     l++;
-                    if(l == cantAtri && k != puntero-1){
+                    if(l == cantAtri && k != puntero - delete -1){
                         k++;
                         l=0;
                     }
@@ -536,13 +547,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 System.out.println("");
                 System.out.println(cantAtri);
                 System.out.println(puntero);
-                
-                //Tamaño de los datos extraidos de la validacion (nombre de la tabla, atributos...
-                int tamanio = d.length;
-                
-                //Puntero donde se encuentra la Fila para actualizar
-                int puntero2 = Integer.parseInt(d[tamanio-2]);
-                System.out.println(puntero2);
                 
                 //Cantidad de atributos ingresados
                 int cantAtriIngre = Integer.parseInt(d[tamanio-1]);
@@ -601,7 +605,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String contenidoIngresado = "";
                 
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
-                for (int i = 0; i < puntero; i++) {
+                for (int i = 0; i < puntero - delete; i++) {
                     for (int j = 0; j < cantAtri; j++) {
                         contenidoIngresado += datos[i][j];
                         if(j != cantAtri-1){
@@ -616,7 +620,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 String contenidoBackup = "";
                 
                 //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
-                for (int i = 0; i < puntero; i++) {
+                for (int i = 0; i < puntero - delete; i++) {
                     for (int j = 0; j < cantAtri; j++) {
                         if(j == 0 && i == 0){
                             
@@ -1042,7 +1046,6 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             
         }
     }
-    
     
     //Método Show, para visualizar todas las tablas de la base de datos TXT
     void showTables() {

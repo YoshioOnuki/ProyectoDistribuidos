@@ -5,13 +5,13 @@ CREATE TABLE alumno ( id int , nombre varchar(255) , edad int , direccion varcha
 SELECT * FROM alumno;
 
 UPDATE alumno SET nombre = 'Onuki' , edad = 21 WHERE id = 1;
-UPDATE alumno2 edad = 21 WHERE id = 1;
+UPDATE alumno2 SET edad = 21 WHERE id = 1;
 UPDATE alumno5 SET nombre = 'Yoshio Onuki' , edad = 21 , direccion = 'Av. Centenario' , estado = 'Inactivo' WHERE id = 1;
 UPDATE alumno SET nombre = 'Yoshio Onuki' , edad = 21 , direccion = 'Av. Centenario' WHERE id = 1;
 
 INSERT INTO alumno2 ( nombre , edad ) VALUES ( 'Yoshio Onuki' , 22 );
 INSERT INTO alumno5 ( nombre , edad , direccion , estado ) VALUES ( 'Hector Lopez' , 21 , 'Jr. Brasil' , 'Activo' );
-INSERT INTO alumno ( nombre , edad , direccion , estado ) VALUES ( 'Susana Suarez' , 21 , 'Jr. Cementerio' );
+INSERT INTO alumno ( nombre , edad , direccion ) VALUES ( 'Susana Suarez' , 21 , 'Jr. Cementerio' );
 
 DELETE FROM alumno5 WHERE id = 1;
 
