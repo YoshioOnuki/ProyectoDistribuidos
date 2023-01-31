@@ -54,7 +54,7 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
                 txtMensaje.setText("");
                 txtMensaje.requestFocus();
             }else if(tipoConsulta(10).equalsIgnoreCase("DROP TABLE")){
-                if (JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar la tabla?\nUna vez borrado no  habrá vuelta atrás.", "¡Advertencia!",
+                if (JOptionPane.showConfirmDialog(null, "¿Está seguro que desea DESTRUIR la base de datos completa?\nUna vez realizada la operación no habrá vuelta atrás.", "¡Advertencia!",
                 JOptionPane.YES_NO_OPTION, 1, icoWar) == JOptionPane.YES_OPTION) {
                     String mensaje = "" + this.txtMensaje.getText() + "\n";
                     //this.txtArea.setText(mensaje);
@@ -62,12 +62,28 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
                     this.txtMensaje.setText("");
                     runCli(mensaje);
                 } else {
-                    String mensaje = "Error...\n";
+                    String mensaje = "Cancelado...";
                     this.txtArea.setText(mensaje);
                     this.txtMensaje.setText("");
                     runCli(mensaje);
-                    panelEstado.setBackground(new Color(228, 65, 65));
-                    txtError.setText("Error:  ...");
+                    panelEstado.setBackground(new Color(108, 117, 125));
+                    txtError.setText("Cancelado: DROP cancelado...");
+                }
+            }else if(tipoConsulta(14).equalsIgnoreCase("TRUNCATE TABLE")){
+                if (JOptionPane.showConfirmDialog(null, "¿Está seguro que desea TRUNCAR la tabla completa?\nUna vez realizada la operación no  habrá vuelta atrás.", "¡Advertencia!",
+                JOptionPane.YES_NO_OPTION, 1, icoWar) == JOptionPane.YES_OPTION) {
+                    String mensaje = "" + this.txtMensaje.getText() + "\n";
+                    //this.txtArea.setText(mensaje);
+                    this.txtArea.setText(mensaje);
+                    this.txtMensaje.setText("");
+                    runCli(mensaje);
+                } else {
+                    String mensaje = "Cancelado...";
+                    this.txtArea.setText(mensaje);
+                    this.txtMensaje.setText("");
+                    runCli(mensaje);
+                    panelEstado.setBackground(new Color(108, 117, 125));
+                    txtError.setText("Cancelado: TRUNCATE cancelado...");
                 }
             }else{
                 String mensaje = "" + this.txtMensaje.getText() + "\n";
