@@ -575,78 +575,98 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                     }
                 }
                 
-                String at = "";
-                int n = 0;
+                //Estado para validar si se encuentra el ID de la condicional de la consulta
+                int estadoEncuentro = 0;
                 
-                //Se carga el Array "datos" con los campos actualizados
-                for (int j = 0; j < cantAtriIngre; j++) {
-                    for (int i = 0; i < cantAtri; i++) {
-                        for (int m = 0; m < datos[0][i].length(); m++) {
-                            if(datos[0][i].charAt(m) != espacio.charAt(0)){
-                                at += datos[0][i].charAt(m);
-                                System.out.println(at);
-                            }else if(datos[0][i].charAt(m) == espacio.charAt(0)){
-                                if(datIngre[j].equalsIgnoreCase(at)){
-                                    datos[puntero2][i] = datoUpd[n];
-                                    System.out.println(datoUpd[n]);
-                                    n++;
-                                    at = "";
-                                    break;
-                                }else{
-                                    at = "";
-                                    break;
+                //puntero-delete][cantAtri]
+                for (int i = 0; i < puntero - delete; i++) {
+                    if(datos[i][0].equalsIgnoreCase(""+puntero2)){
+                        puntero2 = Integer.parseInt(datos[i][0]);
+                        System.out.println(puntero2);
+                        estadoEncuentro = 1;
+                    }else{
+                        estadoEncuentro = 0;
+                    }
+                }
+                
+                if(estadoEncuentro == 0){
+                    enviar("Error: No se encontró el ID en la tabla...");
+                    panelEstado.setBackground(new Color(228, 65, 65));
+                    txtError.setText("Error: No se encontró el ID en la tabla...");
+                }else{
+                    String at = "";
+                    int n = 0;
+
+                    //Se carga el Array "datos" con los campos actualizados
+                    for (int j = 0; j < cantAtriIngre; j++) {
+                        for (int i = 0; i < cantAtri; i++) {
+                            for (int m = 0; m < datos[0][i].length(); m++) {
+                                if(datos[0][i].charAt(m) != espacio.charAt(0)){
+                                    at += datos[0][i].charAt(m);
+                                    System.out.println(at);
+                                }else if(datos[0][i].charAt(m) == espacio.charAt(0)){
+                                    if(datIngre[j].equalsIgnoreCase(at)){
+                                        datos[puntero2][i] = datoUpd[n];
+                                        System.out.println(datoUpd[n]);
+                                        n++;
+                                        at = "";
+                                        break;
+                                    }else{
+                                        at = "";
+                                        break;
+                                    }
                                 }
                             }
                         }
+                        at = "";
                     }
-                    at = "";
-                }
-                
-                String contenidoIngresado = "";
-                
-                //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
-                for (int i = 0; i < puntero - delete; i++) {
-                    for (int j = 0; j < cantAtri; j++) {
-                        contenidoIngresado += datos[i][j];
-                        if(j != cantAtri-1){
-                            contenidoIngresado += espacio+"|"+espacio;
-                        }else{
-                            contenidoIngresado += "\n";
+
+                    String contenidoIngresado = "";
+
+                    //Cargamos todo el array en un String, con el formato que se guardará la base de datos raiz
+                    for (int i = 0; i < puntero - delete; i++) {
+                        for (int j = 0; j < cantAtri; j++) {
+                            contenidoIngresado += datos[i][j];
+                            if(j != cantAtri-1){
+                                contenidoIngresado += espacio+"|"+espacio;
+                            }else{
+                                contenidoIngresado += "\n";
+                            }
                         }
                     }
-                }
-                System.out.println(contenidoIngresado);
+                    System.out.println(contenidoIngresado);
 
-                String contenidoBackup = "";
-                
-                //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
-                for (int i = 0; i < puntero - delete; i++) {
-                    for (int j = 0; j < cantAtri; j++) {
-                        if(j == 0 && i == 0){
-                            
-                        }else{
-                            contenidoBackup += ",";
+                    String contenidoBackup = "";
+
+                    //Cargamos todo el array en un String, con el formato que se guardará la base de datos backup
+                    for (int i = 0; i < puntero - delete; i++) {
+                        for (int j = 0; j < cantAtri; j++) {
+                            if(j == 0 && i == 0){
+
+                            }else{
+                                contenidoBackup += ",";
+                            }
+                            contenidoBackup += datos[i][j];
                         }
-                        contenidoBackup += datos[i][j];
                     }
-                }
-                System.out.println(contenidoBackup);
+                    System.out.println(contenidoBackup);
 
-                //Creo el archivo raiz y escribo los datos actualizados en la base de datos TXT
-                archiFile.createNewFile();
-                int respuesta1 = escribirDatos(archiFile, contenidoIngresado);
-                
-                //Creo el archivo backup y escribo los datos actualizados en la base de datos backup
-                archiBackupFile.createNewFile();
-                int respuesta2 = escribirDatos(archiBackupFile, contenidoBackup);
-                
-                //Mensaje de confirmación
-                txtArea.setText("Tabla actualizada correctamente...\n "
-                        + "====================================\n"+contenidoIngresado);
-                enviar("Tabla actualizada correctamente...\n "
-                        + "====================================\n"+contenidoIngresado);
-                panelEstado.setBackground(new Color(76, 175, 80));
-                txtError.setText("Correcto:  Tabla actualizada correctamente...");
+                    //Creo el archivo raiz y escribo los datos actualizados en la base de datos TXT
+                    archiFile.createNewFile();
+                    int respuesta1 = escribirDatos(archiFile, contenidoIngresado);
+
+                    //Creo el archivo backup y escribo los datos actualizados en la base de datos backup
+                    archiBackupFile.createNewFile();
+                    int respuesta2 = escribirDatos(archiBackupFile, contenidoBackup);
+
+                    //Mensaje de confirmación
+                    txtArea.setText("Tabla actualizada correctamente...\n "
+                            + "====================================\n"+contenidoIngresado);
+                    enviar("Tabla actualizada correctamente...\n "
+                            + "====================================\n"+contenidoIngresado);
+                    panelEstado.setBackground(new Color(76, 175, 80));
+                    txtError.setText("Correcto:  Tabla actualizada correctamente...");
+                }
             } catch (IOException ex) {
                 Logger.getLogger(VistaServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
