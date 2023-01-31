@@ -15,8 +15,9 @@ import javax.swing.JOptionPane;
  */
 public class VistaCliente extends javax.swing.JFrame implements Observer{
     
-    //Inicializamos un Icono de alerta para mis alertar JOptionPane
+    //Inicializamos Iconos de alerta para JOptionPane
     ImageIcon icoWar = new ImageIcon("src/Imagenes/IconWarning.png");
+    ImageIcon icoQuestion = new ImageIcon("src/Imagenes/iconQuestion.png");
     
     //Inicializamos variables estáticas para el manejo de datos
     public static String men = "";
@@ -55,34 +56,38 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
                 txtMensaje.requestFocus();
             }else if(tipoConsulta(10).equalsIgnoreCase("DROP TABLE")){
                 if (JOptionPane.showConfirmDialog(null, "¿Está seguro que desea DESTRUIR la base de datos completa?\nUna vez realizada la operación no habrá vuelta atrás.", "¡Advertencia!",
-                JOptionPane.YES_NO_OPTION, 1, icoWar) == JOptionPane.YES_OPTION) {
+                JOptionPane.YES_NO_OPTION, 1, icoQuestion) == JOptionPane.YES_OPTION) {
                     String mensaje = "" + this.txtMensaje.getText() + "\n";
                     //this.txtArea.setText(mensaje);
                     this.txtArea.setText(mensaje);
                     this.txtMensaje.setText("");
                     runCli(mensaje);
                 } else {
+                    lblLoading.setVisible(false);
                     String mensaje = "Cancelado...";
                     this.txtArea.setText(mensaje);
                     this.txtMensaje.setText("");
                     runCli(mensaje);
                     panelEstado.setBackground(new Color(108, 117, 125));
+                    txtError.setForeground(Color.WHITE);
                     txtError.setText("Cancelado: DROP cancelado...");
                 }
             }else if(tipoConsulta(14).equalsIgnoreCase("TRUNCATE TABLE")){
                 if (JOptionPane.showConfirmDialog(null, "¿Está seguro que desea TRUNCAR la tabla completa?\nUna vez realizada la operación no  habrá vuelta atrás.", "¡Advertencia!",
-                JOptionPane.YES_NO_OPTION, 1, icoWar) == JOptionPane.YES_OPTION) {
+                JOptionPane.YES_NO_OPTION, 1, icoQuestion) == JOptionPane.YES_OPTION) {
                     String mensaje = "" + this.txtMensaje.getText() + "\n";
                     //this.txtArea.setText(mensaje);
                     this.txtArea.setText(mensaje);
                     this.txtMensaje.setText("");
                     runCli(mensaje);
                 } else {
+                    lblLoading.setVisible(false);
                     String mensaje = "Cancelado...";
                     this.txtArea.setText(mensaje);
                     this.txtMensaje.setText("");
                     runCli(mensaje);
                     panelEstado.setBackground(new Color(108, 117, 125));
+                    txtError.setForeground(Color.WHITE);
                     txtError.setText("Cancelado: TRUNCATE cancelado...");
                 }
             }else{
