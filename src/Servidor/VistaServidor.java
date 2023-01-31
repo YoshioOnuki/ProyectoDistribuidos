@@ -525,7 +525,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 System.out.println("Posision ID para actualizar: "+puntero2);
                 
                 //Capturamos los datos de la tabla en un Array
-                for (int j = 0; j < cantAtri*puntero - (delete*puntero); j++) {
+                for (int j = 0; j < cantAtri*puntero - (delete*cantAtri); j++) {
                     for (int i = posi; i < dat.length(); i++) {
                         if(dat.charAt(i) != coma.charAt(0)){
                             atri += dat.charAt(i);
