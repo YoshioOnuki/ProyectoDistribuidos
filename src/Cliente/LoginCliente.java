@@ -42,7 +42,6 @@ public class LoginCliente extends javax.swing.JFrame {
         if(ip.isEmpty()){
             JOptionPane.showMessageDialog(null, "¡Campo de texto IP es requerido!", "¡Advertencia!",JOptionPane.WARNING_MESSAGE, icoWar);
         }else{
-            //192.168.1.79
             int estado = 0;
             for (int i = 0; i < ip.length(); i++) {
                 if(ip.charAt(i) < '0'|| ip.charAt(i) > '9'){

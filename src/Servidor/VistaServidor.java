@@ -1236,10 +1236,8 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }else if(tipoConsulta(11).equalsIgnoreCase("SHOW TABLES")){
                 showTables();
             }else if(tipoConsulta(10).equalsIgnoreCase("DROP TABLE")){
-                System.out.println("Drop");
                 dropTruncateTable(11,1);
             }else if(tipoConsulta(14).equalsIgnoreCase("TRUNCATE TABLE")){
-                System.out.println("Truncate");
                 dropTruncateTable(15,2);
             }else{
                 enviar("Error...");

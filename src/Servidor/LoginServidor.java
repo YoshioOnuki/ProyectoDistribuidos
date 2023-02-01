@@ -45,11 +45,14 @@ public class LoginServidor extends javax.swing.JFrame {
             if (ip.length() < 11) {
                 JOptionPane.showMessageDialog(null, "¡Le faltan números a su IP!", "¡Advertencia!", JOptionPane.WARNING_MESSAGE, icoWar);
             } else {
+                //Inicializamos el contador de puntos y contador de puntos que se encuentran juntos
                 int cont = 0;
                 int punt = 0;
                 for (int i = 0; i < ip.length(); i++) {
+                    //Buscamos los los puntos en el IP y aumentamos el contador
                     if (ip.charAt(i) == punto.charAt(0)) {
                         punt++;
+                        //Validamos que no hayan puntos juntos
                         if (i != ip.length() - 1) {
                             if (ip.charAt(i + 1) == punto.charAt(0)) {
                                 cont++;
@@ -57,6 +60,7 @@ public class LoginServidor extends javax.swing.JFrame {
                         }
                     }
                 }
+                //Validamos que no hayan puntos juntos
                 if (cont > 0) {
                     JOptionPane.showMessageDialog(null, "¡Formato de IP incorrecto!", "¡Advertencia!", JOptionPane.WARNING_MESSAGE, icoWar);
                 } else {

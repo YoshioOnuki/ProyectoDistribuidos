@@ -63,11 +63,9 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
                     this.txtMensaje.setText("");
                     runCli(mensaje);
                 } else {
-                    lblLoading.setVisible(false);
                     String mensaje = "Cancelado...";
                     this.txtArea.setText(mensaje);
                     this.txtMensaje.setText("");
-                    runCli(mensaje);
                     panelEstado.setBackground(new Color(108, 117, 125));
                     txtError.setText("Cancelado: DROP cancelado...");
                 }
@@ -80,11 +78,9 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
                     this.txtMensaje.setText("");
                     runCli(mensaje);
                 } else {
-                    lblLoading.setVisible(false);
                     String mensaje = "Cancelado...";
                     this.txtArea.setText(mensaje);
                     this.txtMensaje.setText("");
-                    runCli(mensaje);
                     panelEstado.setBackground(new Color(108, 117, 125));
                     txtError.setText("Cancelado: TRUNCATE cancelado...");
                 }
@@ -94,12 +90,11 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
                 this.txtArea.setText(mensaje);
                 this.txtMensaje.setText("");
                 runCli(mensaje);
-               
             }
         }
     }
     void runCli(String mensaje){
-         new Thread(){
+        new Thread(){
             public void run(){
                 txtArea.setText("");
                 lblLoading.setVisible(true);
