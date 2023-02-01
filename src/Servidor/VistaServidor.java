@@ -73,6 +73,10 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
         Cliente c1 = new Cliente(this.ip,5050,mensa);
         Thread t1 = new Thread(c1); 
         t1.start();
+        
+        //Cliente c2 = new Cliente("192.168.0.135",5050,mensa);
+        //Thread t2 = new Thread(c2); 
+        //t2.start();
     }
     
     //Inicializamos al servidor
@@ -1155,68 +1159,76 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
             }
         }else if(tipo == 2){
             if(archiFile.exists()){
-                //Capturamos la cantidad de atributos y el puntero de la tabla
-                int cantAtri = Integer.parseInt(leerDatos(archiCan));
-                int puntero = Integer.parseInt(leerDatos(archiPuntero));
-                int delete = Integer.parseInt(leerDatos(archiDelete));
-                
-                //Instanciamos el arreglo con los parametros 1 y cantidad de atributos
-                datos = new String[1][cantAtri];
-                
-                //Capturamos los datos del Backup de la tabla
-                String dat = leerDatos(archiBackupFile);
-                
-                //Variables para el manejo de datos de la tabla
-                String atri = "";
-                int posii = 0;
-                int l = 0;
-                
-                //Capturamos los datos de la tabla en un Array
-                for (int j = 0; j < cantAtri; j++) {
-                    for (int i = posii; i < dat.length(); i++) {
-                        if(dat.charAt(i) != coma.charAt(0)){
-                            atri += dat.charAt(i);
-                            posii++;
-                        }else if(dat.charAt(i) == coma.charAt(0)){
-                            posii++;
-                            break;
+                try {
+                    //Capturamos la cantidad de atributos y el puntero de la tabla
+                    int cantAtri = Integer.parseInt(leerDatos(archiCan));
+                    int puntero = Integer.parseInt(leerDatos(archiPuntero));
+                    int delete = Integer.parseInt(leerDatos(archiDelete));
+                    
+                    //Instanciamos el arreglo con los parametros 1 y cantidad de atributos
+                    datos = new String[1][cantAtri];
+                    
+                    //Capturamos los datos del Backup de la tabla
+                    String dat = leerDatos(archiBackupFile);
+                    
+                    //Variables para el manejo de datos de la tabla
+                    String atri = "";
+                    int posii = 0;
+                    int l = 0;
+                    
+                    //Capturamos los datos de la tabla en un Array
+                    for (int j = 0; j < cantAtri; j++) {
+                        for (int i = posii; i < dat.length(); i++) {
+                            if(dat.charAt(i) != coma.charAt(0)){
+                                atri += dat.charAt(i);
+                                posii++;
+                            }else if(dat.charAt(i) == coma.charAt(0)){
+                                posii++;
+                                break;
+                            }
+                        }
+                        datos[0][l] = atri;
+                        l++;
+                        atri = "";
+                    }
+                    
+                    String contenido = "";
+                    String contenidoBackup = "";
+                    
+                    for (int i = 0; i < cantAtri; i++) {
+                        contenido += datos[0][i];
+                        if(i != cantAtri-1){
+                            contenido += espacio+"|"+espacio;
+                        }else{
+                            contenido += "\n";
                         }
                     }
-                    datos[0][l] = atri;
-                    l++;
-                    atri = "";
-                }
-                
-                String contenido = "";
-                String contenidoBackup = "";
-                
-                for (int i = 0; i < cantAtri; i++) {
-                    contenido += datos[0][i];
-                    if(i != cantAtri-1){
-                        contenido += espacio+"|"+espacio;
-                    }else{
-                        contenido += "\n";
+                    for (int i = 0; i < cantAtri; i++) {
+                        if(i != 0){
+                            contenidoBackup += ",";
+                        }
+                        contenidoBackup += datos[0][i];
                     }
-                }
-                for (int i = 0; i < cantAtri; i++) {
-                    if(i != 0){
-                        contenidoBackup += ",";
-                    }
-                    contenidoBackup += datos[0][i];
-                }
-                
                     
-                int respuesta0 = escribirDatos(archiFile, contenido);
-                int respuesta1 = escribirDatos(archiBackupFile, contenidoBackup);
-                int respuesta2 = escribirDatos(archiPuntero, "0");
-                int respuesta3 = escribirDatos(archiDelete, "0");
-                
-                System.out.println(respuesta0+" "+respuesta1+" "+respuesta2+" "+respuesta3);
-                
-                txtArea.setText("Tabla truncada correctamente...");
-                enviar("Tabla truncada correctamente...");
-                panelEstado.setBackground(new Color(76, 175, 80));
-                txtError.setText("Correcto:  Tabla truncada correctamente...");
+                    archiFile.createNewFile();
+                    archiBackupFile.createNewFile();
+                    archiPuntero.createNewFile();
+                    archiDelete.createNewFile();
+                    
+                    int respuesta0 = escribirDatos(archiFile, contenido);
+                    int respuesta1 = escribirDatos(archiBackupFile, contenidoBackup);
+                    int respuesta2 = escribirDatos(archiPuntero, "0");
+                    int respuesta3 = escribirDatos(archiDelete, "0");
+                    
+                    System.out.println(respuesta0+" "+respuesta1+" "+respuesta2+" "+respuesta3);
+                    
+                    txtArea.setText("Tabla truncada correctamente...");
+                    enviar("Tabla truncada correctamente...");
+                    panelEstado.setBackground(new Color(76, 175, 80));
+                    txtError.setText("Correcto:  Tabla truncada correctamente...");
+                } catch (IOException ex) {
+                    System.out.println("Error al crear archivos");
+                }
             }else{
                 enviar("Error: TRUNCATE TABLE...");
                 panelEstado.setBackground(new Color(228, 65, 65));
