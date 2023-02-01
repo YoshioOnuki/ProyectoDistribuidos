@@ -170,12 +170,15 @@ public class VistaCliente extends javax.swing.JFrame implements Observer{
         }else if(m.equalsIgnoreCase("Tabla eliminada correctamente...")){
             panelEstado.setBackground(new Color(76, 175, 80));
             txtError.setText("Correcto:  Tabla eliminada correctamente...");
+        }else if(m.equalsIgnoreCase("Tabla truncada correctamente...")){
+            panelEstado.setBackground(new Color(76, 175, 80));
+            txtError.setText("Correcto:  Tabla truncada correctamente...");
         }else if(m.equalsIgnoreCase("Error: DROP TABLE...")){
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error:  No se encontro la tabla a eliminar...");
         }else if(m.equalsIgnoreCase("Error: TRUNCATE TABLE...")){
             panelEstado.setBackground(new Color(228, 65, 65));
-            txtError.setText("Error:  No se encontro la tabla a limpiar...");
+            txtError.setText("Error:  No se encontro la tabla a truncar...");
         }else if(m.equalsIgnoreCase("Error: No se encontró el ID en la tabla...")){
             panelEstado.setBackground(new Color(228, 65, 65));
             txtError.setText("Error: No se encontró el ID en la tabla...");

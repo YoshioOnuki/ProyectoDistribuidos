@@ -1158,6 +1158,7 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                 //Capturamos la cantidad de atributos y el puntero de la tabla
                 int cantAtri = Integer.parseInt(leerDatos(archiCan));
                 int puntero = Integer.parseInt(leerDatos(archiPuntero));
+                int delete = Integer.parseInt(leerDatos(archiDelete));
                 
                 //Instanciamos el arreglo con los parametros 1 y cantidad de atributos
                 datos = new String[1][cantAtri];
@@ -1182,15 +1183,44 @@ public class VistaServidor extends javax.swing.JFrame implements Observer{
                         }
                     }
                     datos[0][l] = atri;
-                    System.out.print(datos[0][l]+" ");
                     l++;
                     atri = "";
                 }
                 
+                String contenido = "";
+                String contenidoBackup = "";
+                
+                for (int i = 0; i < cantAtri; i++) {
+                    contenido += datos[0][i];
+                    if(i != cantAtri-1){
+                        contenido += espacio+"|"+espacio;
+                    }else{
+                        contenido += "\n";
+                    }
+                }
+                for (int i = 0; i < cantAtri; i++) {
+                    if(i != 0){
+                        contenidoBackup += ",";
+                    }
+                    contenidoBackup += datos[0][i];
+                }
+                
+                    
+                int respuesta0 = escribirDatos(archiFile, contenido);
+                int respuesta1 = escribirDatos(archiBackupFile, contenidoBackup);
+                int respuesta2 = escribirDatos(archiPuntero, "0");
+                int respuesta3 = escribirDatos(archiDelete, "0");
+                
+                System.out.println(respuesta0+" "+respuesta1+" "+respuesta2+" "+respuesta3);
+                
+                txtArea.setText("Tabla truncada correctamente...");
+                enviar("Tabla truncada correctamente...");
+                panelEstado.setBackground(new Color(76, 175, 80));
+                txtError.setText("Correcto:  Tabla truncada correctamente...");
             }else{
                 enviar("Error: TRUNCATE TABLE...");
                 panelEstado.setBackground(new Color(228, 65, 65));
-                txtError.setText("Error:  No se encontro la tabla a limpiar...");
+                txtError.setText("Error:  No se encontro la tabla a truncar...");
             }
         }
         
